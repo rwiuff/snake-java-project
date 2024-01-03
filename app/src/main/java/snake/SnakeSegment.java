@@ -6,7 +6,7 @@ public class SnakeSegment extends Space{
     }
 
     public boolean collision(SnakeObject snake){
+        Test.endGame(snake.getLength() * 10);
         return false;
-        // TODO: View.endGame();
     }
 }
