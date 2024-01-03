@@ -9,7 +9,12 @@ public class Controller {
         this.board =board;
     }
     public void changeDir (int dir) {
+        // w-0
+        // a-3
+        // s-2
+        //d-1
         this.board.getSnake().getHead().setDir(dir);
+        this.board.update(); //as only updates when moving.
     }
     
 }
