@@ -15,6 +15,13 @@ abstract class Space {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+
     public void collision(SnakeObject snake){
 
     }

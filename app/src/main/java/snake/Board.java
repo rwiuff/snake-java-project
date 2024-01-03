@@ -4,17 +4,41 @@ import java.awt.Point;
 import java.util.HashSet;
 
 public class Board {
-    private Space[][] board;
+    public Space[][] board;
     private SnakeObject snake;
     private Apple apple;
     private HashSet<Point> emptySpaces = new HashSet<Point>();
 
+    
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                Object obj = board[i][j];
+                if (obj instanceof Apple) {
+                    s += " Apple ";
+                }
+                else if (obj instanceof SnakeSegment) {
+                    s += " Snake ";
+                }
+                else if (obj instanceof SnakeHead){
+                    s += " Head  "; 
+                }
+                else {
+                    s += "   0   ";
+                }
+            }
+            s += "\n";
+        }
+        return s;
+    }
 
     public Board(int n, int m) {
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
-        this.apple = new Apple(1, 2);
-        update();
+        this.apple = new Apple(3, 3);
+        placeSnake();
+        placeApple();
     }
 
     public void update(){
@@ -37,8 +61,8 @@ public class Board {
         }
     }
 
-    public static void placeApple(){
-
+    public void placeApple(){
+        this.board[apple.getX()][apple.getY()] = apple;
     }
     
     public SnakeObject getSnake() {
