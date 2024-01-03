@@ -1,6 +1,9 @@
 package snake;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -17,12 +20,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Welcome to snek");
         int width = Integer.parseInt(dimensions[0]);
         int height = Integer.parseInt(dimensions[1]);
-        View view = new View(width, height);
-        primaryStage.setScene(view.gridScene());
+        // System.out.println("Width: " + width);
+        // System.out.println("Height: " + height);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+        Parent root = loader.load();
+        BoardController boardcontroller = loader.getController();
+        boardcontroller.setDimensions(width, height);
+        primaryStage.setTitle("Welcome to snek");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        System.out.println("Breakpoint");
     }
 
 }

@@ -47,7 +47,6 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-mainClassName = 'snake.Main'
 jar {
     archiveBaseName = 'Snake'
     archiveVersion =  '0.1'
