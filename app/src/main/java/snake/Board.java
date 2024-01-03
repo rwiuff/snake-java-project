@@ -1,14 +1,15 @@
 package snake;
 
 import java.awt.Point;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Board {
     public Space[][] board;
     private SnakeObject snake;
     private Apple apple;
-    private HashSet<Point> emptySpaces = new HashSet<Point>();
-
+    private ArrayList<Point> emptySpaces = new ArrayList<Point>();
+    private Random random=new Random();
     
     public String toString() {
         String s = "";
@@ -36,16 +37,27 @@ public class Board {
     public Board(int n, int m) {
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
-        this.apple = new Apple(3, 3);
-        placeSnake();
+        this.board[this.snake.getHead().getX()][this.snake.getHead().getY()]=this.snake.getHead();
+        this.board[this.snake.getBody().get(0).getX()][this.snake.getBody().get(0).getY()]=snake.getBody().get(0);
+        for (int row =0; row<n;row++) {
+            for (int column=0; column<m;column++) {
+                if (this.board[row][column]==null) {
+                    emptySpaces.add(new Point (row,column));
+                }
+            }
+        }
         placeApple();
+        update();
+
     }
 
     public void update(){
         this.board[snake.getBody().get(0).getX()][snake.getBody().get(0).getY()] = null;
         snake.snakeMove();
         try {
-            this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake);
+            if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
+                this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,this.emptySpaces);
+            };
             
         } catch (Exception e) {
             // pass
@@ -62,7 +74,14 @@ public class Board {
     }
 
     public void placeApple(){
-        this.board[apple.getX()][apple.getY()] = apple;
+        int index=random.nextInt(emptySpaces.size());
+        int x =(int) this.emptySpaces.get(index).getX();
+        int y= (int) this.emptySpaces.get(index).getY();
+        this.board[x][y]=new Apple(x,y);
+
+        
+
+
     }
     
     public SnakeObject getSnake() {

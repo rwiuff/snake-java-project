@@ -25,4 +25,6 @@ abstract class Space {
     public void collision(SnakeObject snake){
 
     }
+
+    
 }
