@@ -25,16 +25,16 @@ public class SnakeHead extends Space{
     public void move() {
         switch (dir) {
             case 0:
-                setY((vSize+(getY()-1))%vSize);
+                setX((vSize+(getX()-1))%vSize);
                 break;
             case 1:
-                setX((getX()+1)%hSize);
+                setY((getY()+1)%hSize);
                 break;
             case 2:
-                setY((getY()+1)%vSize);
+                setX((getX()+1)%vSize);
                 break;
             case 3:
-                setX((hSize+(getX()-1))%hSize);
+                setY((hSize+(getY()-1))%hSize);
                 break;
             default:
                 System.out.println("default");
