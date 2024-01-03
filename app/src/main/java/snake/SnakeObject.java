@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class SnakeObject{
     private SnakeHead head;
     private ArrayList<SnakeSegment> body = new ArrayList<SnakeSegment>();
-    private boolean dead;
     private int length;
     private int boardSize;
 

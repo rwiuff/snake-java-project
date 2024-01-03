@@ -7,7 +7,6 @@ import java.util.Random;
 public class Board {
     public Space[][] board;
     private SnakeObject snake;
-    private Apple apple;
     private ArrayList<Point> emptySpaces = new ArrayList<Point>();
     private Random random=new Random();
     
@@ -78,10 +77,6 @@ public class Board {
         int x =(int) this.emptySpaces.get(index).getX();
         int y= (int) this.emptySpaces.get(index).getY();
         this.board[x][y]=new Apple(x,y);
-
-        
-
-
     }
     
     public SnakeObject getSnake() {
