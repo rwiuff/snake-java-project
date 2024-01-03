@@ -8,7 +8,7 @@ public class SnakeObject{
     private int length;
     private int boardSize;
 
-    public SnakeObject(int hSize, int vSize) {
+    public SnakeObject(int vSize, int hSize) {
         this.head = new SnakeHead(hSize / 2, vSize / 2, hSize, vSize);
         this.body.add(new SnakeSegment(hSize / 2 + 1, vSize / 2));
         this.length = 2;
