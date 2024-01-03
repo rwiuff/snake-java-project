@@ -77,6 +77,7 @@ public class Board {
         int x =(int) this.emptySpaces.get(index).getX();
         int y= (int) this.emptySpaces.get(index).getY();
         this.board[x][y]=new Apple(x,y);
+        this.emptySpaces.remove(new Point(x,y));
     }
     
     public SnakeObject getSnake() {
