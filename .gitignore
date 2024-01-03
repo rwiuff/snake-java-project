@@ -373,7 +373,7 @@ Temporary Items
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
-!.vscode/launch.json
+.vscode/launch.json
 !.vscode/extensions.json
 !.vscode/*.code-snippets
 
@@ -444,3 +444,5 @@ gradle-app.setting
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,latex,java,gradle,macos,windows
 # Ignore Gradle build output directory
 build
+
+.fake
