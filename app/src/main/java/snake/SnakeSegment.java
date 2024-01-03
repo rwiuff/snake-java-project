@@ -5,7 +5,7 @@ public class SnakeSegment extends Space{
         super(x, y);
     }
 
-    public void collision(){
-        
+    public void collision(SnakeObject snake){
+        // TODO: View.endGame();
     }
 }

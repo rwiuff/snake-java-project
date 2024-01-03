@@ -13,7 +13,6 @@ public class SnakeObject{
         this.head = new SnakeHead(hSize / 2, vSize / 2, hSize, vSize);
         this.body.add(new SnakeSegment(hSize / 2 + 1, vSize / 2));
         this.length = 2;
-        this.dead = false;
         this.boardSize = hSize*vSize;
     }
 
@@ -29,13 +28,6 @@ public class SnakeObject{
         body.add(new SnakeSegment(head.getX(), head.getY()));
         head.move();
         body.remove(0);
-    }
-
-    public boolean getDead(){
-        return dead;
-    }
-    public void setDead(boolean dead){
-        this.dead = dead;
     }
 
     public SnakeHead getHead(){

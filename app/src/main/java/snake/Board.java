@@ -18,14 +18,28 @@ public class Board {
     }
 
     public void update(){
+        this.board[snake.getBody().get(0).getX()][snake.getBody().get(0).getY()] = null;
+        snake.snakeMove();
         try {
-            this.board[this.snake.getHead().getX()][this.snake.getHead().getY()].collision(this.snake);
+            this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake);
             
         } catch (Exception e) {
-            // TODO: handle exception
+            // pass
+        }
+        placeSnake();
+        // TODO: draw snake in view
+    }
+
+    public void placeSnake(){
+        this.board[snake.getHead().getX()][snake.getHead().getY()] = snake.getHead();
+        for (SnakeSegment snakeBody : snake.getBody()) {
+            this.board[snakeBody.getX()][snakeBody.getY()] = snakeBody;
         }
     }
 
+    public static void placeApple(){
+
+    }
     
     public SnakeObject getSnake() {
         return this.snake;

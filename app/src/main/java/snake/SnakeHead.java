@@ -26,7 +26,7 @@ public class SnakeHead extends Space{
     public void move() {
         switch (dir) {
             case 0:
-                this.x = ((vSize+(y-1))%vSize);
+                this.y = ((vSize+(y-1))%vSize);
             case 1:
                 this.x = ((x+1)%hSize);
             case 2:

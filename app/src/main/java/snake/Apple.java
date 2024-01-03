@@ -8,6 +8,7 @@ public class Apple extends Space{
 
     
     public void collision(SnakeObject snake) {
-
+        snake.extend();
+        Board.placeApple();
     }
 }
