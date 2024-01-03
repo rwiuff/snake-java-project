@@ -8,9 +8,10 @@ public class Main extends Application {
     public static String[] dimensions;
 
     public static void main(String[] args) {
-        System.out.println("Width: " + args[0]);
-        System.out.println("Height: " + args[1]);
-        dimensions = args;
+        System.out.println(args.length);
+        dimensions = args.length < 2 ? new String[] { "15", "15" } : args;
+        System.out.println("Width: " + dimensions[0]);
+        System.out.println("Height: " + dimensions[1]);
         launch(args);
     }
 
