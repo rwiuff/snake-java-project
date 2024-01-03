@@ -12,7 +12,6 @@ public class Main extends Application {
         dimensions = args.length < 2 ? new String[] { "15", "15" } : args;
         System.out.println("Width: " + dimensions[0]);
         System.out.println("Height: " + dimensions[1]);
-        dimensions = args;
         launch(args);
     }
 
