@@ -49,10 +49,10 @@ tasks.named('test') {
 
 mainClassName = 'snake.Main'
 jar {
-    archiveBaseName = 'AdvancedReversi'
-    archiveVersion =  '1.4.1'
+    archiveBaseName = 'Snake'
+    archiveVersion =  '0.1'
     manifest {
-        attributes 'Main-Class': 'advancedreversi.launcher'
+        attributes 'Main-Class': 'snake.launcher'
     }
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
