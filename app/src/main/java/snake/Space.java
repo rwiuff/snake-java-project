@@ -1,4 +1,6 @@
 package snake;
+import java.awt.Point;
+import java.util.ArrayList;
 abstract class Space {
     private int x;
     private int y;
@@ -15,7 +17,10 @@ abstract class Space {
         return y;
     }
 
-    public void collision(SnakeObject snake){
+    public boolean collision(SnakeObject snake){ //boolean only used for apple
+        return false;
+    }
+    public void placeNew(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
 
     }
 }
