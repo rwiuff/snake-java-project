@@ -5,10 +5,34 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Board {
-    private Space[][] board;
+    public Space[][] board;
     private SnakeObject snake;
+    private Apple apple;
     private ArrayList<Point> emptySpaces = new ArrayList<Point>();
     private Random random=new Random();
+    
+    public String toString() {
+        String s = "";
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                Object obj = board[i][j];
+                if (obj instanceof Apple) {
+                    s += " Apple ";
+                }
+                else if (obj instanceof SnakeSegment) {
+                    s += " Snake ";
+                }
+                else if (obj instanceof SnakeHead){
+                    s += " Head  "; 
+                }
+                else {
+                    s += "   0   ";
+                }
+            }
+            s += "\n";
+        }
+        return s;
+    }
 
     public Board(int n, int m) {
         this.board = new Space[n][m];

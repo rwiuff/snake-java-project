@@ -17,10 +17,20 @@ abstract class Space {
         return y;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+    public void setY(int y) {
+        this.y = y;
+    }
+
+
     public boolean collision(SnakeObject snake){ //boolean only used for apple
         return false;
     }
     public void placeNew(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
 
     }
+
+
 }
