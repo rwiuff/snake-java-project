@@ -26,7 +26,8 @@ public class Board {
         }
     }
 
-    public void collision(int x, int y, SnakeObject snek){
-
+    
+    public SnakeObject getSnake() {
+        return this.snake;
     }
 }
