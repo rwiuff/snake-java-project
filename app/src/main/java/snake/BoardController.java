@@ -1,46 +1,39 @@
 package snake;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class BoardController implements Initializable {
+public class BoardController {
+    // @FXML
+    // private GridPane gridPane;
     @FXML
-    private GridPane gridPane;
-
-    private Rectangle rectangle;
+    private BorderPane borderPane;
 
     private int width;
     private int height;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        gridPane = new GridPane();
-        rectangle = new Rectangle();
-        // r.setX(50);
-        // r.setY(50);
-        rectangle.setWidth(10);
-        rectangle.setHeight(10);
-        // r.setArcWidth(20);
-        // r.setArcHeight(20);
-        rectangle.setFill(Color.OLIVE);
-        rectangle.setStroke(Color.WHEAT);
+    public void setDimensions(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setGrid() {
+        GridPane gridPane = new GridPane();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
+                Rectangle rectangle = new Rectangle();
+                rectangle.setWidth(10);
+                rectangle.setHeight(10);
+                rectangle.setFill(Color.OLIVE);
+                rectangle.setStroke(Color.WHEAT);
                 gridPane.add(rectangle, i, j);
             }
         }
         gridPane.setAlignment(Pos.CENTER);
-    }
-
-    public void setDimensions(int width, int height) {
-        this.width = width;
-        this.height = height;
+        borderPane.setCenter(gridPane);
     }
 }
