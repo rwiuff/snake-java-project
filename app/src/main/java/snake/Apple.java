@@ -18,6 +18,7 @@ public class Apple extends Space{
     public void placeNew (Space[][] spaceArray,ArrayList<Point> emptySpaces) {
         int index =new Random().nextInt(emptySpaces.size());
         Point place = emptySpaces.get(index);
+        emptySpaces.remove(place);
         spaceArray[(int)place.getX()][(int)place.getY()]=new Apple((int)place.getX(),(int)place.getY());
     }
 }
