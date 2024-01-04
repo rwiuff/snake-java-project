@@ -34,8 +34,9 @@ public class Board {
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
         this.board[this.snake.getHead().getX()][this.snake.getHead().getY()] = this.snake.getHead();
-        this.board[this.snake.getBody().get(0).getX()][this.snake.getBody().get(0).getY()] = snake.getBody().get(0);
+        this.board[this.snake.getTail().getX()][this.snake.getTail().getY()] = snake.getTail();
         
+
         for (int row = 0; row < n; row++) {
             for (int column = 0; column < m; column++) {
                 if (this.board[row][column] == null) {
@@ -48,18 +49,19 @@ public class Board {
     }
 
     public void update() {
-        SnakeSegment tail = this.snake.getBody().get(0); // -2 as length includes head,
+        SnakeSegment tail = this.snake.getTail(); // -2 as length includes head,
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
         int tempLength = this.snake.getLength(); // while body list does not
         this.emptySpaces.add(tailPlace); // objects can be placed
         snake.snakeMove();
+        this.emptySpaces.remove(new Point (this.snake.getTail().getX(),this.snake.getTail().getY()));
         this.emptySpaces.remove(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
         try {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
-                if (this.snake.getLength() != tempLength) {
-                    this.emptySpaces.remove(tailPlace);
-                }
+                //if (this.snake.getLength() != tempLength) {
+                //    this.emptySpaces.remove(tailPlace);
+                //}
                 this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces);
 
             }

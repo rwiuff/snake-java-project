@@ -40,5 +40,7 @@ public class SnakeObject{
     public ArrayList<SnakeSegment> getBody(){
         return body;
     }
-
+    public SnakeSegment getTail(){
+        return this.body.get(0);
+    }
 }
