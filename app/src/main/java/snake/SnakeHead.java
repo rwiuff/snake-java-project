@@ -8,7 +8,7 @@ public class SnakeHead extends Space{
     private int hSize;
 
     
-    public SnakeHead (int x, int y, int vSize, int hSize) {
+    public SnakeHead (int x, int y, int hSize, int vSize) {
         super(x, y);
         this.dir=3;
         this.hSize = hSize;

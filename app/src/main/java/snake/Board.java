@@ -35,6 +35,9 @@ public class Board {
         this.snake = new SnakeObject(n, m);
         this.board[this.snake.getHead().getX()][this.snake.getHead().getY()] = this.snake.getHead();
         this.board[this.snake.getBody().get(0).getX()][this.snake.getBody().get(0).getY()] = snake.getBody().get(0);
+        this.board[this.snake.getBody().get(1).getX()][this.snake.getBody().get(1).getY()] = snake.getBody().get(1);
+        this.board[this.snake.getBody().get(2).getX()][this.snake.getBody().get(2).getY()] = snake.getBody().get(2);
+
         for (int row = 0; row < n; row++) {
             for (int column = 0; column < m; column++) {
                 if (this.board[row][column] == null) {
@@ -43,7 +46,6 @@ public class Board {
             }
         }
         placeApple();
-        update();
 
     }
 
