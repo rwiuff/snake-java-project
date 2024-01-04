@@ -48,8 +48,8 @@ public class Board {
     }
 
     public void update() {
-        this.board[snake.getBody().get(0).getX()][snake.getBody().get(0).getY()] = null;
-        SnakeSegment tail = this.snake.getBody().get(this.getSnake().getLength() - 2); // -2 as length includes head,
+        SnakeSegment tail = this.snake.getBody().get(0); // -2 as length includes head,
+        this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
         int tempLength = this.snake.getLength(); // while body list does not
         this.emptySpaces.add(tailPlace); // objects can be placed

@@ -1,9 +1,12 @@
 package snake;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -27,6 +30,7 @@ public class Main extends Application {
         boardcontroller.setDimensions(width, height);
         primaryStage.setTitle("Welcome to snek");
         Scene scene = new Scene(root);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::handleKey);
         primaryStage.setScene(scene);
         boardcontroller.run(scene);
         primaryStage.show();
