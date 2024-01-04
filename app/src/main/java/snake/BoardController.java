@@ -1,7 +1,10 @@
 package snake;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -17,8 +20,36 @@ public class BoardController {
     private int height;
     private Board board;
 
-    public void initialise() {
+    public void run(Scene scene) {
         this.board = new Board(width, height);
+        drawBoard();
+        scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                int direction;
+                switch (event.getCharacter()) {
+                    case "w":
+                        direction = 0;
+                        break;
+                    case "d":
+                        direction = 1;
+                        break;
+                    case "s":
+                        direction = 2;
+                        break;
+                    case "a":
+                        direction = 3;
+                        break;
+                    default:
+                        System.out.println("Invalid keypress");
+                        direction = 4;
+                        break;
+                }
+                board.getSnake().getHead().setDir(direction);
+                board.update();
+                drawBoard();
+            }
+        });
     }
 
     public void setDimensions(int width, int height) {
@@ -46,4 +77,5 @@ public class BoardController {
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
     }
+
 }
