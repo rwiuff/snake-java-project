@@ -28,7 +28,9 @@ public class Main extends Application {
         Parent root = loader.load();
         BoardController boardcontroller = loader.getController();
         boardcontroller.setDimensions(width, height);
-        boardcontroller.setGrid();
+        boardcontroller.initialise();
+        boardcontroller.drawBoard();
+        
         primaryStage.setTitle("Welcome to snek");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

@@ -1,5 +1,7 @@
 package snake;
 
+import javafx.scene.paint.Color;
+
 public class SnakeHead extends Space{
     private int dir;
     private int vSize;
@@ -11,6 +13,7 @@ public class SnakeHead extends Space{
         this.dir=3;
         this.hSize = hSize;
         this.vSize = vSize;
+        setColor(Color.BLACK);
     }
 
     public int getDir() {

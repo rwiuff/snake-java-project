@@ -1,13 +1,19 @@
 package snake;
+
+import javafx.scene.paint.Color;
 import java.awt.Point;
 import java.util.ArrayList;
+
+
 abstract class Space {
     private int x;
     private int y;
+    private Color color = Color.GRAY;
 
     public Space(int x, int y){
         this.x = x;
         this.y = y;
+        
     }
 
     public int getX() {
@@ -30,6 +36,13 @@ abstract class Space {
     }
     public void placeNew(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
 
+    }
+
+    public Color getColor(){
+        return this.color;
+    }
+    public void setColor(Color color){
+        this.color = color;
     }
 
 

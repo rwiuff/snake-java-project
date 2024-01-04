@@ -1,6 +1,7 @@
 package snake;
 
-public class SnakeSegment extends Space{
+public class SnakeSegment extends Space{    
+
     public SnakeSegment (int x, int y) {
         super(x, y);
     }

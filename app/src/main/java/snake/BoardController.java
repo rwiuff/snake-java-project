@@ -15,20 +15,30 @@ public class BoardController {
 
     private int width;
     private int height;
+    private Board board;
+
+    public void initialise() {
+        this.board = new Board(width, height);
+    }
 
     public void setDimensions(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public void setGrid() {
+    public void drawBoard() {
         GridPane gridPane = new GridPane();
+        Space[][] spaces = board.getBoard();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Rectangle rectangle = new Rectangle();
                 rectangle.setWidth(10);
                 rectangle.setHeight(10);
-                rectangle.setFill(Color.OLIVE);
+                try {
+                    rectangle.setFill(spaces[j][i].getColor());
+                } catch (NullPointerException e) {
+                    rectangle.setFill(Color.OLIVE);
+                }
                 rectangle.setStroke(Color.WHEAT);
                 gridPane.add(rectangle, i, j);
             }
