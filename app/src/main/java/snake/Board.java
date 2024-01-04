@@ -52,7 +52,11 @@ public class Board {
 
     public void update(){
         this.board[snake.getBody().get(0).getX()][snake.getBody().get(0).getY()] = null;
+        SnakeSegment tail = this.snake.getBody().get(this.getSnake().getLength()-2); //-2 as length includes head, while body list does not
+        this.emptySpaces.add(new Point (tail.getX(),tail.getY())); //objects can be placed
         snake.snakeMove();
+        this.emptySpaces.remove(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
+        
         try {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
                 this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,this.emptySpaces);
@@ -62,7 +66,7 @@ public class Board {
             // pass
         }
         placeSnake();
-        // TODO: draw snake in view
+        // TODO: Draw array in view
     }
 
     public void placeSnake(){
