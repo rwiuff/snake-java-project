@@ -11,7 +11,7 @@ public class Main extends Application {
     public static String[] dimensions;
 
     public static void main(String[] args) {
-        System.out.println(args.length);
+        // System.out.println(args.length);
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
         System.out.println("Width: " + dimensions[0]);
         System.out.println("Height: " + dimensions[1]);
@@ -33,15 +33,15 @@ public class Main extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-        double x = primaryStage.getX();
-        double y = primaryStage.getY();
-        double xD = primaryStage.getWidth();
-        double yD = primaryStage.getHeight();
+        // double x = primaryStage.getX();
+        // double y = primaryStage.getY();
+        // double xD = primaryStage.getWidth();
+        // double yD = primaryStage.getHeight();
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
         // primaryStage.setX(x + ((xD - primaryStage.getWidth()) / 2));
         // primaryStage.setY(y + ((yD - primaryStage.getHeight()) / 2));
-        System.out.println("Breakpoint");
+        // System.out.println("Breakpoint");
     }
 
 }
