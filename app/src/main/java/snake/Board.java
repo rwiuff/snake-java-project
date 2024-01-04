@@ -3,28 +3,26 @@ package snake;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
+import javafx.scene.paint.Color;
 
 public class Board {
     public Space[][] board;
     private SnakeObject snake;
     private ArrayList<Point> emptySpaces = new ArrayList<Point>();
-    private Random random=new Random();
-    
-    public String toString() {
+    private Random random = new Random();
+
+    public String toString() { // remove in final
         String s = "";
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
                 Object obj = board[i][j];
                 if (obj instanceof Apple) {
                     s += " Apple ";
-                }
-                else if (obj instanceof SnakeSegment) {
+                } else if (obj instanceof SnakeSegment) {
                     s += " Snake ";
-                }
-                else if (obj instanceof SnakeHead){
-                    s += " Head  "; 
-                }
-                else {
+                } else if (obj instanceof SnakeHead) {
+                    s += " Head  ";
+                } else {
                     s += "   0   ";
                 }
             }
@@ -36,12 +34,12 @@ public class Board {
     public Board(int n, int m) {
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
-        this.board[this.snake.getHead().getX()][this.snake.getHead().getY()]=this.snake.getHead();
-        this.board[this.snake.getBody().get(0).getX()][this.snake.getBody().get(0).getY()]=snake.getBody().get(0);
-        for (int row =0; row<n;row++) {
-            for (int column=0; column<m;column++) {
-                if (this.board[row][column]==null) {
-                    emptySpaces.add(new Point (row,column));
+        this.board[this.snake.getHead().getX()][this.snake.getHead().getY()] = this.snake.getHead();
+        this.board[this.snake.getBody().get(0).getX()][this.snake.getBody().get(0).getY()] = snake.getBody().get(0);
+        for (int row = 0; row < n; row++) {
+            for (int column = 0; column < m; column++) {
+                if (this.board[row][column] == null) {
+                    emptySpaces.add(new Point(row, column));
                 }
             }
         }
@@ -50,41 +48,50 @@ public class Board {
 
     }
 
-    public void update(){
+    public void update() {
         this.board[snake.getBody().get(0).getX()][snake.getBody().get(0).getY()] = null;
-        SnakeSegment tail = this.snake.getBody().get(this.getSnake().getLength()-2); //-2 as length includes head, while body list does not
-        this.emptySpaces.add(new Point (tail.getX(),tail.getY())); //objects can be placed
+        SnakeSegment tail = this.snake.getBody().get(this.getSnake().getLength() - 2); // -2 as length includes head,
+        Point tailPlace = new Point(tail.getX(),tail.getY()); 
+        int tempLength=this.snake.getLength();                                                   // while body list does not
+        this.emptySpaces.add(tailPlace); // objects can be placed
         snake.snakeMove();
         this.emptySpaces.remove(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
-        
+
         try {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
-                this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,this.emptySpaces);
-            };
-            
+                if (this.snake.getLength()!=tempLength) { 
+                    this.emptySpaces.remove(tailPlace);
+                }
+                this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces);
+                
+            }
+            ;
+
         } catch (Exception e) {
             // pass
         }
         placeSnake();
-        // TODO: Draw array in view
     }
 
-    public void placeSnake(){
+    public void placeSnake() {
         this.board[snake.getHead().getX()][snake.getHead().getY()] = snake.getHead();
         for (SnakeSegment snakeBody : snake.getBody()) {
             this.board[snakeBody.getX()][snakeBody.getY()] = snakeBody;
         }
     }
 
-    public void placeApple(){
-        int index=random.nextInt(emptySpaces.size());
-        int x =(int) this.emptySpaces.get(index).getX();
-        int y= (int) this.emptySpaces.get(index).getY();
-        this.board[x][y]=new Apple(x,y);
-        this.emptySpaces.remove(new Point(x,y));
+    public void placeApple() {
+        int index = random.nextInt(emptySpaces.size());
+        int x = (int) this.emptySpaces.get(index).getX();
+        int y = (int) this.emptySpaces.get(index).getY();
+        this.board[x][y] = new Apple(x, y);
+        this.emptySpaces.remove(new Point(x, y));
     }
-    
+
     public SnakeObject getSnake() {
         return this.snake;
+    }
+    public Space[][] getBoard() {
+        return this.board;
     }
 }
