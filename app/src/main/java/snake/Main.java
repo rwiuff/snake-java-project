@@ -12,7 +12,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         System.out.println(args.length);
-        dimensions = args.length < 2 ? new String[] { "15", "15" } : args;
+        dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
         System.out.println("Width: " + dimensions[0]);
         System.out.println("Height: " + dimensions[1]);
         launch(args);
@@ -28,9 +28,19 @@ public class Main extends Application {
         Parent root = loader.load();
         BoardController boardcontroller = loader.getController();
         boardcontroller.setDimensions(width, height);
+        boardcontroller.setGrid();
         primaryStage.setTitle("Welcome to snek");
-        primaryStage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
         primaryStage.show();
+        double x = primaryStage.getX();
+        double y = primaryStage.getY();
+        double xD = primaryStage.getWidth();
+        double yD = primaryStage.getHeight();
+        primaryStage.sizeToScene();
+        primaryStage.centerOnScreen();
+        // primaryStage.setX(x + ((xD - primaryStage.getWidth()) / 2));
+        // primaryStage.setY(y + ((yD - primaryStage.getHeight()) / 2));
         System.out.println("Breakpoint");
     }
 
