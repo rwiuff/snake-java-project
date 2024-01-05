@@ -56,13 +56,7 @@ public class Board {
         
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
-        try { //index out of bound if no apple has been picked up
-            if (!(tail.equals(this.snake.getBody().get(1)))) {
-            changesMap.put("Empty",tailPlace);
-        }
-        }  catch (IndexOutOfBoundsException e) {
-            //do nothing
-        }
+        changesMap.put("Empty",tailPlace);
         changesMap.put("OldHead",new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
         
         this.emptySpaces.add(tailPlace); // objects can be placed

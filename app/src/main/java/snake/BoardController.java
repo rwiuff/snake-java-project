@@ -68,6 +68,8 @@ public class BoardController {
                 rectangle.setFill(Color.BLACK);
             } else if (key.equals("Empty")) {
                 rectangle.setFill(Color.OLIVE);
+            } else if (key.equals("OldHead")) {
+                rectangle.setFill(Color.GRAY);
             }
         }
     }
