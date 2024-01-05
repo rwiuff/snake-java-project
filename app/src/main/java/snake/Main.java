@@ -33,5 +33,7 @@ public class Main extends Application {
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
-
+    public static void gameOver() {
+        System.out.println("Game Over");
+    }
 }
