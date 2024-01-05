@@ -60,14 +60,14 @@ public class BoardController {
         Set<String> keys = updateFields.keySet();
         for (String key : keys) {
             Point updateObject = updateFields.get(key);
-            String lookup = "#" + (int)updateObject.getY() + ";" + (int)updateObject.getX();
+            String lookup = "#" + (int) updateObject.getY() + ";" + (int) updateObject.getX();
             Rectangle rectangle = (Rectangle) scene.lookup(lookup);
             if (key.equals("Apple")) {
                 rectangle.setFill(Color.RED);
             } else if (key.equals("Head")) {
                 rectangle.setFill(Color.BLACK);
-            } else if (key.equals("Tail")) {
-                rectangle.setFill(Color.GRAY);
+            } else if (key.equals("Empty")) {
+                rectangle.setFill(Color.OLIVE);
             }
         }
     }
