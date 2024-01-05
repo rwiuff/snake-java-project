@@ -29,21 +29,22 @@ public class BoardController {
     private Board board;
     private HashMap<String, Point> changesMap;
     private Timeline realtime;
-    private int direction;
+    private int direction=3;
     private int tick = 1;
     private int prevDir;
     public void run(Scene scene) {
         this.board = new Board(width, height);
         this.realtime = new Timeline(
-                new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
+                new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        board.getSnake().getHead().setDir(direction);
-                        if (tick++ % 30 == 0) {
+                        int tempDirection=direction;
+                        board.getSnake().getHead().setDir(tempDirection);
+                        if (tick++ % 150 == 0) {
                             changesMap = board.update();
                             reDrawBoard(scene, changesMap);
                             tick = 1;
-                            prevDir=direction;
+                            prevDir=tempDirection;
                         }
                         
 
@@ -128,6 +129,14 @@ public class BoardController {
         }
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
+    }
+    public void retry() {
+        this.board=new Board(this.board.getBoard().length,this.board.getBoard()[0].length);
+        this.direction=3;
+        this.prevDir=3;
+        this.tick=1;
+        this.realtime.play();
+        
     }
 
 }
