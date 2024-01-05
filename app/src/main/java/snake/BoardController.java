@@ -35,12 +35,12 @@ public class BoardController {
     public void run(Scene scene) {
         this.board = new Board(width, height);
         this.realtime = new Timeline(
-                new KeyFrame(Duration.millis(1), new EventHandler<ActionEvent>() {
+                new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         int tempDirection=direction;
                         board.getSnake().getHead().setDir(tempDirection);
-                        if (tick++ % 150 == 0) {
+                        if (tick++ % 6 == 0) {
                             changesMap = board.update();
                             reDrawBoard(scene, changesMap);
                             tick = 1;
