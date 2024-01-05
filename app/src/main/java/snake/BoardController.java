@@ -70,6 +70,8 @@ public class BoardController {
                 rectangle.setFill(Color.OLIVE);
             } else if (key.equals("OldHead")) {
                 rectangle.setFill(Color.GRAY);
+            } else if (key.equals("GhostTail")){
+                rectangle.setFill(Color.GRAY);
             }
         }
     }
