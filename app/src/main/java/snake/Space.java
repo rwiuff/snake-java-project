@@ -34,8 +34,8 @@ abstract class Space {
     public boolean collision(SnakeObject snake){ //boolean only used for apple
         return false;
     }
-    public void placeNew(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
-
+    public Point placeNew(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
+        return new Point();
     }
 
     public Color getColor(){
