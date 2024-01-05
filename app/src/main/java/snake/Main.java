@@ -30,15 +30,10 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         boardcontroller.run(scene);
         primaryStage.show();
-        // double x = primaryStage.getX();
-        // double y = primaryStage.getY();
-        // double xD = primaryStage.getWidth();
-        // double yD = primaryStage.getHeight();
+        double xD = primaryStage.getWidth();
+        double yD = primaryStage.getHeight();
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
-        // primaryStage.setX(x + ((xD - primaryStage.getWidth()) / 2));
-        // primaryStage.setY(y + ((yD - primaryStage.getHeight()) / 2));
-
     }
 
 }
