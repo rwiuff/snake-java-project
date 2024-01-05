@@ -30,8 +30,6 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         boardcontroller.run(scene);
         primaryStage.show();
-        double xD = primaryStage.getWidth();
-        double yD = primaryStage.getHeight();
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
