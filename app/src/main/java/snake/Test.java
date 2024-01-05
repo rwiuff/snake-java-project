@@ -12,6 +12,7 @@ public class Test {
             board.getSnake().getHead().setDir(dir);
             board.update();
         }
+        
     }
 
     public static void endGame(int score){

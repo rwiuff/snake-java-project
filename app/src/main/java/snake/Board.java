@@ -51,15 +51,19 @@ public class Board {
     }
 
     public HashMap<String,Point> update() {
-        HashMap<String,Point> changesMap = new <HashMap>();
+        HashMap<String,Point> changesMap = new HashMap<String,Point>();
         SnakeSegment tail = this.snake.getTail(); // -2 as length includes head,
         
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
-        if (!(tail.equals(this.snake.getBody().get(1)))) {
+        try {
+            if (!(tail.equals(this.snake.getBody().get(1)))) {
             changesMap.put("Tail",tailPlace);
         }
-        int tempLength = this.snake.getLength(); // while body list does not
+        }  catch (IndexOutOfBoundsException e) {
+            //do nothing
+        }
+        
         this.emptySpaces.add(tailPlace); // objects can be placed
         snake.snakeMove();
         Point headPlace = new Point(this.snake.getHead().getX(), this.snake.getHead().getY());
@@ -70,7 +74,7 @@ public class Board {
         try {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) { //true if has to place a new of its type
               
-                changes.put("Apple",this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces));
+                changesMap.put("Apple",this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces));
 
             }
             ;

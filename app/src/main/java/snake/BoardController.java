@@ -19,7 +19,7 @@ public class BoardController {
     private int width;
     private int height;
     private Board board;
-
+    
     public void run(Scene scene) {
         this.board = new Board(width, height);
         drawBoard();
@@ -56,15 +56,14 @@ public class BoardController {
         this.width = width;
         this.height = height;
     }
-
     public void drawBoard() {
         GridPane gridPane = new GridPane();
         Space[][] spaces = board.getBoard();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Rectangle rectangle = new Rectangle();
-                rectangle.setWidth(10);
-                rectangle.setHeight(10);
+                rectangle.setWidth(20); //change size of squares here
+                rectangle.setHeight(20); //change size of squares here
                 try {
                     rectangle.setFill(spaces[j][i].getColor());
                 } catch (NullPointerException e) {
@@ -77,5 +76,6 @@ public class BoardController {
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
     }
+    
 
 }
