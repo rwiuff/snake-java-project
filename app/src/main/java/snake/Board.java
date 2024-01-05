@@ -63,6 +63,7 @@ public class Board {
         }  catch (IndexOutOfBoundsException e) {
             //do nothing
         }
+        changesMap.put("OldHead",new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
         
         this.emptySpaces.add(tailPlace); // objects can be placed
         snake.snakeMove();
