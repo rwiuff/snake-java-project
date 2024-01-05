@@ -3,7 +3,6 @@ package snake;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Border;
@@ -11,9 +10,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import java.util.HashMap;
-import java.util.Set;
-import java.awt.Point;
 
 public class BoardController {
     // @FXML
@@ -77,28 +73,26 @@ public class BoardController {
         this.width = width;
         this.height = height;
     }
-
     public void drawBoard() {
         GridPane gridPane = new GridPane();
-        gridPane.setId("gridPane");
         Space[][] spaces = board.getBoard();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Rectangle rectangle = new Rectangle();
-                rectangle.setWidth(10);
-                rectangle.setHeight(10);
+                rectangle.setWidth(20); //change size of squares here
+                rectangle.setHeight(20); //change size of squares here
                 try {
                     rectangle.setFill(spaces[j][i].getColor());
                 } catch (NullPointerException e) {
                     rectangle.setFill(Color.OLIVE);
                 }
                 rectangle.setStroke(Color.WHEAT);
-                rectangle.setId(i + ";" + j);
                 gridPane.add(rectangle, i, j);
             }
         }
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
     }
+    
 
 }
