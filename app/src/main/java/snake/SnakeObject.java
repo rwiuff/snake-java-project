@@ -7,11 +7,11 @@ public class SnakeObject{
     private ArrayList<SnakeSegment> body = new ArrayList<SnakeSegment>();
     private int length;
     private int boardSize;
-
+     
     public SnakeObject(int vSize, int hSize) {
         this.head = new SnakeHead(vSize / 2, hSize / 2, hSize, vSize);
         this.body.add(new SnakeSegment(vSize / 2, (hSize / 2)+1));
-        this.length = 2;
+                this.length = 2;
         this.boardSize = hSize*vSize;
     }
 
@@ -43,4 +43,4 @@ public class SnakeObject{
     public SnakeSegment getTail(){
         return this.body.get(0);
     }
-}
+    }
