@@ -38,7 +38,7 @@ public class Main extends Application {
         primaryStage.centerOnScreen();
         // primaryStage.setX(x + ((xD - primaryStage.getWidth()) / 2));
         // primaryStage.setY(y + ((yD - primaryStage.getHeight()) / 2));
-        System.out.println("Breakpoint");
+        // System.out.println("Breakpoint");
 
     }
 
