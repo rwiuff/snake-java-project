@@ -1,5 +1,8 @@
 package snake;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -9,6 +12,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
 import java.util.HashMap;
 import java.util.Set;
 import java.awt.Point;
@@ -23,35 +28,57 @@ public class BoardController {
     private int height;
     private Board board;
     private HashMap<String, Point> changesMap;
-
+    private Timeline realtime;
+    private int direction;
+    private int tick = 1;
+    private int prevDir;
     public void run(Scene scene) {
         this.board = new Board(width, height);
+        this.realtime = new Timeline(
+                new KeyFrame(Duration.millis(5), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        board.getSnake().getHead().setDir(direction);
+                        if (tick++ % 30 == 0) {
+                            changesMap = board.update();
+                            reDrawBoard(scene, changesMap);
+                            tick = 1;
+                            prevDir=direction;
+                        }
+                        
+
+                    }
+                }));
+        this.realtime.setCycleCount(Timeline.INDEFINITE);
+        this.realtime.play();
         drawBoard();
         scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                int direction;
+
                 switch (event.getCharacter()) {
                     case "w":
-                        direction = 0;
+                        if (prevDir%2!=0) {
+                            direction = 0;}
                         break;
                     case "d":
-                        direction = 1;
+                        if (prevDir%2!=1) {
+                            direction = 1;}
                         break;
                     case "s":
-                        direction = 2;
+                        if (prevDir%2!=0) {
+                        direction = 2;}
                         break;
                     case "a":
-                        direction = 3;
+                        if (prevDir%2!=1) {
+                            direction = 3;}
                         break;
                     default:
                         System.out.println("Invalid keypress");
                         direction = 4;
                         break;
                 }
-                board.getSnake().getHead().setDir(direction);
-                changesMap = board.update();
-                reDrawBoard(scene, changesMap);
+
             }
         });
     }
@@ -70,7 +97,7 @@ public class BoardController {
                 rectangle.setFill(Color.OLIVE);
             } else if (key.equals("OldHead")) {
                 rectangle.setFill(Color.GRAY);
-            } else if (key.equals("GhostTail")){
+            } else if (key.equals("GhostTail")) {
                 rectangle.setFill(Color.GRAY);
             }
         }
