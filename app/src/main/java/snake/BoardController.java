@@ -14,8 +14,6 @@ import java.util.Set;
 import java.awt.Point;
 
 public class BoardController {
-    // @FXML
-    // private GridPane gridPane;
     @FXML
     private BorderPane borderPane;
 
@@ -23,6 +21,8 @@ public class BoardController {
     private int height;
     private Board board;
     private HashMap<String, Point> changesMap;
+
+    private int fieldsize;
 
     public void run(Scene scene) {
         this.board = new Board(width, height);
@@ -76,9 +76,10 @@ public class BoardController {
         }
     }
 
-    public void setDimensions(int width, int height) {
+    public void setDimensions(int width, int height, int fieldSize) {
         this.width = width;
         this.height = height;
+        this.fieldsize = fieldSize;
     }
 
     public void drawBoard() {
@@ -87,8 +88,8 @@ public class BoardController {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Rectangle rectangle = new Rectangle();
-                rectangle.setWidth(20); // change size of squares here
-                rectangle.setHeight(20); // change size of squares here
+                rectangle.setWidth(fieldsize); // change size of squares here
+                rectangle.setHeight(fieldsize); // change size of squares here
                 try {
                     rectangle.setFill(spaces[j][i].getColor());
                 } catch (NullPointerException e) {
