@@ -9,8 +9,8 @@ public class SnakeObject{
     private int boardSize;
 
     public SnakeObject(int vSize, int hSize) {
-        this.head = new SnakeHead(hSize / 2, vSize / 2, hSize, vSize);
-        this.body.add(new SnakeSegment(hSize / 2, vSize / 2+1));
+        this.head = new SnakeHead(vSize / 2, hSize / 2, hSize, vSize);
+        this.body.add(new SnakeSegment(vSize / 2, (hSize / 2)+1));
         this.length = 2;
         this.boardSize = hSize*vSize;
     }
@@ -40,5 +40,7 @@ public class SnakeObject{
     public ArrayList<SnakeSegment> getBody(){
         return body;
     }
-
+    public SnakeSegment getTail(){
+        return this.body.get(0);
+    }
 }
