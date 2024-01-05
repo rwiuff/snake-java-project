@@ -68,7 +68,7 @@ public class Board {
         
         try {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) { //true if has to place a new of its type
-              
+                this.emptySpaces.remove(new point(this.snake.getGhostTail().getX(),this.snake.getGhostTail().getY()));
                 changesMap.put("Apple",this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces));
 
             }
