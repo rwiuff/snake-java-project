@@ -60,13 +60,14 @@ public class BoardController {
         Set<String> keys = updateFields.keySet();
         for (String key : keys) {
             Point updateObject = updateFields.get(key);
-            Rectangle newRectangle = (Rectangle) scene.lookup("#" + updateObject.getX() + ";" + updateObject.getY());
+            String lookup = "#" + (int)updateObject.getY() + ";" + (int)updateObject.getX();
+            Rectangle rectangle = (Rectangle) scene.lookup(lookup);
             if (key.equals("Apple")) {
-                newRectangle.setFill(Color.RED);
+                rectangle.setFill(Color.RED);
             } else if (key.equals("Head")) {
-                newRectangle.setFill(Color.BLACK);
+                rectangle.setFill(Color.BLACK);
             } else if (key.equals("Tail")) {
-                newRectangle.setFill(Color.GRAY);
+                rectangle.setFill(Color.GRAY);
             }
         }
     }
@@ -75,26 +76,27 @@ public class BoardController {
         this.width = width;
         this.height = height;
     }
+
     public void drawBoard() {
         GridPane gridPane = new GridPane();
         Space[][] spaces = board.getBoard();
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 Rectangle rectangle = new Rectangle();
-                rectangle.setWidth(20); //change size of squares here
-                rectangle.setHeight(20); //change size of squares here
+                rectangle.setWidth(20); // change size of squares here
+                rectangle.setHeight(20); // change size of squares here
                 try {
                     rectangle.setFill(spaces[j][i].getColor());
                 } catch (NullPointerException e) {
                     rectangle.setFill(Color.OLIVE);
                 }
                 rectangle.setStroke(Color.WHEAT);
+                rectangle.setId(i + ";" + j);
                 gridPane.add(rectangle, i, j);
             }
         }
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
     }
-    
 
 }
