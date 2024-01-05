@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -23,12 +24,9 @@ public class BoardController {
     private int width;
     private int height;
     private Board board;
-    private HashMap<String,Point> updateFields;
-
-    private Scene scene;
+    private HashMap<String, Point> changesMap;
 
     public void run(Scene scene) {
-        this.scene = scene;
         this.board = new Board(width, height);
         drawBoard();
         scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
@@ -54,17 +52,24 @@ public class BoardController {
                         break;
                 }
                 board.getSnake().getHead().setDir(direction);
-                updateFields = board.update();
-                reDrawBoard(updateFields);
+                changesMap = board.update();
+                reDrawBoard(scene, changesMap);
             }
         });
     }
 
-    protected void reDrawBoard(HashMap<String,Point> updateFields) {
-        Node grid = borderPane.lookup("gridPane");
+    protected void reDrawBoard(Scene scene, HashMap<String, Point> updateFields) {
         Set<String> keys = updateFields.keySet();
         for (String key : keys) {
             Point updateObject = updateFields.get(key);
+            Rectangle newRectangle = (Rectangle) scene.lookup("#" + updateObject.getX() + ";" + updateObject.getY());
+            if (key.equals("Apple")) {
+                newRectangle.setFill(Color.RED);
+            } else if (key.equals("Head")) {
+                newRectangle.setFill(Color.BLACK);
+            } else if (key.equals("Tail")) {
+                newRectangle.setFill(Color.GRAY);
+            }
         }
     }
 

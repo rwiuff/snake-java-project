@@ -51,7 +51,7 @@ public class Board {
     }
 
     public HashMap<String,Point> update() {
-        HashMap<String,Point> changesMap = new <HashMap>();
+        HashMap<String,Point> changesMap = new HashMap<String,Point>();
         SnakeSegment tail = this.snake.getTail(); // -2 as length includes head,
         
         this.board[tail.getX()][tail.getY()] = null;
@@ -70,7 +70,7 @@ public class Board {
         try {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) { //true if has to place a new of its type
               
-                changes.put("Apple",this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces));
+                changesMap.put("Apple",this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces));
 
             }
             ;
