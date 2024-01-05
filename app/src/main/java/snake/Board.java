@@ -56,7 +56,7 @@ public class Board {
         
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
-        try {
+        try { //index out of bound if no apple has been picked up
             if (!(tail.equals(this.snake.getBody().get(1)))) {
             changesMap.put("Tail",tailPlace);
         }
