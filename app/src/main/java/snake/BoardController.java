@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -31,6 +32,15 @@ public class BoardController {
     private Button pauseBtn;
     @FXML
     private Button menuBtn;
+    @FXML
+    private Label scoreLabel;
+
+    private Color appleColor = Color.CRIMSON;
+    private Color headColor = Color.ORANGERED;
+    private Color snakeColor = Color.DARKORANGE;
+    private Color fieldColor = Color.SILVER;
+    private Color wallColor = Color.SEASHELL;
+
     private int width;
     private int height;
     private Board board;
@@ -58,12 +68,12 @@ public class BoardController {
     }
 
     @FXML
-    private void pause(ActionEvent event){
+    private void pause(ActionEvent event) {
         System.out.println("pause");
     }
 
     @FXML
-    private void menu(ActionEvent event){
+    private void menu(ActionEvent event) {
         System.out.println("menu");
     }
 
@@ -87,7 +97,7 @@ public class BoardController {
                 }));
         this.realtime.setCycleCount(Timeline.INDEFINITE);
         this.realtime.play();
-                scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+        scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
 
@@ -154,15 +164,17 @@ public class BoardController {
             String lookup = "#" + (int) updateObject.getY() + ";" + (int) updateObject.getX();
             Rectangle rectangle = (Rectangle) scene.lookup(lookup);
             if (key.equals("Apple")) {
-                rectangle.setFill(Color.RED);
+                rectangle.setFill(appleColor);
             } else if (key.equals("Head")) {
-                rectangle.setFill(Color.BLACK);
+                rectangle.setFill(headColor);
             } else if (key.equals("Empty")) {
-                rectangle.setFill(Color.OLIVE);
+                rectangle.setFill(fieldColor);
             } else if (key.equals("OldHead")) {
-                rectangle.setFill(Color.GRAY);
+                rectangle.setFill(snakeColor);
             } else if (key.equals("GhostTail")) {
-                rectangle.setFill(Color.GRAY);
+                rectangle.setFill(snakeColor);
+            } else if (key.equals("Score")) {
+                scoreLabel.setText("Score: " + (int) updateObject.getX());
             }
         }
     }
@@ -184,9 +196,9 @@ public class BoardController {
                 try {
                     rectangle.setFill(spaces[j][i].getColor());
                 } catch (NullPointerException e) {
-                    rectangle.setFill(Color.OLIVE);
+                    rectangle.setFill(fieldColor);
                 }
-                rectangle.setStroke(Color.OLIVE);
+                rectangle.setStroke(fieldColor);
                 rectangle.setId(i + ";" + j);
                 gridPane.add(rectangle, i, j);
             }

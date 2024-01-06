@@ -1,13 +1,13 @@
 package snake;
 
-public class SnakeSegment extends Space{    
+public class SnakeSegment extends Space {
 
-    public SnakeSegment (int x, int y) {
+    public SnakeSegment(int x, int y) {
         super(x, y);
     }
 
-    public boolean collision(SnakeObject snake){
-        Main.gameOver((snake.getLength()-2) * 10);
+    public boolean collision(SnakeObject snake) {
+        Main.gameOver((snake.getLength() - 2) * 10);
         return false;
     }
 }

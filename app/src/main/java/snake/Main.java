@@ -94,8 +94,9 @@ public class Main extends Application {
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
+
     public static void gameOver(int score) {
         System.out.println("Game Over");
-        System.out.println("Score: "+ score);
+        System.out.println("Score: " + score);
     }
 }

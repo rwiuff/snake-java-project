@@ -50,7 +50,8 @@ public class SnakeObject {
     public SnakeSegment getGhostTail() {
         return this.ghostTail;
     }
+
     public void setWinCondition(int snakeSize) {
-        this.winCondition=snakeSize;
+        this.winCondition = snakeSize;
     }
 }
