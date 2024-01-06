@@ -134,7 +134,7 @@ public class BoardController {
                             }
                         }
                         break;
-                    case "SPACE":
+                    case "space":
                         System.out.println("SPACE");
                         break;
                     default:
