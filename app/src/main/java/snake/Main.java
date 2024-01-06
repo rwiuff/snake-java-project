@@ -2,8 +2,10 @@ package snake;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -24,16 +26,25 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
         Parent root = loader.load();
         BoardController boardcontroller = loader.getController();
-        boardcontroller.setDimensions(width, height);
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        int screenWidth = (int) screenBounds.getWidth();
+        int screenHeight = (int) screenBounds.getHeight();
+        int fieldSize = 20;
+        if ((width * 20) > screenWidth*0.7 || (height * 20) > screenHeight*0.7) {
+            int heightSize = (int) (screenWidth*0.7 / width);
+            int widthSize = (int) (screenHeight*0.7 / height);
+            fieldSize = height > widthSize ? widthSize : heightSize;
+        }
+        boardcontroller.setDimensions(width, height, fieldSize);
         primaryStage.setTitle("Welcome to snek");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         boardcontroller.run(scene);
         primaryStage.show();
-        double xD = primaryStage.getWidth();
-        double yD = primaryStage.getHeight();
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
-
+    public static void gameOver() {
+        System.out.println("Game Over");
+    }
 }
