@@ -38,9 +38,10 @@ public class BoardController {
     private Timeline realtime;
     private int direction = 3;
     private int tick = 1;
-    private int prevDir;
     private int fieldsize;
     private Scene scene;
+    private int prevDir = 3;
+    private int[] queue = { 3, 3 };
 
     @FXML
     private void startGame(ActionEvent event) {
@@ -71,42 +72,66 @@ public class BoardController {
                 new KeyFrame(Duration.millis(25), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        int tempDirection = direction;
-                        board.getSnake().getHead().setDir(tempDirection);
+                        int direction = queue[0];
+                        board.getSnake().getHead().setDir(direction);
                         if (tick++ % 6 == 0) {
                             changesMap = board.update();
                             reDrawBoard(scene, changesMap);
                             tick = 1;
-                            prevDir = tempDirection;
+                            queue[0] = queue[1]; // direction input is used
+                            prevDir = direction;
+
                         }
 
                     }
                 }));
         this.realtime.setCycleCount(Timeline.INDEFINITE);
         this.realtime.play();
-        scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+                scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
 
                 switch (event.getCharacter()) {
                     case "w":
-                        if (prevDir % 2 != 0) {
-                            direction = 0;
+                        if (queue[1] % 2 != 0) {
+                            queue[0] = queue[1];
+                            queue[1] = 0;
+                            if (queue[0] == prevDir) {
+                                queue[0] = queue[1];
+                                queue[1] = 0;
+                            }
                         }
+
                         break;
                     case "d":
-                        if (prevDir % 2 != 1) {
-                            direction = 1;
+                        if (queue[1] % 2 != 1) {
+                            queue[0] = queue[1];
+                            queue[1] = 1;
+                            if (queue[0] == prevDir) {
+                                queue[0] = queue[1];
+                                queue[1] = 1;
+                            }
                         }
                         break;
                     case "s":
-                        if (prevDir % 2 != 0) {
-                            direction = 2;
+                        if (queue[1] % 2 != 0) {
+                            queue[0] = queue[1];
+                            queue[1] = 2;
+                            if (queue[0] == prevDir) {
+                                queue[0] = queue[1];
+                                queue[1] = 2;
+                            }
+
                         }
                         break;
                     case "a":
-                        if (prevDir % 2 != 1) {
-                            direction = 3;
+                        if (queue[1] % 2 != 1) {
+                            queue[0] = queue[1];
+                            queue[1] = 3;
+                            if (queue[0] == prevDir) {
+                                queue[0] = queue[1];
+                                queue[1] = 3;
+                            }
                         }
                         break;
                     case "SPACE":
@@ -172,8 +197,8 @@ public class BoardController {
 
     public void retry() {
         this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length);
-        this.direction = 3;
-        this.prevDir = 3;
+        queue[0] = 3;
+        queue[1] = 3;
         this.tick = 1;
         this.realtime.play();
 
