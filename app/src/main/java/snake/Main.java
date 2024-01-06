@@ -21,6 +21,8 @@ public class Main extends Application {
     public static String[] dimensions;
     public static int width;
     public static int height;
+    private static FXMLLoader menuLoader;
+    private static FXMLLoader boardLoader;
     private static MainMenuController mainMenuController;
     private static BoardController boardController;
     private static Parent mainMenuRoot;
@@ -28,6 +30,7 @@ public class Main extends Application {
     private static Image icon16;
     private static Image icon32;
     private static Image icon64;
+    private static Scene scene;
 
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
@@ -41,9 +44,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         populateResources();
+        scene = new Scene(mainMenuRoot);
         primaryStage.setTitle("Snek");
         primaryStage.getIcons().addAll(icon16, icon32, icon64);
-        primaryStage.setScene(new Scene(mainMenuRoot));
+        mainMenu(primaryStage);
         primaryStage.setResizable(false);
         primaryStage.show();
         primaryStage.sizeToScene();
@@ -54,17 +58,29 @@ public class Main extends Application {
         });
     }
 
+    public static void mainMenu(Stage primaryStage) {
+        scene.setRoot(mainMenuRoot);
+        primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
+        primaryStage.centerOnScreen();
+    }
+
     private void populateResources() throws IOException {
-        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+        menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
         mainMenuController = menuLoader.getController();
         mainMenuRoot = menuLoader.load();
-        FXMLLoader boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+        boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
         boardRoot = boardLoader.load();
         boardController = boardLoader.getController();
         icon16 = new Image(getClass().getResourceAsStream("/icons/icon16.png"));
         icon32 = new Image(getClass().getResourceAsStream("/icons/icon32.png"));
         icon64 = new Image(getClass().getResourceAsStream("/icons/icon64.png"));
+    }
 
+    private static void boardReLoad() throws IOException {
+        boardLoader = new FXMLLoader(Main.class.getResource("/fxml/Board.fxml"));
+        boardRoot = boardLoader.load();
+        boardController = boardLoader.getController();
     }
 
     public static void exit(Stage primaryStage) {
@@ -77,7 +93,7 @@ public class Main extends Application {
             Platform.exit();
     }
 
-    public static void startGame(Stage primaryStage) {
+    public static void startGame(Stage primaryStage) throws IOException {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         int screenWidth = (int) screenBounds.getWidth();
         int screenHeight = (int) screenBounds.getHeight();
@@ -87,8 +103,9 @@ public class Main extends Application {
             int widthSize = (int) (screenHeight * 0.7 / height);
             fieldSize = height > widthSize ? widthSize : heightSize;
         }
+        boardReLoad();
+        scene.setRoot(boardRoot);
         boardController.setDimensions(width, height, fieldSize);
-        Scene scene = new Scene(boardRoot);
         boardController.setup(scene);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
@@ -96,7 +113,6 @@ public class Main extends Application {
     }
 
     public static void gameOver(int score) {
-        System.out.println("Game Over");
-        System.out.println("Score: " + score);
+        boardController.gameOver(score);
     }
 }

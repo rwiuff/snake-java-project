@@ -6,8 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
@@ -15,10 +19,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.Set;
+
 import java.awt.Point;
 
 public class BoardController {
@@ -28,6 +36,8 @@ public class BoardController {
     private Button startGameBtn;
     @FXML
     private VBox instructionOverlay;
+    @FXML
+    private VBox pauseOverlay;
     @FXML
     private Button pauseBtn;
     @FXML
@@ -56,6 +66,7 @@ public class BoardController {
     @FXML
     private void startGame(ActionEvent event) {
         instructionOverlay.setVisible(false);
+        pauseOverlay.setVisible(false);
         borderPane.setVisible(true);
         run(scene);
     }
@@ -64,17 +75,40 @@ public class BoardController {
         this.scene = scene;
         this.board = new Board(width, height);
         drawBoard();
+        pauseOverlay.setVisible(false);
         borderPane.setVisible(false);
+        pauseBtn.setFocusTraversable(false);
+        menuBtn.setFocusTraversable(false);
     }
 
     @FXML
     private void pause(ActionEvent event) {
-        System.out.println("pause");
+        pauseOverlay.setVisible(true);
+        borderPane.setVisible(false);
+        realtime.pause();
+    }
+
+    @FXML
+    private void continueGame(ActionEvent event) {
+        pauseOverlay.setVisible(false);
+        borderPane.setVisible(true);
+        realtime.play();
     }
 
     @FXML
     private void menu(ActionEvent event) {
-        System.out.println("menu");
+        realtime.pause();
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText("You are about to exit yur game");
+        alert.setContentText("Progress will be lost");
+        alert.setTitle("Go to main menu");
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            Main.mainMenu(stage);
+        } else {
+            realtime.play();
+        }
     }
 
     public void run(Scene scene) {
@@ -144,8 +178,8 @@ public class BoardController {
                             }
                         }
                         break;
-                    case "space":
-                        System.out.println("SPACE");
+                    case " ":
+                        pause(null);
                         break;
                     default:
                         System.out.println("Invalid keypress");
@@ -209,11 +243,42 @@ public class BoardController {
 
     public void retry() {
         this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length);
+        drawBoard();
         queue[0] = 3;
         queue[1] = 3;
         this.tick = 1;
         this.realtime.play();
 
+    }
+
+    public void gameOver(int score) {
+        realtime.stop();
+        Stage stage = (Stage) scene.getWindow();
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Game Over");
+        String headerText = board.getSnake().getLength() == width * height ? "You won!\n" : "Game Over\n";
+        headerText = headerText + "Your score is: " + score;
+        alert.setHeaderText(headerText);
+        alert.setContentText("What now?");
+
+        ButtonType retryButton = new ButtonType("Retry");
+        ButtonType mainButton = new ButtonType("Main Menu");
+        ButtonType exitButton = new ButtonType("Exit game");
+
+        alert.getButtonTypes().setAll(retryButton, mainButton, exitButton);
+
+        alert.setOnCloseRequest(e -> {
+            ButtonType result = alert.getResult();
+            if (result == retryButton) {
+                retry();
+            } else if (result == mainButton) {
+                Main.mainMenu(stage);
+            } else if (result == exitButton) {
+                Main.exit(stage);
+            }
+        });
+
+        alert.show();
     }
 
 }
