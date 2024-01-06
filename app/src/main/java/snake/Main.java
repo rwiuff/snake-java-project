@@ -46,6 +46,7 @@ public class Main extends Application {
         populateResources();
         scene = new Scene(mainMenuRoot);
         primaryStage.setTitle("Snek");
+        primaryStage.setFullScreenExitHint("Press F11 to exit fullscreen");
         primaryStage.getIcons().addAll(icon16, icon32, icon64);
         mainMenu(primaryStage);
         primaryStage.setResizable(false);

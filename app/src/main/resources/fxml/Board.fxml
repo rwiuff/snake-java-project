@@ -37,9 +37,20 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
+                  <Label text="Pause: SPACE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label text="Fullscreen: F11">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                   <GridPane>
                     <columnConstraints>
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -48,12 +59,17 @@
                      <children>
                         <Button fx:id="continueBtn" mnemonicParsing="false" onAction="#continueGame" text="Continue">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="18.0" />
                            </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#menu" text="Main Menu" GridPane.columnIndex="1">
+                        <Button fx:id="retryBtn" mnemonicParsing="false" onAction="#retry" text="Restart" textAlignment="CENTER" GridPane.columnIndex="1">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#menu" text="Main Menu" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="18.0" />
                            </font>
                         </Button>
                      </children>
@@ -78,10 +94,15 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label text="Pause with Space">
+                  <Label text="Pause: SPACE">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
+                  <Label text="Fullscreen: F11">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
                   <Button fx:id="startGameBtn" mnemonicParsing="false" onAction="#startGame" text="Start Game">
                      <font>
                         <Font size="24.0" />

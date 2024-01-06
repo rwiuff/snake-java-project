@@ -2,10 +2,13 @@ package snake;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -19,12 +22,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.HashMap;
-import java.util.Optional;
 import java.util.Set;
 
 import java.awt.Point;
@@ -101,7 +103,7 @@ public class BoardController {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         Alert alert = new Alert(AlertType.CONFIRMATION);
-        alert.setHeaderText("You are about to exit yur game");
+        alert.setHeaderText("You are about to exit your game");
         alert.setContentText("Progress will be lost");
         alert.setTitle("Go to main menu");
         if (alert.showAndWait().get() == ButtonType.OK) {
@@ -131,12 +133,11 @@ public class BoardController {
                 }));
         this.realtime.setCycleCount(Timeline.INDEFINITE);
         this.realtime.play();
-        scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-
-                switch (event.getCharacter()) {
-                    case "w":
+                switch (event.getCode()) {
+                    case W:
                         if (queue[1] % 2 != 0) {
                             queue[0] = queue[1];
                             queue[1] = 0;
@@ -147,7 +148,7 @@ public class BoardController {
                         }
 
                         break;
-                    case "d":
+                    case D:
                         if (queue[1] % 2 != 1) {
                             queue[0] = queue[1];
                             queue[1] = 1;
@@ -157,7 +158,7 @@ public class BoardController {
                             }
                         }
                         break;
-                    case "s":
+                    case S:
                         if (queue[1] % 2 != 0) {
                             queue[0] = queue[1];
                             queue[1] = 2;
@@ -168,7 +169,7 @@ public class BoardController {
 
                         }
                         break;
-                    case "a":
+                    case A:
                         if (queue[1] % 2 != 1) {
                             queue[0] = queue[1];
                             queue[1] = 3;
@@ -178,8 +179,13 @@ public class BoardController {
                             }
                         }
                         break;
-                    case " ":
+                    case SPACE:
                         pause(null);
+                        break;
+                    case F11:
+                        Stage stage = (Stage) scene.getWindow();
+                        stage.setFullScreen(!stage.isFullScreen());
+                        // resize(stage);
                         break;
                     default:
                         System.out.println("Invalid keypress");
@@ -189,6 +195,32 @@ public class BoardController {
 
             }
         });
+        Stage stage = (Stage) scene.getWindow();
+        stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+                    Boolean newValue) {
+                resize(stage);
+            }
+        });
+    }
+
+    private void resize(Stage stage) {
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        int screenWidth = (int) screenBounds.getWidth();
+        int screenHeight = (int) screenBounds.getHeight();
+        if (stage.isFullScreen()) {
+            int newWidth = screenWidth / width;
+            int newHeight = screenHeight / height;
+            fieldsize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth * 0.9);
+        } else {
+            if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
+                int heightSize = (int) (screenWidth * 0.7 / width);
+                int widthSize = (int) (screenHeight * 0.7 / height);
+                fieldsize = height > widthSize ? widthSize : heightSize;
+            }
+        }
+        drawBoard();
     }
 
     protected void reDrawBoard(Scene scene, HashMap<String, Point> updateFields) {
@@ -239,6 +271,19 @@ public class BoardController {
         }
         gridPane.setAlignment(Pos.CENTER);
         borderPane.setCenter(gridPane);
+    }
+
+    @FXML
+    public void retry(ActionEvent event) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setHeaderText("You are about to restart your game");
+        alert.setContentText("Progress will be lost");
+        alert.setTitle("Restart game");
+        if (alert.showAndWait().get() == ButtonType.OK) {
+            pauseOverlay.setVisible(false);
+            borderPane.setVisible(true);
+            retry();
+        }
     }
 
     public void retry() {
