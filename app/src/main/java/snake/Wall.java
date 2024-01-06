@@ -6,7 +6,7 @@ public class Wall extends Space{
     }
 
     public boolean collision(SnakeObject snake) {
-        Main.gameOver();
+        Main.gameOver((snake.getLength()-2)*10);
         return false;
     }
     

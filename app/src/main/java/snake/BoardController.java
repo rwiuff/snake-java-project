@@ -84,7 +84,7 @@ public class BoardController {
                         if (queue[1] % 2 != 0) {
                             queue[0] = queue[1];
                             queue[1] = 2;
-                            if (queue[0]==prevDir) {
+                            if (queue[0] == prevDir) {
                                 queue[0] = queue[1];
                                 queue[1] = 2;
                             }
@@ -95,7 +95,7 @@ public class BoardController {
                         if (queue[1] % 2 != 1) {
                             queue[0] = queue[1];
                             queue[1] = 3;
-                            if (queue[0]==prevDir) {
+                            if (queue[0] == prevDir) {
                                 queue[0] = queue[1];
                                 queue[1] = 3;
                             }
