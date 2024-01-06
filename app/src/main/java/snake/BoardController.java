@@ -52,6 +52,7 @@ public class BoardController {
         this.realtime.setCycleCount(Timeline.INDEFINITE);
         this.realtime.play();
         drawBoard();
+        
         scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
