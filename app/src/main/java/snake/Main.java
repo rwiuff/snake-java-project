@@ -89,9 +89,8 @@ public class Main extends Application {
         }
         boardController.setDimensions(width, height, fieldSize);
         Scene scene = new Scene(boardRoot);
+        boardController.setup(scene);
         primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
-        boardController.run(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
