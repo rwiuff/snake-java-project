@@ -149,7 +149,7 @@ public class BoardController {
                 } catch (NullPointerException e) {
                     rectangle.setFill(Color.OLIVE);
                 }
-                rectangle.setStroke(Color.WHEAT);
+                rectangle.setStroke(Color.OLIVE);
                 rectangle.setId(i + ";" + j);
                 gridPane.add(rectangle, i, j);
             }
