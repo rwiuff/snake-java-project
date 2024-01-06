@@ -21,6 +21,13 @@ public class Main extends Application {
     public static String[] dimensions;
     public static int width;
     public static int height;
+    private static MainMenuController mainMenuController;
+    private static BoardController boardController;
+    private static Parent mainMenuRoot;
+    private static Parent boardRoot;
+    private static Image icon16;
+    private static Image icon32;
+    private static Image icon64;
 
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
@@ -32,16 +39,11 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-        Parent root = loader.load();
+    public void start(Stage primaryStage) throws IOException {
+        populateResources();
         primaryStage.setTitle("Snek");
-        primaryStage.getIcons().addAll(
-                new Image(getClass().getResourceAsStream("/icons/icon16.png")),
-                new Image(getClass().getResourceAsStream("/icons/icon32.png")),
-                new Image(getClass().getResourceAsStream("/icons/icon64.png")));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+        primaryStage.getIcons().addAll(icon16, icon32, icon64);
+        primaryStage.setScene(new Scene(mainMenuRoot));
         primaryStage.setResizable(false);
         primaryStage.show();
         primaryStage.sizeToScene();
@@ -52,21 +54,30 @@ public class Main extends Application {
         });
     }
 
+    private void populateResources() throws IOException {
+        FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+        mainMenuController = menuLoader.getController();
+        mainMenuRoot = menuLoader.load();
+        FXMLLoader boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+        boardRoot = boardLoader.load();
+        boardController = boardLoader.getController();
+        icon16 = new Image(getClass().getResourceAsStream("/icons/icon16.png"));
+        icon32 = new Image(getClass().getResourceAsStream("/icons/icon32.png"));
+        icon64 = new Image(getClass().getResourceAsStream("/icons/icon64.png"));
+
+    }
+
     public static void exit(Stage primaryStage) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to exit Snake?");
         alert.setHeaderText("You are about to exit Snake");
         alert.setTitle("Exit snake");
-        ImageView graphic = new ImageView(new Image(Main.class.getResourceAsStream("/icons/icon32.png")));
-        alert.setGraphic(graphic);
+        alert.setGraphic(new ImageView(icon32));
         if (alert.showAndWait().get() == ButtonType.OK)
             Platform.exit();
     }
 
-    public static void startGame(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/fxml/Board.fxml"));
-        Parent root = loader.load();
-        BoardController boardcontroller = loader.getController();
+    public static void startGame(Stage primaryStage) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         int screenWidth = (int) screenBounds.getWidth();
         int screenHeight = (int) screenBounds.getHeight();
@@ -76,11 +87,11 @@ public class Main extends Application {
             int widthSize = (int) (screenHeight * 0.7 / height);
             fieldSize = height > widthSize ? widthSize : heightSize;
         }
-        boardcontroller.setDimensions(width, height, fieldSize);
-        Scene scene = new Scene(root);
+        boardController.setDimensions(width, height, fieldSize);
+        Scene scene = new Scene(boardRoot);
         primaryStage.setScene(scene);
         primaryStage.setResizable(true);
-        boardcontroller.run(scene);
+        boardController.run(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
