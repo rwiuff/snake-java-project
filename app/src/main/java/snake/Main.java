@@ -63,8 +63,8 @@ public class Main extends Application {
             Platform.exit();
     }
 
-    public void startGame(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+    public static void startGame(Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Main.class.getResource("/fxml/Board.fxml"));
         Parent root = loader.load();
         BoardController boardcontroller = loader.getController();
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
