@@ -46,7 +46,7 @@ public class BoardController {
                         break;
                     default:
                         System.out.println("Invalid keypress");
-                        direction = 4;
+                        direction=5;
                         break;
                 }
                 board.getSnake().getHead().setDir(direction);
