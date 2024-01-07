@@ -2,13 +2,10 @@ package snake;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -22,7 +19,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -182,11 +178,10 @@ public class BoardController {
                     case SPACE:
                         pause(null);
                         break;
-                    case F11:
-                        Stage stage = (Stage) scene.getWindow();
-                        stage.setFullScreen(!stage.isFullScreen());
-                        // resize(stage);
-                        break;
+                    // case F11:
+                    //     Stage stage = (Stage) scene.getWindow();
+                    //     stage.setFullScreen(!stage.isFullScreen());
+                    //     break;
                     default:
                         System.out.println("Invalid keypress");
                         direction = 4;
@@ -195,32 +190,14 @@ public class BoardController {
 
             }
         });
-        Stage stage = (Stage) scene.getWindow();
-        stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-                    Boolean newValue) {
-                resize(stage);
-            }
-        });
-    }
-
-    private void resize(Stage stage) {
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-        int screenWidth = (int) screenBounds.getWidth();
-        int screenHeight = (int) screenBounds.getHeight();
-        if (stage.isFullScreen()) {
-            int newWidth = screenWidth / width;
-            int newHeight = screenHeight / height;
-            fieldsize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth * 0.9);
-        } else {
-            if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
-                int heightSize = (int) (screenWidth * 0.7 / width);
-                int widthSize = (int) (screenHeight * 0.7 / height);
-                fieldsize = height > widthSize ? widthSize : heightSize;
-            }
-        }
-        drawBoard();
+        // Stage stage = (Stage) scene.getWindow();
+        // stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
+        //     @Override
+        //     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+        //             Boolean newValue) {
+        //         Main.resize(stage);
+        //     }
+        // });
     }
 
     protected void reDrawBoard(Scene scene, HashMap<String, Point> updateFields) {

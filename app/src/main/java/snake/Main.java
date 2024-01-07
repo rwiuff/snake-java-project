@@ -46,7 +46,7 @@ public class Main extends Application {
         populateResources();
         scene = new Scene(mainMenuRoot);
         primaryStage.setTitle("Snek");
-        primaryStage.setFullScreenExitHint("Press F11 to exit fullscreen");
+        // primaryStage.setFullScreenExitHint("Press F11 to exit fullscreen");
         primaryStage.getIcons().addAll(icon16, icon32, icon64);
         mainMenu(primaryStage);
         primaryStage.setResizable(false);
@@ -116,4 +116,24 @@ public class Main extends Application {
     public static void gameOver(int score) {
         boardController.gameOver(score);
     }
+
+    // public static void resize(Stage stage) {
+    //     Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+    //     int screenWidth = (int) screenBounds.getWidth();
+    //     int screenHeight = (int) screenBounds.getHeight();
+    //     if (stage.isFullScreen()) {
+    //         int newWidth = screenWidth / width;
+    //         int newHeight = screenHeight / height;
+    //         fieldSize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth * 0.9);
+    //     } else {
+    //         if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
+    //             int heightSize = (int) (screenWidth * 0.7 / width);
+    //             int widthSize = (int) (screenHeight * 0.7 / height);
+    //             fieldSize = height > widthSize ? widthSize : heightSize;
+    //         }
+    //     }
+    //     boardController.setDimensions(screenWidth, width, height);
+    //     boardController.drawBoard();
+    // }
+
 }
