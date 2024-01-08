@@ -22,7 +22,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.HashMap;
 import java.util.Set;
 
 import java.awt.Point;
@@ -43,16 +42,16 @@ public class BoardController {
     @FXML
     private Label scoreLabel;
 
-    private Color appleColor = Color.CRIMSON;
-    private Color headColor = Color.ORANGERED;
-    private Color snakeColor = Color.DARKORANGE;
+    // private Color appleColor = Color.CRIMSON;
+    // private Color headColor = Color.ORANGERED;
+    // private Color snakeColor = Color.DARKORANGE;
     private Color fieldColor = Color.SILVER;
-    private Color wallColor = Color.SEASHELL;
+    // private Color wallColor = Color.SEASHELL;
 
     private int width;
     private int height;
     private Board board;
-    private HashMap<String, Point> changesMap;
+    private Set<Point> changesMap;
     private Timeline realtime;
     private int direction = 3;
     private int tick = 1;
@@ -209,26 +208,19 @@ public class BoardController {
         // });
     }
 
-    protected void reDrawBoard(Scene scene, HashMap<String, Point> updateFields) {
-        Set<String> keys = updateFields.keySet();
-        for (String key : keys) {
-            Point updateObject = updateFields.get(key);
-            String lookup = "#" + (int) updateObject.getY() + ";" + (int) updateObject.getX();
+    protected void reDrawBoard(Scene scene, Set<Point> changesMap) {
+        for (Point point : changesMap) {
+            int y = (int) point.getY();
+            int x = (int) point.getX();
+            String lookup = "#" + y + ";" + x;
             Rectangle rectangle = (Rectangle) scene.lookup(lookup);
-            if (key.equals("Apple")) {
-                rectangle.setFill(appleColor);
-            } else if (key.equals("Head")) {
-                rectangle.setFill(headColor);
-            } else if (key.equals("Empty")) {
+            try {
+                rectangle.setFill(board.board[x][y].getColor());
+            } catch (NullPointerException e) {
                 rectangle.setFill(fieldColor);
-            } else if (key.equals("OldHead")) {
-                rectangle.setFill(snakeColor);
-            } else if (key.equals("GhostTail")) {
-                rectangle.setFill(snakeColor);
-            } else if (key.equals("Score")) {
-                scoreLabel.setText("Score: " + (int) updateObject.getX());
             }
         }
+        scoreLabel.setText("Score: " + ((board.getSnake().getLength()) - 2) * 10);
     }
 
     public void setDimensions(int width, int height, int fieldSize) {

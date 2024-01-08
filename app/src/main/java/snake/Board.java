@@ -2,8 +2,9 @@ package snake;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class Board {
     public Space[][] board;
@@ -28,19 +29,19 @@ public class Board {
         System.out.println();
     }
 
-    public HashMap<String, Point> update() {
-        HashMap<String, Point> changesMap = new HashMap<String, Point>();
+    public Set<Point> update() {
+        Set<Point> changesMap = new HashSet<Point>();
         SnakeSegment tail = this.snake.getTail(); // -2 as length includes head,
 
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
-        changesMap.put("Empty", tailPlace);
-        changesMap.put("OldHead", new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
+        changesMap.add(tailPlace);
+        changesMap.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
 
         this.emptySpaces.add(tailPlace); // objects can be placed
         snake.snakeMove();
         Point headPlace = new Point(this.snake.getHead().getX(), this.snake.getHead().getY());
-        changesMap.put("Head", headPlace);
+        changesMap.add(headPlace);
         this.emptySpaces.remove(new Point(this.snake.getTail().getX(), this.snake.getTail().getY()));
         this.emptySpaces.remove(headPlace);
 
@@ -49,8 +50,8 @@ public class Board {
                                                                                                // new of its type
                 Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(), this.snake.getGhostTail().getY());
                 this.emptySpaces.remove(ghostTailPlace);
-                changesMap.put("GhostTail", ghostTailPlace);
-                changesMap.put("Apple", this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,
+                changesMap.add(ghostTailPlace);
+                changesMap.add(this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,
                         this.emptySpaces));
 
             }
@@ -60,7 +61,6 @@ public class Board {
             // pass
         }
         placeSnake();
-        changesMap.put("Score", new Point((this.snake.getLength() - 2) * 10, 0));
         return changesMap;
     }
 
