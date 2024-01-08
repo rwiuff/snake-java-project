@@ -70,7 +70,7 @@ public class BoardController {
 
     public void setup(Scene scene) {
         this.scene = scene;
-        this.board = new Board(height, width, true, true);
+        this.board = new Board(height, width, false, true);
         drawBoard();
         pauseOverlay.setVisible(false);
         borderPane.setVisible(false);
@@ -110,7 +110,7 @@ public class BoardController {
 
     public void run(Scene scene) {
         this.realtime = new Timeline(
-                new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
+                new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         int direction = queue[0];

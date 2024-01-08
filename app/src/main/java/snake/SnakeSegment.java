@@ -6,8 +6,8 @@ public class SnakeSegment extends Space {
         super(x, y);
     }
 
-    public boolean collision(SnakeObject snake) {
+    public int collision(SnakeObject snake) {
         Main.gameOver((snake.getLength() - 2) * 10);
-        return false;
+        return 0;
     }
 }

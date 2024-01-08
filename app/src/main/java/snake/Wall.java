@@ -3,15 +3,17 @@ package snake;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.util.Random;
+import javafx.scene.paint.Color;
 public class Wall extends Space{
 
     public Wall(int x, int y) {
         super(x,y);
+        setColor(Color.BLACK);
     }
 
-    public boolean collision(SnakeObject snake) {
+    public int collision(SnakeObject snake) {
         Main.gameOver((snake.getLength() - 2) * 10);
-        return false;
+        return 0;
     }
     public static void placeWalls(Space[][] spaceArray, ArrayList<Point> emptySpaces) {
         Random rng = new Random();

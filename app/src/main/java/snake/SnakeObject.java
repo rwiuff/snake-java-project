@@ -18,7 +18,9 @@ public class SnakeObject {
     }
 
     public void extend() {
+        System.out.println("extending snake"+(this.length-2));
         this.body.add(0, this.ghostTail);
+        
         this.length++;
         if (this.winCondition == length) {
             System.out.println("You win!");
