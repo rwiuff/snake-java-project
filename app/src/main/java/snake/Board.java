@@ -15,8 +15,7 @@ public class Board {
     public Board(int n, int m) {
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
-        this.board[this.snake.getHead().getX()][this.snake.getHead().getY()] = this.snake.getHead();
-        this.board[this.snake.getTail().getX()][this.snake.getTail().getY()] = snake.getTail();
+        placeSnake();
 
         for (int row = 0; row < n; row++) {
             for (int column = 0; column < m; column++) {
