@@ -10,13 +10,13 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.Set;
-import java.util.HashSet;
 import java.awt.Point;
 
 public class BoardController {
     @FXML
     private BorderPane borderPane;
 
+    private Color fieldColor = Color.OLIVE;
     private int width;
     private int height;
     private Board board;
