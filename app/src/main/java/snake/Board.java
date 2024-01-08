@@ -12,7 +12,7 @@ public class Board {
     private ArrayList<Point> emptySpaces = new ArrayList<Point>();
     private Random random = new Random();
 
-    public Board(int n, int m) {
+    public Board(int n, int m, boolean wallsON, boolean warpsOn) {
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
         placeSnake();
@@ -65,9 +65,8 @@ public class Board {
 
     public void placeSnake() {
         this.board[snake.getHead().getX()][snake.getHead().getY()] = snake.getHead();
-        for (SnakeSegment snakeBody : snake.getBody()) {
-            this.board[snakeBody.getX()][snakeBody.getY()] = snakeBody;
-        }
+        SnakeSegment newSnakeSegment = snake.getBody().get(snake.getBody().size()-1);
+        this.board[newSnakeSegment.getX()][newSnakeSegment.getY()] = newSnakeSegment;
     }
 
     public void placeApple() {

@@ -265,7 +265,7 @@ public class BoardController {
     }
 
     public void retry() {
-        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length);
+        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, false, false);
         drawBoard();
         queue[0] = 3;
         queue[1] = 3;
