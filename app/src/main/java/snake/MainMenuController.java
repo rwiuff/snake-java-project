@@ -14,8 +14,6 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;

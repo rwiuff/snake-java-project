@@ -71,7 +71,7 @@ public class BoardController {
 
     public void setup(Scene scene) {
         this.scene = scene;
-        this.board = new Board(width, height);
+        this.board = new Board(height, width);
         drawBoard();
         pauseOverlay.setVisible(false);
         borderPane.setVisible(false);
