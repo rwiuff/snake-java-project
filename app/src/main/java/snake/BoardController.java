@@ -9,8 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import java.util.HashMap;
 import java.util.Set;
+import java.util.HashSet;
 import java.awt.Point;
 
 public class BoardController {
@@ -20,7 +20,7 @@ public class BoardController {
     private int width;
     private int height;
     private Board board;
-    private HashMap<String, Point> changesMap;
+    private Set<Point> changesMap;
 
     private int fieldsize;
 
@@ -68,7 +68,6 @@ public class BoardController {
                 rectangle.setFill(fieldColor);
             }
         }
-        scoreLabel.setText("Score: " + ((board.getSnake().getLength()) - 2) * 10);
     }
 
 
