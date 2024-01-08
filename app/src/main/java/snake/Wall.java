@@ -3,19 +3,23 @@ package snake;
 import java.util.ArrayList;
 import java.awt.Point;
 import java.util.Random;
+
+import javafx.scene.paint.Color;
 public class Wall extends Space{
 
     public Wall(int x, int y) {
         super(x,y);
+        setColor(Color.BLACK);
     }
 
     public boolean collision(SnakeObject snake) {
-        Main.gameOver((snake.getLength() - 2) * 10);
+        Main.gameOver(snake.getLength());
         return false;
     }
-    public static void placeWalls(Space[][] spaceArray, ArrayList<Point> emptySpaces) {
+
+    public static int placeWalls(Space[][] spaceArray, ArrayList<Point> emptySpaces) {
         Random rng = new Random();
-        int amount = rng.nextInt(spaceArray.length*spaceArray[0].length/100*5);
+        int amount = rng.nextInt((int)(spaceArray.length*(double)spaceArray[0].length/100*5));
         for (int i=1; i<=amount;i++) {
             int index=rng.nextInt(emptySpaces.size());
             Point coordinates = emptySpaces.get(index);
@@ -36,7 +40,8 @@ public class Wall extends Space{
             }
 
         }
-
+        
+        return amount;
     }
 
 }

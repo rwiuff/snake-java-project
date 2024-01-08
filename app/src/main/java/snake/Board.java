@@ -26,10 +26,10 @@ public class Board {
         }
 
         if (wallsON) {
-            Wall.placeWalls(this.board, this.emptySpaces);
+            snake.changeWinCondition(Wall.placeWalls(this.board, this.emptySpaces));
         }
         if (warpsOn) {
-            Warp.placeWarp(this.board, this.emptySpaces);
+            snake.changeWinCondition(Warp.placeWarp(this.board, this.emptySpaces));
         }
 
         placeApple();
@@ -53,13 +53,16 @@ public class Board {
         this.emptySpaces.remove(headPlace);
 
         try {
-            if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) { // true if has to place a
-                                                                                               // new of its type
+            Space hitpoint = this.board[snake.getHead().getX()][snake.getHead().getY()];
+            if (hitpoint.collision(snake)) { // true if has to place a new of its type
                 Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(), this.snake.getGhostTail().getY());
                 this.emptySpaces.remove(ghostTailPlace);
                 changesMap.add(ghostTailPlace);
-                changesMap.add(this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,
-                        this.emptySpaces));
+                if (hitpoint instanceof Apple) {
+                    
+                }
+                placeApple();
+                changesMap.remove(tailPlace);
             }
 
         } catch (Exception e) {
@@ -74,6 +77,7 @@ public class Board {
         SnakeSegment newSnakeSegment = snake.getBody().get(snake.getBody().size()-1);
         this.board[newSnakeSegment.getX()][newSnakeSegment.getY()] = newSnakeSegment;
     }
+
 
     public void placeApple() {
         int index = random.nextInt(emptySpaces.size());

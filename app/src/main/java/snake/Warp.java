@@ -28,7 +28,8 @@ public class Warp extends Space{
         }
         return true;
     }
-    public static void placeWarp(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
+
+    public static int placeWarp(Space[][] spaceArray,ArrayList<Point> emptySpaces) {
         Random rng = new Random();
         int index=rng.nextInt(emptySpaces.size());
         Point first = emptySpaces.remove(index);
@@ -39,6 +40,8 @@ public class Warp extends Space{
 
         spaceArray[warp1.getX()][warp1.getY()] = warp1;
         spaceArray[warp2.getX()][warp2.getY()]=warp2;
+    
+        return 2;
     }
     
 }

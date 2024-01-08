@@ -33,7 +33,7 @@ public class Main extends Application {
     private static Scene scene;
 
     public static void main(String[] args) {
-        dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
+        dimensions = args.length < 2 ? new String[] { "10", "10" } : args;
         width = Integer.parseInt(dimensions[0]);
         height = Integer.parseInt(dimensions[1]);
         System.out.println("Width: " + width);
@@ -113,8 +113,8 @@ public class Main extends Application {
         primaryStage.centerOnScreen();
     }
 
-    public static void gameOver(int score) {
-        boardController.gameOver(score);
+    public static void gameOver(int length) {
+        boardController.gameOver(length-2 * 100);
     }
 
     // public static void resize(Stage stage) {

@@ -50,6 +50,8 @@ public class BoardController {
 
     private int width;
     private int height;
+    private boolean wallsON = false;
+    private boolean warpsOn = true;
     private Board board;
     private Set<Point> changesMap;
     private Timeline realtime;
@@ -59,6 +61,7 @@ public class BoardController {
     private Scene scene;
     private int prevDir = 3;
     private int[] queue = { 3, 3 };
+
 
     @FXML
     private void startGame(ActionEvent event) {
@@ -70,7 +73,7 @@ public class BoardController {
 
     public void setup(Scene scene) {
         this.scene = scene;
-        this.board = new Board(height, width, true, true);
+        this.board = new Board(height, width, wallsON, warpsOn);
         drawBoard();
         pauseOverlay.setVisible(false);
         borderPane.setVisible(false);
@@ -220,7 +223,7 @@ public class BoardController {
                 rectangle.setFill(fieldColor);
             }
         }
-        scoreLabel.setText("Score: " + ((board.getSnake().getLength()) - 2) * 10);
+        scoreLabel.setText("Score: " + ((board.getSnake().getLength()) - 2) * 100);
     }
 
     public void setDimensions(int width, int height, int fieldSize) {
@@ -265,7 +268,7 @@ public class BoardController {
     }
 
     public void retry() {
-        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, true, true);
+        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, wallsON, warpsOn);
         drawBoard();
         queue[0] = 3;
         queue[1] = 3;

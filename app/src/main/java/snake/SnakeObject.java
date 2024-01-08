@@ -21,7 +21,7 @@ public class SnakeObject {
         this.body.add(0, this.ghostTail);
         this.length++;
         if (this.winCondition == length) {
-            System.out.println("You win!");
+            Main.gameOver(length*10);
         }
     }
 
@@ -51,7 +51,7 @@ public class SnakeObject {
         return this.ghostTail;
     }
 
-    public void setWinCondition(int snakeSize) {
-        this.winCondition = snakeSize;
+    public void changeWinCondition(int amount) {
+        this.winCondition =- amount;
     }
 }
