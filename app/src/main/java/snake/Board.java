@@ -72,9 +72,7 @@ public class Board {
                 this.emptySpaces.remove(ghostTailPlace);
                 changesMap.put("GhostTail",ghostTailPlace);
                 changesMap.put("Apple",this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board, this.emptySpaces));
-
             }
-            ;
 
         } catch (Exception e) {
             // pass
