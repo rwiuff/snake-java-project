@@ -36,13 +36,11 @@ public class Main extends Application {
         dimensions = args.length < 2 ? new String[] { "10", "10" } : args;
         width = Integer.parseInt(dimensions[0]);
         height = Integer.parseInt(dimensions[1]);
-        System.out.println("Width: " + width);
-        System.out.println("Height: " + height);
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage) throws IOException { 
         populateResources();
         scene = new Scene(mainMenuRoot);
         primaryStage.setTitle("Snek");

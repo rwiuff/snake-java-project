@@ -1,8 +1,7 @@
 package snake;
 
 import javafx.scene.paint.Color;
-import java.awt.Point;
-import java.util.ArrayList;
+
 
 abstract class Space {
     private int x;
@@ -31,13 +30,10 @@ abstract class Space {
         this.y = y;
     }
 
-    public boolean collision(SnakeObject snake) { // boolean only used for apple
-        return false;
+    public int  collision(SnakeObject snake) { // boolean only used for apple
+        return 0;
     }
 
-    public Point placeNew(Space[][] spaceArray, ArrayList<Point> emptySpaces) {
-        return new Point();
-    }
 
     public Color getColor() {
         return this.color;

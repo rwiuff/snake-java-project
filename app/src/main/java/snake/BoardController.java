@@ -113,7 +113,7 @@ public class BoardController {
 
     public void run(Scene scene) {
         this.realtime = new Timeline(
-                new KeyFrame(Duration.millis(100), new EventHandler<ActionEvent>() {
+                new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         int direction = queue[0];
