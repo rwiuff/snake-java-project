@@ -62,7 +62,6 @@ public class Board {
                         this.emptySpaces));
             }
 
-
         } catch (Exception e) {
             // pass
         }
