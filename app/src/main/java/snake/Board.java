@@ -74,6 +74,7 @@ public class Board {
                 changesMap.add(ghostTailPlace);
                 changesMap.add(this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,
                         this.emptySpaces));
+                changesMap.remove(tailPlace);
             }
 
         } catch (NullPointerException e) {
