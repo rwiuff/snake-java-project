@@ -34,7 +34,6 @@ public class Board {
         }
 
         placeApple();
-        System.out.println();
     }
 
     public Set<Point> update() {
@@ -87,7 +86,6 @@ public class Board {
     }
 
     public void placeApple() {
-        System.out.println("placing new apple");
         int index = random.nextInt(emptySpaces.size());
         int x = (int) this.emptySpaces.get(index).getX();
         int y = (int) this.emptySpaces.get(index).getY();

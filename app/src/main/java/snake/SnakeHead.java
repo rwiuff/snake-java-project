@@ -40,7 +40,6 @@ public class SnakeHead extends Space {
                 setY((hSize + (getY() - 1)) % hSize);
                 break;
             default:
-                System.out.println("default");
                 break;
         }
     }

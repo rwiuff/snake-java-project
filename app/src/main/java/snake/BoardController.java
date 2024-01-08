@@ -55,7 +55,6 @@ public class BoardController {
     private Board board;
     private Set<Point> changesMap;
     private Timeline realtime;
-    private int direction = 3;
     private int tick = 1;
     private int fieldsize;
     private Scene scene;
@@ -194,7 +193,6 @@ public class BoardController {
                     // break;
                     default:
                         System.out.println("Invalid keypress");
-                        direction = 4;
                         break;
                 }
 
