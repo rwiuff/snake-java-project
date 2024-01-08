@@ -32,17 +32,12 @@
                         <Image url="@../icons/icon64.png" />
                      </image>
                   </ImageView>
-                  <Label text="Controls: WASD">
+                  <Label text="Controls: WASD or arrow keys">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Label text="Pause: SPACE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label text="Fullscreen: F11">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -90,7 +85,7 @@
                         <Image url="@../icons/icon64.png" />
                      </image>
                   </ImageView>
-                  <Label text="Controls: WASD">
+                  <Label text="Controls: WASD or arrow keys">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
@@ -98,11 +93,6 @@
                      <font>
                         <Font size="18.0" />
                      </font></Label>
-                  <Label text="Fullscreen: F11">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
                   <Button fx:id="startGameBtn" mnemonicParsing="false" onAction="#startGame" text="Start Game">
                      <font>
                         <Font size="24.0" />

@@ -133,6 +133,8 @@ public class BoardController {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
+                    case UP:
+
                     case W:
                         if (queue[1] % 2 != 0) {
                             queue[0] = queue[1];
@@ -144,6 +146,8 @@ public class BoardController {
                         }
 
                         break;
+                    case RIGHT:
+
                     case D:
                         if (queue[1] % 2 != 1) {
                             queue[0] = queue[1];
@@ -154,6 +158,8 @@ public class BoardController {
                             }
                         }
                         break;
+                    case DOWN:
+
                     case S:
                         if (queue[1] % 2 != 0) {
                             queue[0] = queue[1];
@@ -165,6 +171,8 @@ public class BoardController {
 
                         }
                         break;
+                    case LEFT:
+
                     case A:
                         if (queue[1] % 2 != 1) {
                             queue[0] = queue[1];
@@ -179,9 +187,9 @@ public class BoardController {
                         pause(null);
                         break;
                     // case F11:
-                    //     Stage stage = (Stage) scene.getWindow();
-                    //     stage.setFullScreen(!stage.isFullScreen());
-                    //     break;
+                    // Stage stage = (Stage) scene.getWindow();
+                    // stage.setFullScreen(!stage.isFullScreen());
+                    // break;
                     default:
                         System.out.println("Invalid keypress");
                         direction = 4;
@@ -192,11 +200,12 @@ public class BoardController {
         });
         // Stage stage = (Stage) scene.getWindow();
         // stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-        //     @Override
-        //     public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-        //             Boolean newValue) {
-        //         Main.resize(stage);
-        //     }
+        // @Override
+        // public void changed(ObservableValue<? extends Boolean> observable, Boolean
+        // oldValue,
+        // Boolean newValue) {
+        // Main.resize(stage);
+        // }
         // });
     }
 
