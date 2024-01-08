@@ -112,7 +112,7 @@ public class Main extends Application {
     }
 
     public static void gameOver(int length) {
-        boardController.gameOver(length-2 * 100);
+        boardController.gameOver((length-2) * 100);
     }
 
     // public static void resize(Stage stage) {

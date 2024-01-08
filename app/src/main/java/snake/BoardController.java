@@ -50,7 +50,7 @@ public class BoardController {
 
     private int width;
     private int height;
-    private boolean wallsON = false;
+    private boolean wallsON = true;
     private boolean warpsOn = true;
     private Board board;
     private Set<Point> changesMap;
