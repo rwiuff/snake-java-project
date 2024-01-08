@@ -24,6 +24,14 @@ public class Board {
                 }
             }
         }
+
+        if (wallsON) {
+            Wall.placeWalls(this.board, this.emptySpaces);
+        }
+        if (warpsOn) {
+            Warp.placeWarp(this.board, this.emptySpaces);
+        }
+
         placeApple();
         System.out.println();
     }
@@ -52,9 +60,8 @@ public class Board {
                 changesMap.add(ghostTailPlace);
                 changesMap.add(this.board[snake.getHead().getX()][snake.getHead().getY()].placeNew(this.board,
                         this.emptySpaces));
-
             }
-            ;
+
 
         } catch (Exception e) {
             // pass
