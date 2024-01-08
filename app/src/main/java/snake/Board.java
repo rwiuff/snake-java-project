@@ -85,9 +85,9 @@ public class Board {
 
     public void placeSnake() {
         this.board[snake.getHead().getX()][snake.getHead().getY()] = snake.getHead();
-        for (SnakeSegment snakeBody : snake.getBody()) {
-            this.board[snakeBody.getX()][snakeBody.getY()] = snakeBody;
-        }
+        SnakeSegment newSnakeSegment = snake.getBody().get(snake.getBody().size()-1);
+        this.board[newSnakeSegment.getX()][newSnakeSegment.getY()] = newSnakeSegment;
+        
     }
 
     public void placeApple() {
