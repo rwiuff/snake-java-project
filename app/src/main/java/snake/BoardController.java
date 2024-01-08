@@ -56,25 +56,21 @@ public class BoardController {
         });
     }
 
-    protected void reDrawBoard(Scene scene, HashMap<String, Point> updateFields) {
-        Set<String> keys = updateFields.keySet();
-        for (String key : keys) {
-            Point updateObject = updateFields.get(key);
-            String lookup = "#" + (int) updateObject.getY() + ";" + (int) updateObject.getX();
+    protected void reDrawBoard(Scene scene, Set<Point> changesMap) {
+        for (Point point : changesMap) {
+            int y = (int) point.getY();
+            int x = (int) point.getX();
+            String lookup = "#" + y + ";" + x;
             Rectangle rectangle = (Rectangle) scene.lookup(lookup);
-            if (key.equals("Apple")) {
-                rectangle.setFill(Color.RED);
-            } else if (key.equals("Head")) {
-                rectangle.setFill(Color.BLACK);
-            } else if (key.equals("Empty")) {
-                rectangle.setFill(Color.OLIVE);
-            } else if (key.equals("OldHead")) {
-                rectangle.setFill(Color.GRAY);
-            } else if (key.equals("GhostTail")){
-                rectangle.setFill(Color.GRAY);
+            try {
+                rectangle.setFill(board.board[x][y].getColor());
+            } catch (NullPointerException e) {
+                rectangle.setFill(fieldColor);
             }
         }
+        scoreLabel.setText("Score: " + ((board.getSnake().getLength()) - 2) * 10);
     }
+
 
     public void setDimensions(int width, int height, int fieldSize) {
         this.width = width;
