@@ -70,6 +70,13 @@ public class Board {
                         placeApple();
                     }
                     break;
+                case 3: //bomb
+                    SnakeSegment newTail = this.snake.getBody().get(this.snake.getBody().size()-2); // segment with coordinates of new ghostTail
+                    this.board[newTail.getX()][newTail.getY()]=null;
+                    Point newTailPoint = new Point((newTail.getX(),newTail.getY())
+                    emptySpaces.add(newTailPoint);
+                    changesMap.add(newTailPoint);
+                    
 
             }
         } catch (NullPointerException e) {
