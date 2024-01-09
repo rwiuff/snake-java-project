@@ -24,6 +24,16 @@ public class SnakeObject {
             Main.gameOver(length*10);
         }
     }
+    public void shorten() {
+        if (this.length<3) {
+            Main.gameOver(this.length);
+        } else {
+            this.ghostTail=this.body.remove(this.body.size()-1);
+            this.length--;
+        }
+        
+
+    }
 
     public void snakeMove() {
         body.add(new SnakeSegment(head.getX(), head.getY()));
