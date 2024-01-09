@@ -50,8 +50,8 @@ public class BoardController {
 
     private int width;
     private int height;
-    private boolean wallsON = true;
-    private boolean warpsOn = true;
+    private boolean wallsOn;
+    private boolean warpsOn;
     private Board board;
     private Set<Point> changesMap;
     private Timeline realtime;
@@ -60,6 +60,7 @@ public class BoardController {
     private Scene scene;
     private int prevDir = 3;
     private int[] queue = { 3, 3 };
+    private double speed;
 
 
     @FXML
@@ -70,9 +71,12 @@ public class BoardController {
         run(scene);
     }
 
-    public void setup(Scene scene) {
+    public void setup(Scene scene, double speed, boolean wallsOn, boolean warpsOn) {
+        this.speed = speed;
+        this.wallsOn = wallsOn;
+        this.warpsOn = warpsOn;
         this.scene = scene;
-        this.board = new Board(height, width, wallsON, warpsOn);
+        this.board = new Board(height, width, wallsOn, warpsOn);
         drawBoard();
         pauseOverlay.setVisible(false);
         borderPane.setVisible(false);
@@ -112,7 +116,7 @@ public class BoardController {
 
     public void run(Scene scene) {
         this.realtime = new Timeline(
-                new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
+                new KeyFrame(Duration.millis(speed), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         int direction = queue[0];
@@ -266,7 +270,7 @@ public class BoardController {
     }
 
     public void retry() {
-        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, wallsON, warpsOn);
+        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, wallsOn, warpsOn);
         drawBoard();
         queue[0] = 3;
         queue[1] = 3;

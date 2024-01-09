@@ -3,15 +3,21 @@ package snake;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
@@ -37,9 +43,10 @@ public class MainMenuController {
 
     @FXML
     private void settingsGoto(ActionEvent event) {
-        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        Dialog<HashMap<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Settings");
         dialog.setHeaderText("Settings for Snake");
+        dialog.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/icon32.png"))));
 
         ButtonType applyBtn = new ButtonType("Apply", ButtonData.APPLY);
 
@@ -59,19 +66,63 @@ public class MainMenuController {
         grid.add(new Label("Height"), 0, 1);
         grid.add(height, 1, 1);
 
+        CheckBox walls = new CheckBox("Enable Walls");
+        CheckBox warp = new CheckBox("Enable Wormholes");
+        Rectangle wallTangle = new Rectangle(15, 15);
+        wallTangle.setFill(Color.BLACK);
+        wallTangle.setStroke(Color.BLACK);
+        Rectangle warpTangle = new Rectangle(15, 15);
+        warpTangle.setFill(Color.PURPLE);
+        warpTangle.setStroke(Color.BLACK);
+
+        if (Main.wallsOn)
+            walls.setSelected(true);
+        if (Main.warpsOn)
+            warp.setSelected(true);
+
+        grid.add(walls, 1, 2);
+        grid.add(wallTangle, 0, 2);
+        grid.add(warp, 1, 3);
+        grid.add(warpTangle, 0, 3);
+
+        Slider speed = new Slider(10, 50, 20);
+
+        grid.add(new Label("Fast\nSnake"), 0, 4);
+        grid.add(speed, 1, 4);
+        grid.add(new Label("Slow\nSnake"), 2, 4);
+
         dialog.getDialogPane().setContent(grid);
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == applyBtn) {
-                return new Pair<String, String>(width.getText(), height.getText());
+                HashMap<String, String> settings = new HashMap<String, String>();
+                settings.put("Width", width.getText());
+                settings.put("Height", height.getText());
+                settings.put("Walls", String.valueOf(walls.isSelected()));
+                settings.put("Warp", String.valueOf(warp.isSelected()));
+                settings.put("Speed", String.valueOf(speed.getValue()));
+                return settings;
             }
             return null;
         });
-        Optional<Pair<String, String>> result = dialog.showAndWait();
+        Optional<HashMap<String, String>> result = dialog.showAndWait();
 
-        result.ifPresent(dimensions -> {
-            Main.width = Integer.parseInt(dimensions.getKey());
-            Main.height = Integer.parseInt(dimensions.getValue());
+        result.ifPresent(settings -> {
+            if (!settings.get("Width").isBlank())
+                Main.width = Integer.parseInt(settings.get("Width"));
+            if (!settings.get("Height").isBlank())
+                Main.height = Integer.parseInt(settings.get("Height"));
+            if (settings.get("Walls").equals("true")) {
+                Main.wallsOn = true;
+            } else if (settings.get("Walls").equals("false")) {
+                Main.wallsOn = false;
+            }
+            if (settings.get("Warp").equals("true")) {
+                Main.warpsOn = true;
+            } else if (settings.get("Warp").equals("false")) {
+                Main.warpsOn = false;
+            }
+            Main.speed = Double.valueOf(settings.get("Speed"));
         });
     }
 
