@@ -54,8 +54,9 @@ public class Board {
 
         try {
             switch (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
-                case 1: // true if apple or warp
-
+                case 0:
+                    break; // essentially default. Just stops program from checking other cases.
+                case 1: // apple
                     Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(),
                             this.snake.getGhostTail().getY());
                     this.emptySpaces.remove(ghostTailPlace);
@@ -64,7 +65,8 @@ public class Board {
                     placeApple();
                     break;
                 case 2: // warp
-                    if (board[snake.getHead().getX()][snake.getHead().getY()].collision(snake) == 1) { // hits apple                                                                                // after warp
+                    if (board[snake.getHead().getX()][snake.getHead().getY()].collision(snake) == 1) { // hits apple
+                                                                                                       // after warp
                         placeApple();
                     }
                     break;
