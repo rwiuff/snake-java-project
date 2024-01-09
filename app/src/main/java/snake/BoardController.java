@@ -57,6 +57,7 @@ public class BoardController {
     private int prevDir = 3;
     private int[] queue = { 3, 3 };
     private double speed;
+    private boolean bombsOn;
 
     @FXML
     private void startGame(ActionEvent event) {
@@ -66,10 +67,11 @@ public class BoardController {
         run(scene);
     }
 
-    public void setup(Scene scene, double speed, boolean wallsOn, boolean warpsOn) {
+    public void setup(Scene scene, double speed, boolean wallsOn, boolean warpsOn, boolean bombsOn) {
         this.speed = speed;
         this.wallsOn = wallsOn;
         this.warpsOn = warpsOn;
+        this.bombsOn = bombsOn;
         this.scene = scene;
         this.board = new Board(height, width, wallsOn, warpsOn);
         drawBoard();

@@ -24,16 +24,17 @@ public class Main extends Application {
     private static FXMLLoader menuLoader;
     private static FXMLLoader boardLoader;
     private static MainMenuController mainMenuController;
-    static BoardController boardController;
+    public static BoardController boardController;
     private static Parent mainMenuRoot;
     private static Parent boardRoot;
     private static Image icon16;
     private static Image icon32;
     private static Image icon64;
     private static Scene scene;
-    static double speed = 20;
-    static boolean wallsOn = true;
-    static boolean warpsOn = true;
+    public static double speed = 20;
+    public static boolean wallsOn = true;
+    public static boolean warpsOn = true;
+    public static boolean bombsOn = true;
 
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
@@ -108,7 +109,7 @@ public class Main extends Application {
         boardReLoad();
         scene.setRoot(boardRoot);
         boardController.setDimensions(width, height, fieldSize);
-        boardController.setup(scene, speed, wallsOn, warpsOn);
+        boardController.setup(scene, speed, wallsOn, warpsOn, bombsOn);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();

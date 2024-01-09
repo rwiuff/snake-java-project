@@ -68,28 +68,36 @@ public class MainMenuController {
 
         CheckBox walls = new CheckBox("Enable Walls");
         CheckBox warp = new CheckBox("Enable Wormholes");
-        Rectangle wallTangle = new Rectangle(15, 15);
+        CheckBox bomb = new CheckBox("Enable bombs");
+        Rectangle wallTangle = new Rectangle(20, 20);
         wallTangle.setFill(Color.BLACK);
         wallTangle.setStroke(Color.BLACK);
-        Rectangle warpTangle = new Rectangle(15, 15);
+        Rectangle warpTangle = new Rectangle(20, 20);
         warpTangle.setFill(Color.PURPLE);
         warpTangle.setStroke(Color.BLACK);
+        Rectangle bombTangle = new Rectangle(20, 20);
+        bombTangle.setFill(Color.CHARTREUSE);
+        bombTangle.setStroke(Color.BLACK);
 
         if (Main.wallsOn)
             walls.setSelected(true);
         if (Main.warpsOn)
             warp.setSelected(true);
+        if (Main.bombsOn)
+            bomb.setSelected(true);
 
         grid.add(walls, 1, 2);
         grid.add(wallTangle, 0, 2);
         grid.add(warp, 1, 3);
         grid.add(warpTangle, 0, 3);
+        grid.add(bomb, 1, 4);
+        grid.add(bombTangle, 0, 4);
 
         Slider speed = new Slider(10, 50, 20);
 
-        grid.add(new Label("Fast\nSnake"), 0, 4);
-        grid.add(speed, 1, 4);
-        grid.add(new Label("Slow\nSnake"), 2, 4);
+        grid.add(new Label("Fast\nSnake"), 0, 5);
+        grid.add(speed, 1, 5);
+        grid.add(new Label("Slow\nSnake"), 2, 5);
 
         dialog.getDialogPane().setContent(grid);
 
@@ -100,6 +108,7 @@ public class MainMenuController {
                 settings.put("Height", height.getText());
                 settings.put("Walls", String.valueOf(walls.isSelected()));
                 settings.put("Warp", String.valueOf(warp.isSelected()));
+                settings.put("Bomb", String.valueOf(bomb.isSelected()));
                 settings.put("Speed", String.valueOf(speed.getValue()));
                 return settings;
             }
@@ -121,6 +130,11 @@ public class MainMenuController {
                 Main.warpsOn = true;
             } else if (settings.get("Warp").equals("false")) {
                 Main.warpsOn = false;
+            }
+            if (settings.get("Bomb").equals("true")) {
+                Main.bombsOn = true;
+            } else if (settings.get("Bomb").equals("false")) {
+                Main.bombsOn = false;
             }
             Main.speed = Double.valueOf(settings.get("Speed"));
         });
