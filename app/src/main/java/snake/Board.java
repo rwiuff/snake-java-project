@@ -74,7 +74,7 @@ public class Board {
                     }
                     break;
                 case 3: //bomb
-                    SnakeSegment newTail = this.snake.getBody().get(this.snake.getBody().size()-2); // segment with coordinates of new ghostTail
+                    SnakeSegment newTail = this.snake.getTail(); // segment with coordinates of new ghostTail
                     this.board[newTail.getX()][newTail.getY()]=null;
                     Point newTailPoint = new Point(newTail.getX(),newTail.getY());
                     emptySpaces.add(newTailPoint);
@@ -87,17 +87,21 @@ public class Board {
         }
         this.changesMap.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
         //checking if bombs have expired
+        Set<Point> expiredBombs = new HashSet<Point>();
         for (Point bombSite : this.bombList) {
             try { //only used to guarantee no error is thrown when trying method. Shouldnt occur as all points in list are places of bombs
                 
             if (this.board[(int)bombSite.getX()][(int)bombSite.getY()].checkExpiration(this.board,this.emptySpaces)) {
-                this.bombList.remove(bombSite);
+                expiredBombs.add(bombSite);
                 changesMap.add(bombSite);
             }
 
             } catch (NullPointerException e) {
                 //do nothing
             }
+        }
+        for (Point dud : expiredBombs) {
+            this.bombList.remove(dud);
         }
         placeSnake();
         return this.changesMap;
@@ -162,6 +166,8 @@ public class Board {
     public int noOfEmptyspaces() {
         return this.emptySpaces.size();
     }
-    
+    public void clearChangesMap() {
+        this.changesMap.clear();
+    }
 
 }

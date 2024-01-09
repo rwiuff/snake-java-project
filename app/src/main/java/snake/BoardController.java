@@ -127,9 +127,9 @@ public class BoardController {
                                 tick = 1;
                                 queue[0] = queue[1]; // direction input is used
                                 prevDir = direction;
-
+                                board.clearChangesMap();
                             }
-
+                            
                         }
                     }));
             this.realtime.setCycleCount(Timeline.INDEFINITE);
@@ -147,11 +147,13 @@ public class BoardController {
                                 tick = 1;
                                 queue[0] = queue[1]; // direction input is used
                                 prevDir = direction;
+                                board.clearChangesMap();
                                 if (rng.nextInt(board.getBoardSize())<board.noOfEmptyspaces()) {
                                     board.placeBomb(rng.nextInt(board.noOfEmptyspaces()));
                                 }
 
                             }
+                            
 
                         }
                     }));
