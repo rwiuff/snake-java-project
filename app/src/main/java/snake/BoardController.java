@@ -42,11 +42,7 @@ public class BoardController {
     @FXML
     private Label scoreLabel;
 
-    // private Color appleColor = Color.CRIMSON;
-    // private Color headColor = Color.ORANGERED;
-    // private Color snakeColor = Color.DARKORANGE;
     private Color fieldColor = Color.SILVER;
-    // private Color wallColor = Color.SEASHELL;
 
     private int width;
     private int height;
@@ -61,7 +57,6 @@ public class BoardController {
     private int prevDir = 3;
     private int[] queue = { 3, 3 };
     private double speed;
-
 
     @FXML
     private void startGame(ActionEvent event) {
