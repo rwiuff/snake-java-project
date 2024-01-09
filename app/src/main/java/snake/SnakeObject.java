@@ -21,7 +21,7 @@ public class SnakeObject {
         this.body.add(0, this.ghostTail);
         this.length++;
         if (this.winCondition == length) {
-            Main.gameOver(length*10);
+            Main.gameOver(length);
         }
     }
 

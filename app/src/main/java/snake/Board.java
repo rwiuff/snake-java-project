@@ -9,11 +9,12 @@ import java.util.Set;
 public class Board {
     public Space[][] board;
     private SnakeObject snake;
-    private ArrayList<Point> emptySpaces = new ArrayList<Point>();
+    private ArrayList<Point> emptySpaces = new ArrayList<Point>(); // list of all spaces in the board array not containing an object
     private Random random = new Random();
-    private Set<Point> changesMap = new HashSet<Point>();
+    private Set<Point> changesMap = new HashSet<Point>(); // a set of the position on the board that need to be drawn by the BoarcController
 
     public Board(int n, int m, boolean wallsON, boolean warpsOn) {
+        // instantiates a 2d Space array and the snake
         this.board = new Space[n][m];
         this.snake = new SnakeObject(n, m);
         placeSnake();
@@ -81,13 +82,13 @@ public class Board {
         return this.changesMap;
     }
 
-    public void placeSnake() {
+    public void placeSnake() { // places the SnakeHead and newest segment in the board
         this.board[snake.getHead().getX()][snake.getHead().getY()] = snake.getHead();
         SnakeSegment newSnakeSegment = snake.getBody().get(snake.getBody().size() - 1);
         this.board[newSnakeSegment.getX()][newSnakeSegment.getY()] = newSnakeSegment;
     }
 
-    public void placeApple() {
+    public void placeApple() { // places an Apple object on a random empty spcae on the board
         int index = random.nextInt(emptySpaces.size());
         int x = (int) this.emptySpaces.get(index).getX();
         int y = (int) this.emptySpaces.get(index).getY();
@@ -102,9 +103,5 @@ public class Board {
 
     public Space[][] getBoard() {
         return this.board;
-    }
-
-    public void appleCollision() {
-
     }
 }

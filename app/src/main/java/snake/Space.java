@@ -11,7 +11,6 @@ abstract class Space {
     public Space(int x, int y) {
         this.x = x;
         this.y = y;
-
     }
 
     public int getX() {
@@ -30,7 +29,7 @@ abstract class Space {
         this.y = y;
     }
 
-    public int  collision(SnakeObject snake) { // boolean only used for apple
+    public int  collision(SnakeObject snake) { // int to determine what it collides with
         return 0;
     }
 
