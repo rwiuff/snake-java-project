@@ -1,5 +1,8 @@
 package snake;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -31,24 +34,28 @@ public class Main extends Application {
     private static Image icon32;
     private static Image icon64;
     private static Scene scene;
-    public static double speed = 20;
-    public static boolean wallsOn = true;
-    public static boolean warpsOn = true;
-    public static boolean bombsOn = true;
+    private static Settings settings;
 
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
         width = Integer.parseInt(dimensions[0]);
         height = Integer.parseInt(dimensions[1]);
+        settings = new Settings();
+        File file = new File("SnakeHighScore.txt");
+        if (!file.exists())
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException { 
+    public void start(Stage primaryStage) throws IOException {
         populateResources();
         scene = new Scene(mainMenuRoot);
         primaryStage.setTitle("Snek");
-        // primaryStage.setFullScreenExitHint("Press F11 to exit fullscreen");
         primaryStage.getIcons().addAll(icon16, icon32, icon64);
         mainMenu(primaryStage);
         primaryStage.setResizable(false);
@@ -72,9 +79,9 @@ public class Main extends Application {
         menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
         mainMenuController = menuLoader.getController();
         mainMenuRoot = menuLoader.load();
-        boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
-        boardRoot = boardLoader.load();
-        boardController = boardLoader.getController();
+        // boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+        // boardRoot = boardLoader.load();
+        // boardController = boardLoader.getController();
         icon16 = new Image(getClass().getResourceAsStream("/icons/icon16.png"));
         icon32 = new Image(getClass().getResourceAsStream("/icons/icon32.png"));
         icon64 = new Image(getClass().getResourceAsStream("/icons/icon64.png"));
@@ -109,33 +116,37 @@ public class Main extends Application {
         boardReLoad();
         scene.setRoot(boardRoot);
         boardController.setDimensions(width, height, fieldSize);
-        boardController.setup(scene, speed, wallsOn, warpsOn, bombsOn);
+        boardController.setSettings(settings);
+        boardController.setup(scene);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
 
     public static void gameOver(int length) {
-        boardController.gameOver((length-2) * 100);
+        boardController.gameOver((length - 2) * 100);
     }
 
-    // public static void resize(Stage stage) {
-    //     Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-    //     int screenWidth = (int) screenBounds.getWidth();
-    //     int screenHeight = (int) screenBounds.getHeight();
-    //     if (stage.isFullScreen()) {
-    //         int newWidth = screenWidth / width;
-    //         int newHeight = screenHeight / height;
-    //         fieldSize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth * 0.9);
-    //     } else {
-    //         if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
-    //             int heightSize = (int) (screenWidth * 0.7 / width);
-    //             int widthSize = (int) (screenHeight * 0.7 / height);
-    //             fieldSize = height > widthSize ? widthSize : heightSize;
-    //         }
-    //     }
-    //     boardController.setDimensions(screenWidth, width, height);
-    //     boardController.drawBoard();
-    // }
+    public static Settings getSettings() {
+        return settings;
+    }
 
+    public static void setSettings(Settings settings) {
+        Main.settings = settings;
+    }
+
+    public static Object[] loadHighScore() {
+        try (FileReader hsfr = new FileReader("SnakeHighScore.txt")) {
+            BufferedReader hsbr = new BufferedReader(hsfr);
+            String hs = hsbr.readLine();
+            String[] hsArr = hs.split(",");
+            String name = hsArr[1];
+            int score = Integer.parseInt(hsArr[0]);
+            hsbr.close();
+            hsfr.close();
+            return new Object[] { score, name };
+        } catch (NumberFormatException | IOException | NullPointerException e) {
+            return new Object[] { -1, "" };
+        }
+    }
 }

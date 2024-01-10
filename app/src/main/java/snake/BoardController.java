@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,7 +26,11 @@ import javafx.util.Duration;
 import java.util.Set;
 
 import java.awt.Point;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
+
 public class BoardController {
     @FXML
     private BorderPane borderPane;
@@ -59,7 +64,6 @@ public class BoardController {
     private double speed;
     private boolean bombsOn;
     private Random rng = new Random();
-    
 
     @FXML
     private void startGame(ActionEvent event) {
@@ -69,11 +73,14 @@ public class BoardController {
         run(scene);
     }
 
-    public void setup(Scene scene, double speed, boolean wallsOn, boolean warpsOn, boolean bombsOn) {
-        this.speed = speed;
-        this.wallsOn = wallsOn;
-        this.warpsOn = warpsOn;
-        this.bombsOn = bombsOn;
+    public void setSettings(Settings settings) {
+        this.speed = settings.getSpeed();
+        this.wallsOn = settings.isWallsOn();
+        this.warpsOn = settings.isWarpsOn();
+        this.bombsOn = settings.isBombsOn();
+    }
+
+    public void setup(Scene scene) {
         this.scene = scene;
         this.board = new Board(height, width, wallsOn, warpsOn);
         drawBoard();
@@ -129,7 +136,7 @@ public class BoardController {
                                 prevDir = direction;
                                 board.clearChangesMap();
                             }
-                            
+
                         }
                     }));
             this.realtime.setCycleCount(Timeline.INDEFINITE);
@@ -149,12 +156,14 @@ public class BoardController {
                                 prevDir = direction;
                                 board.clearChangesMap();
                                 int boardSize = board.getBoardSize();
-                                if (rng.nextInt(boardSize)<boardSize/(board.getSnake().getLength()/Math.min(board.getHeight(),board.getWidth())+2)) {
-                                    board.placeBomb(Math.max(board.getHeight(),board.getWidth())); //expiration time of bomb
+                                if (rng.nextInt(boardSize) < boardSize
+                                        / (board.getSnake().getLength() / Math.min(board.getHeight(), board.getWidth())
+                                                + 2)) {
+                                    board.placeBomb(Math.max(board.getHeight(), board.getWidth())); // expiration time
+                                                                                                    // of bomb
                                 }
 
                             }
-                            
 
                         }
                     }));
@@ -218,10 +227,6 @@ public class BoardController {
                     case SPACE:
                         pause(null);
                         break;
-                    // case F11:
-                    // Stage stage = (Stage) scene.getWindow();
-                    // stage.setFullScreen(!stage.isFullScreen());
-                    // break;
                     default:
                         System.out.println("Invalid keypress");
                         break;
@@ -229,15 +234,6 @@ public class BoardController {
 
             }
         });
-        // Stage stage = (Stage) scene.getWindow();
-        // stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-        // @Override
-        // public void changed(ObservableValue<? extends Boolean> observable, Boolean
-        // oldValue,
-        // Boolean newValue) {
-        // Main.resize(stage);
-        // }
-        // });
     }
 
     protected void reDrawBoard(Scene scene, Set<Point> changesMap) {
@@ -334,6 +330,29 @@ public class BoardController {
         });
 
         alert.show();
+        if (score > (int) Main.loadHighScore()[0]) {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("New highscore");
+            dialog.setHeaderText("Congratulations! You beat the highscore");
+            dialog.setContentText("Please enter your name:");
+            dialog.setOnCloseRequest(e -> {
+                String name = dialog.getResult();
+                if (!name.isBlank())
+                    saveHighScore(score, name);
+            });
+            dialog.show();
+        }
+    }
+
+    private void saveHighScore(int score, String name) {
+        try (FileWriter hsfw = new FileWriter("SnakeHighScore.txt", false)) {
+            BufferedWriter hsbw = new BufferedWriter(hsfw);
+            hsbw.write(score + "," + name);
+            hsbw.close();
+            hsfw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
 }

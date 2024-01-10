@@ -1,8 +1,10 @@
 package snake;
+
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.awt.Point;
-public class Bomb extends Space{
+
+public class Bomb extends Space {
 
     private int expirationTime;
     
@@ -14,7 +16,7 @@ public class Bomb extends Space{
 
     }
 
-    public int collision (SnakeObject snake) {
+    public int collision(SnakeObject snake) {
         snake.shorten();
         return 3;
     }

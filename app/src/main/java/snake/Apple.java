@@ -12,5 +12,5 @@ public class Apple extends Space {
         // extends snake by 1
         snake.extend();
         return 1;
-    }    
+    }
 }
