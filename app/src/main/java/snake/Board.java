@@ -19,10 +19,10 @@ public class Board {
 
     public Board(int n, int m, boolean wallsON, boolean warpsOn) {
         this.board = new Space[n][m];
-        this.height=n;
-        this.width=m;
+        this.height = n;
+        this.width = m;
         this.snake = new SnakeObject(n, m);
-        this.boardSize=n*m;
+        this.boardSize = n * m;
         placeSnake();
 
         for (int row = 0; row < n; row++) {
@@ -45,7 +45,7 @@ public class Board {
 
     public Set<Point> update() {
 
-        SnakeSegment tail = this.snake.getTail(); 
+        SnakeSegment tail = this.snake.getTail();
 
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
@@ -77,31 +77,32 @@ public class Board {
                         placeApple();
                     }
                     break;
-                case 3: //bomb
+                case 3: // bomb
                     SnakeSegment newGhostTail = this.snake.getGhostTail(); // segment with coordinates of new ghostTail
-                    this.board[newGhostTail.getX()][newGhostTail.getY()]=null;
-                    Point newTailPoint = new Point(newGhostTail.getX(),newGhostTail.getY());
+                    this.board[newGhostTail.getX()][newGhostTail.getY()] = null;
+                    Point newTailPoint = new Point(newGhostTail.getX(), newGhostTail.getY());
                     emptySpaces.add(newTailPoint);
                     changesMap.add(newTailPoint);
-                    
 
             }
         } catch (NullPointerException e) {
             // pass
         }
         this.changesMap.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
-        //checking if bombs have expired
+        // checking if bombs have expired
         Set<Point> expiredBombs = new HashSet<Point>();
         for (Point bombSite : this.bombList) {
-            try { //only used to guarantee no error is thrown when trying method. Shouldnt occur as all points in list are places of bombs
-                
-            if (this.board[(int)bombSite.getX()][(int)bombSite.getY()].checkExpiration(this.board,this.emptySpaces)) {
-                expiredBombs.add(bombSite);
-                changesMap.add(bombSite);
-            }
+            try { // only used to guarantee no error is thrown when trying method. Shouldnt occur
+                  // as all points in list are places of bombs
+
+                if (this.board[(int) bombSite.getX()][(int) bombSite.getY()].checkExpiration(this.board,
+                        this.emptySpaces)) {
+                    expiredBombs.add(bombSite);
+                    changesMap.add(bombSite);
+                }
 
             } catch (NullPointerException e) {
-                //do nothing
+                // do nothing
             }
         }
         for (Point dud : expiredBombs) {
@@ -161,21 +162,25 @@ public class Board {
         }
         // place now found
         emptySpaces.addAll(checkedPoints);
-        
 
     }
+
     public int getBoardSize() {
         return this.boardSize;
     }
+
     public int noOfEmptyspaces() {
         return this.emptySpaces.size();
     }
+
     public void clearChangesMap() {
         this.changesMap.clear();
     }
+
     public int getHeight() {
         return this.height;
     }
+
     public int getWidth() {
         return this.width;
     }

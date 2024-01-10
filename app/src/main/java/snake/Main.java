@@ -36,29 +36,6 @@ public class Main extends Application {
     private static Scene scene;
     private static Settings settings;
 
-    public static Settings getSettings() {
-        return settings;
-    }
-
-    public static void setSettings(Settings settings) {
-        Main.settings = settings;
-    }
-
-    public static Object[] loadHighScore() {
-        try (FileReader hsfr = new FileReader("SnakeHighScore.txt")) {
-            BufferedReader hsbr = new BufferedReader(hsfr);
-            String hs = hsbr.readLine();
-            String[] hsArr = hs.split(",");
-            String name = hsArr[1];
-            int score = Integer.parseInt(hsArr[0]);
-            hsbr.close();
-            hsfr.close();
-            return new Object[] { score, name };
-        } catch (NumberFormatException | IOException | NullPointerException e) {
-            return new Object[] { -1, "" };
-        }
-    }
-
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
         width = Integer.parseInt(dimensions[0]);
@@ -150,24 +127,26 @@ public class Main extends Application {
         boardController.gameOver((length - 2) * 100);
     }
 
-    // public static void resize(Stage stage) {
-    // Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-    // int screenWidth = (int) screenBounds.getWidth();
-    // int screenHeight = (int) screenBounds.getHeight();
-    // if (stage.isFullScreen()) {
-    // int newWidth = screenWidth / width;
-    // int newHeight = screenHeight / height;
-    // fieldSize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth
-    // * 0.9);
-    // } else {
-    // if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
-    // int heightSize = (int) (screenWidth * 0.7 / width);
-    // int widthSize = (int) (screenHeight * 0.7 / height);
-    // fieldSize = height > widthSize ? widthSize : heightSize;
-    // }
-    // }
-    // boardController.setDimensions(screenWidth, width, height);
-    // boardController.drawBoard();
-    // }
+    public static Settings getSettings() {
+        return settings;
+    }
 
+    public static void setSettings(Settings settings) {
+        Main.settings = settings;
+    }
+
+    public static Object[] loadHighScore() {
+        try (FileReader hsfr = new FileReader("SnakeHighScore.txt")) {
+            BufferedReader hsbr = new BufferedReader(hsfr);
+            String hs = hsbr.readLine();
+            String[] hsArr = hs.split(",");
+            String name = hsArr[1];
+            int score = Integer.parseInt(hsArr[0]);
+            hsbr.close();
+            hsfr.close();
+            return new Object[] { score, name };
+        } catch (NumberFormatException | IOException | NullPointerException e) {
+            return new Object[] { -1, "" };
+        }
+    }
 }

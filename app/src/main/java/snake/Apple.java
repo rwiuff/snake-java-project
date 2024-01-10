@@ -11,5 +11,5 @@ public class Apple extends Space {
     public int collision(SnakeObject snake) {
         snake.extend();
         return 1;
-    }    
+    }
 }

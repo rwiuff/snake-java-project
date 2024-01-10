@@ -21,17 +21,17 @@ public class SnakeObject {
         this.body.add(0, this.ghostTail);
         this.length++;
         if (this.winCondition == length) {
-            Main.gameOver(length*10);
+            Main.gameOver(length * 10);
         }
     }
+
     public void shorten() {
-        if (this.length<3) {
+        if (this.length < 3) {
             Main.gameOver(this.length);
         } else {
-            this.ghostTail=this.body.remove(0);
+            this.ghostTail = this.body.remove(0);
             this.length--;
         }
-        
 
     }
 
@@ -62,6 +62,6 @@ public class SnakeObject {
     }
 
     public void changeWinCondition(int amount) {
-        this.winCondition =- amount;
+        this.winCondition = -amount;
     }
 }

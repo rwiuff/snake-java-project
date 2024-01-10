@@ -154,26 +154,26 @@ public class MainMenuController {
     @FXML
     private void highScorePrompt(ActionEvent event) {
         String highScoreText;
-		Alert alert = new Alert(AlertType.INFORMATION);
+        Alert alert = new Alert(AlertType.INFORMATION);
         Object[] hsArr = Main.loadHighScore();
-		alert.setTitle("Highscore");
-		switch ((int) hsArr[0]) {
-			case -1:
-				highScoreText = "No highscore set";
-				break;
-			default:
-				highScoreText = "The HighScore is " + hsArr[0] + " set by "
-						+ hsArr[1];
-		}
-		alert.setContentText(highScoreText);
-		alert.setHeaderText(null);
-		ImageView graphic = new ImageView(new Image(getClass().getResourceAsStream("/icons/icon32.png")));
-		alert.setGraphic(graphic);
-		ButtonType response = alert.showAndWait().orElse(ButtonType.CANCEL);
-		if (response == ButtonType.OK) {
-			alert.close();
-		}
-		alert.close();
+        alert.setTitle("Highscore");
+        switch ((int) hsArr[0]) {
+            case -1:
+                highScoreText = "No highscore set";
+                break;
+            default:
+                highScoreText = "The HighScore is " + hsArr[0] + " set by "
+                        + hsArr[1];
+        }
+        alert.setContentText(highScoreText);
+        alert.setHeaderText(null);
+        ImageView graphic = new ImageView(new Image(getClass().getResourceAsStream("/icons/icon32.png")));
+        alert.setGraphic(graphic);
+        ButtonType response = alert.showAndWait().orElse(ButtonType.CANCEL);
+        if (response == ButtonType.OK) {
+            alert.close();
+        }
+        alert.close();
     }
 
 }

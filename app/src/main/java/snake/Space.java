@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Color;
 
-
 abstract class Space {
     private int x;
     private int y;
@@ -33,10 +32,9 @@ abstract class Space {
         this.y = y;
     }
 
-    public int  collision(SnakeObject snake) { // boolean only used for apple
+    public int collision(SnakeObject snake) { // boolean only used for apple
         return 0;
     }
-
 
     public Color getColor() {
         return this.color;
@@ -50,5 +48,4 @@ abstract class Space {
         return false;
     }
 
-  
 }
