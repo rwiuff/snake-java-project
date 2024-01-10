@@ -8,7 +8,7 @@ import java.util.ArrayList;
 abstract class Space {
     private int x;
     private int y;
-    private Color color = Color.GRAY;
+    private Color color = Color.SILVER;
 
     public Space(int x, int y){
         this.x = x;

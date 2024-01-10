@@ -9,7 +9,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import java.util.HashMap;
 import java.util.Set;
 import java.awt.Point;
 
@@ -17,10 +16,12 @@ public class BoardController {
     @FXML
     private BorderPane borderPane;
 
+    private Color fieldColor = Color.SILVER;
     private int width;
     private int height;
     private Board board;
     private Set<Point> changesMap;
+
 
     private int fieldsize;
 
@@ -56,25 +57,20 @@ public class BoardController {
         });
     }
 
-    protected void reDrawBoard(Scene scene, Set<Point> updateFields) {
-        Set<String> keys = updateFields.keySet();
-        for (String key : keys) {
-            Point updateObject = updateFields.get(key);
-            String lookup = "#" + (int) updateObject.getY() + ";" + (int) updateObject.getX();
+    protected void reDrawBoard(Scene scene, Set<Point> changesMap) {
+        for (Point point : changesMap) {
+            int y = (int) point.getY();
+            int x = (int) point.getX();
+            String lookup = "#" + y + ";" + x;
             Rectangle rectangle = (Rectangle) scene.lookup(lookup);
-            if (key.equals("Apple")) {
-                rectangle.setFill(Color.RED);
-            } else if (key.equals("Head")) {
-                rectangle.setFill(Color.BLACK);
-            } else if (key.equals("Empty")) {
-                rectangle.setFill(Color.OLIVE);
-            } else if (key.equals("OldHead")) {
-                rectangle.setFill(Color.GRAY);
-            } else if (key.equals("GhostTail")){
-                rectangle.setFill(Color.GRAY);
+            try {
+                rectangle.setFill(board.board[x][y].getColor());
+            } catch (NullPointerException e) {
+                rectangle.setFill(fieldColor);
             }
         }
     }
+
 
     public void setDimensions(int width, int height, int fieldSize) {
         this.width = width;
@@ -93,9 +89,9 @@ public class BoardController {
                 try {
                     rectangle.setFill(spaces[j][i].getColor());
                 } catch (NullPointerException e) {
-                    rectangle.setFill(Color.OLIVE);
+                    rectangle.setFill(this.fieldColor);
                 }
-                rectangle.setStroke(Color.WHEAT);
+                rectangle.setStroke(this.fieldColor);
                 rectangle.setId(i + ";" + j);
                 gridPane.add(rectangle, i, j);
             }

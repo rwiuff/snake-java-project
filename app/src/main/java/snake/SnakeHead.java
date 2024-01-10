@@ -13,7 +13,7 @@ public class SnakeHead extends Space{
         this.dir=3;
         this.hSize = hSize;
         this.vSize = vSize;
-        setColor(Color.BLACK);
+        setColor(Color.ORANGERED);
     }
 
     public int getDir() {
