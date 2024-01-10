@@ -1,5 +1,8 @@
 package snake;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javafx.application.Application;
@@ -41,20 +44,41 @@ public class Main extends Application {
         Main.settings = settings;
     }
 
+    public static Object[] loadHighScore() {
+        try (FileReader hsfr = new FileReader("SnakeHighScore.txt")) {
+            BufferedReader hsbr = new BufferedReader(hsfr);
+            String hs = hsbr.readLine();
+            String[] hsArr = hs.split(",");
+            String name = hsArr[1];
+            int score = Integer.parseInt(hsArr[0]);
+            hsbr.close();
+            hsfr.close();
+            return new Object[] { score, name };
+        } catch (NumberFormatException | IOException | NullPointerException e) {
+            return new Object[] { -1, "" };
+        }
+    }
+
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
         width = Integer.parseInt(dimensions[0]);
         height = Integer.parseInt(dimensions[1]);
         settings = new Settings();
+        File file = new File("SnakeHighScore.txt");
+        if (!file.exists())
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) throws IOException { 
+    public void start(Stage primaryStage) throws IOException {
         populateResources();
         scene = new Scene(mainMenuRoot);
         primaryStage.setTitle("Snek");
-        // primaryStage.setFullScreenExitHint("Press F11 to exit fullscreen");
         primaryStage.getIcons().addAll(icon16, icon32, icon64);
         mainMenu(primaryStage);
         primaryStage.setResizable(false);
@@ -123,26 +147,27 @@ public class Main extends Application {
     }
 
     public static void gameOver(int length) {
-        boardController.gameOver((length-2) * 100);
+        boardController.gameOver((length - 2) * 100);
     }
 
     // public static void resize(Stage stage) {
-    //     Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-    //     int screenWidth = (int) screenBounds.getWidth();
-    //     int screenHeight = (int) screenBounds.getHeight();
-    //     if (stage.isFullScreen()) {
-    //         int newWidth = screenWidth / width;
-    //         int newHeight = screenHeight / height;
-    //         fieldSize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth * 0.9);
-    //     } else {
-    //         if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
-    //             int heightSize = (int) (screenWidth * 0.7 / width);
-    //             int widthSize = (int) (screenHeight * 0.7 / height);
-    //             fieldSize = height > widthSize ? widthSize : heightSize;
-    //         }
-    //     }
-    //     boardController.setDimensions(screenWidth, width, height);
-    //     boardController.drawBoard();
+    // Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+    // int screenWidth = (int) screenBounds.getWidth();
+    // int screenHeight = (int) screenBounds.getHeight();
+    // if (stage.isFullScreen()) {
+    // int newWidth = screenWidth / width;
+    // int newHeight = screenHeight / height;
+    // fieldSize = newWidth > newHeight ? (int) (newHeight * 0.9) : (int) (newWidth
+    // * 0.9);
+    // } else {
+    // if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
+    // int heightSize = (int) (screenWidth * 0.7 / width);
+    // int widthSize = (int) (screenHeight * 0.7 / height);
+    // fieldSize = height > widthSize ? widthSize : heightSize;
+    // }
+    // }
+    // boardController.setDimensions(screenWidth, width, height);
+    // boardController.drawBoard();
     // }
 
 }

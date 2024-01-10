@@ -1,6 +1,8 @@
 package snake;
 
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
@@ -147,6 +149,31 @@ public class MainMenuController {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
         Main.exit(stage);
+    }
+
+    @FXML
+    private void highScorePrompt(ActionEvent event) {
+        String highScoreText;
+		Alert alert = new Alert(AlertType.INFORMATION);
+        Object[] hsArr = Main.loadHighScore();
+		alert.setTitle("Highscore");
+		switch ((int) hsArr[0]) {
+			case -1:
+				highScoreText = "No highscore set";
+				break;
+			default:
+				highScoreText = "The HighScore is " + hsArr[0] + " set by "
+						+ hsArr[1];
+		}
+		alert.setContentText(highScoreText);
+		alert.setHeaderText(null);
+		ImageView graphic = new ImageView(new Image(getClass().getResourceAsStream("/icons/icon32.png")));
+		alert.setGraphic(graphic);
+		ButtonType response = alert.showAndWait().orElse(ButtonType.CANCEL);
+		if (response == ButtonType.OK) {
+			alert.close();
+		}
+		alert.close();
     }
 
 }

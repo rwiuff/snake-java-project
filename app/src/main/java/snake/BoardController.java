@@ -13,6 +13,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,6 +26,9 @@ import javafx.util.Duration;
 import java.util.Set;
 
 import java.awt.Point;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Random;
 
 public class BoardController {
@@ -223,10 +227,6 @@ public class BoardController {
                     case SPACE:
                         pause(null);
                         break;
-                    // case F11:
-                    // Stage stage = (Stage) scene.getWindow();
-                    // stage.setFullScreen(!stage.isFullScreen());
-                    // break;
                     default:
                         System.out.println("Invalid keypress");
                         break;
@@ -234,15 +234,6 @@ public class BoardController {
 
             }
         });
-        // Stage stage = (Stage) scene.getWindow();
-        // stage.fullScreenProperty().addListener(new ChangeListener<Boolean>() {
-        // @Override
-        // public void changed(ObservableValue<? extends Boolean> observable, Boolean
-        // oldValue,
-        // Boolean newValue) {
-        // Main.resize(stage);
-        // }
-        // });
     }
 
     protected void reDrawBoard(Scene scene, Set<Point> changesMap) {
@@ -339,6 +330,29 @@ public class BoardController {
         });
 
         alert.show();
+        if (score > (int) Main.loadHighScore()[0]) {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("New highscore");
+            dialog.setHeaderText("Congratulations! You beat the highscore");
+            dialog.setContentText("Please enter your name:");
+            dialog.setOnCloseRequest(e -> {
+                String name = dialog.getResult();
+                if (!name.isBlank())
+                    saveHighScore(score, name);
+            });
+            dialog.show();
+        }
+    }
+
+    private void saveHighScore(int score, String name) {
+        try (FileWriter hsfw = new FileWriter("SnakeHighScore.txt", false)) {
+            BufferedWriter hsbw = new BufferedWriter(hsfw);
+            hsbw.write(score + "," + name);
+            hsbw.close();
+            hsfw.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 
 }
