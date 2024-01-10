@@ -149,7 +149,7 @@ public class BoardController {
                                 prevDir = direction;
                                 board.clearChangesMap();
                                 int boardSize = board.getBoardSize();
-                                if (rng.nextInt(boardSize)<boardSize/board.getSnake().getLength()) {
+                                if (rng.nextInt(boardSize)<boardSize/(board.getSnake().getLength()/Math.min(board.getHeight(),board.getWidth())+2)) {
                                     board.placeBomb(Math.max(board.getHeight(),board.getWidth())); //expiration time of bomb
                                 }
 
