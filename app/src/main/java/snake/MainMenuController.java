@@ -43,6 +43,7 @@ public class MainMenuController {
 
     @FXML
     private void settingsGoto(ActionEvent event) {
+        Settings settings = Main.getSettings();
         Dialog<HashMap<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Settings");
         dialog.setHeaderText("Settings for Snake");
@@ -79,11 +80,11 @@ public class MainMenuController {
         bombTangle.setFill(Color.CHARTREUSE);
         bombTangle.setStroke(Color.BLACK);
 
-        if (Main.wallsOn)
+        if (settings.isWallsOn())
             walls.setSelected(true);
-        if (Main.warpsOn)
+        if (settings.isWarpsOn())
             warp.setSelected(true);
-        if (Main.bombsOn)
+        if (settings.isBombsOn())
             bomb.setSelected(true);
 
         grid.add(walls, 1, 2);
@@ -93,7 +94,7 @@ public class MainMenuController {
         grid.add(bomb, 1, 4);
         grid.add(bombTangle, 0, 4);
 
-        Slider speed = new Slider(10, 50, 20);
+        Slider speed = new Slider(10, 50, settings.getSpeed());
 
         grid.add(new Label("Fast\nSnake"), 0, 5);
         grid.add(speed, 1, 5);
@@ -103,40 +104,41 @@ public class MainMenuController {
 
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == applyBtn) {
-                HashMap<String, String> settings = new HashMap<String, String>();
-                settings.put("Width", width.getText());
-                settings.put("Height", height.getText());
-                settings.put("Walls", String.valueOf(walls.isSelected()));
-                settings.put("Warp", String.valueOf(warp.isSelected()));
-                settings.put("Bomb", String.valueOf(bomb.isSelected()));
-                settings.put("Speed", String.valueOf(speed.getValue()));
-                return settings;
+                HashMap<String, String> newSettings = new HashMap<String, String>();
+                newSettings.put("Width", width.getText());
+                newSettings.put("Height", height.getText());
+                newSettings.put("Walls", String.valueOf(walls.isSelected()));
+                newSettings.put("Warp", String.valueOf(warp.isSelected()));
+                newSettings.put("Bomb", String.valueOf(bomb.isSelected()));
+                newSettings.put("Speed", String.valueOf(speed.getValue()));
+                return newSettings;
             }
             return null;
         });
         Optional<HashMap<String, String>> result = dialog.showAndWait();
 
-        result.ifPresent(settings -> {
-            if (!settings.get("Width").isBlank())
-                Main.width = Integer.parseInt(settings.get("Width"));
-            if (!settings.get("Height").isBlank())
-                Main.height = Integer.parseInt(settings.get("Height"));
-            if (settings.get("Walls").equals("true")) {
-                Main.wallsOn = true;
-            } else if (settings.get("Walls").equals("false")) {
-                Main.wallsOn = false;
+        result.ifPresent(newSettings -> {
+            if (!newSettings.get("Width").isBlank())
+                Main.width = Integer.parseInt(newSettings.get("Width"));
+            if (!newSettings.get("Height").isBlank())
+                Main.height = Integer.parseInt(newSettings.get("Height"));
+            if (newSettings.get("Walls").equals("true")) {
+                settings.setWallsOn(true);
+            } else if (newSettings.get("Walls").equals("false")) {
+                settings.setWallsOn(false);
             }
-            if (settings.get("Warp").equals("true")) {
-                Main.warpsOn = true;
-            } else if (settings.get("Warp").equals("false")) {
-                Main.warpsOn = false;
+            if (newSettings.get("Warp").equals("true")) {
+                settings.setWarpsOn(true);
+            } else if (newSettings.get("Warp").equals("false")) {
+                settings.setWarpsOn(false);
             }
-            if (settings.get("Bomb").equals("true")) {
-                Main.bombsOn = true;
-            } else if (settings.get("Bomb").equals("false")) {
-                Main.bombsOn = false;
+            if (newSettings.get("Bomb").equals("true")) {
+                settings.setBombsOn(true);
+            } else if (newSettings.get("Bomb").equals("false")) {
+                settings.setBombsOn(false);
             }
-            Main.speed = Double.valueOf(settings.get("Speed"));
+            settings.setSpeed(Double.valueOf(newSettings.get("Speed")));
+            Main.setSettings(settings);
         });
     }
 

@@ -26,6 +26,7 @@ import java.util.Set;
 
 import java.awt.Point;
 import java.util.Random;
+
 public class BoardController {
     @FXML
     private BorderPane borderPane;
@@ -59,7 +60,6 @@ public class BoardController {
     private double speed;
     private boolean bombsOn;
     private Random rng = new Random();
-    
 
     @FXML
     private void startGame(ActionEvent event) {
@@ -69,11 +69,14 @@ public class BoardController {
         run(scene);
     }
 
-    public void setup(Scene scene, double speed, boolean wallsOn, boolean warpsOn, boolean bombsOn) {
-        this.speed = speed;
-        this.wallsOn = wallsOn;
-        this.warpsOn = warpsOn;
-        this.bombsOn = bombsOn;
+    public void setSettings(Settings settings) {
+        this.speed = settings.getSpeed();
+        this.wallsOn = settings.isWallsOn();
+        this.warpsOn = settings.isWarpsOn();
+        this.bombsOn = settings.isBombsOn();
+    }
+
+    public void setup(Scene scene) {
         this.scene = scene;
         this.board = new Board(height, width, wallsOn, warpsOn);
         drawBoard();
@@ -129,7 +132,7 @@ public class BoardController {
                                 prevDir = direction;
                                 board.clearChangesMap();
                             }
-                            
+
                         }
                     }));
             this.realtime.setCycleCount(Timeline.INDEFINITE);
@@ -149,12 +152,14 @@ public class BoardController {
                                 prevDir = direction;
                                 board.clearChangesMap();
                                 int boardSize = board.getBoardSize();
-                                if (rng.nextInt(boardSize)<boardSize/(board.getSnake().getLength()/Math.min(board.getHeight(),board.getWidth())+2)) {
-                                    board.placeBomb(Math.max(board.getHeight(),board.getWidth())); //expiration time of bomb
+                                if (rng.nextInt(boardSize) < boardSize
+                                        / (board.getSnake().getLength() / Math.min(board.getHeight(), board.getWidth())
+                                                + 2)) {
+                                    board.placeBomb(Math.max(board.getHeight(), board.getWidth())); // expiration time
+                                                                                                    // of bomb
                                 }
 
                             }
-                            
 
                         }
                     }));

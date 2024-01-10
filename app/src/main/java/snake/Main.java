@@ -31,15 +31,21 @@ public class Main extends Application {
     private static Image icon32;
     private static Image icon64;
     private static Scene scene;
-    public static double speed = 20;
-    public static boolean wallsOn = true;
-    public static boolean warpsOn = true;
-    public static boolean bombsOn = true;
+    private static Settings settings;
+
+    public static Settings getSettings() {
+        return settings;
+    }
+
+    public static void setSettings(Settings settings) {
+        Main.settings = settings;
+    }
 
     public static void main(String[] args) {
         dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
         width = Integer.parseInt(dimensions[0]);
         height = Integer.parseInt(dimensions[1]);
+        settings = new Settings();
         launch(args);
     }
 
@@ -109,7 +115,8 @@ public class Main extends Application {
         boardReLoad();
         scene.setRoot(boardRoot);
         boardController.setDimensions(width, height, fieldSize);
-        boardController.setup(scene, speed, wallsOn, warpsOn, bombsOn);
+        boardController.setSettings(settings);
+        boardController.setup(scene);
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
