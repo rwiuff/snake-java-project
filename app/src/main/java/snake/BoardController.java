@@ -20,7 +20,7 @@ public class BoardController {
     private int width;
     private int height;
     private Board board;
-    private HashMap<String, Point> changesMap;
+    private Set<Point> changesMap;
 
     private int fieldsize;
 
@@ -56,7 +56,7 @@ public class BoardController {
         });
     }
 
-    protected void reDrawBoard(Scene scene, HashMap<String, Point> updateFields) {
+    protected void reDrawBoard(Scene scene, Set<Point> updateFields) {
         Set<String> keys = updateFields.keySet();
         for (String key : keys) {
             Point updateObject = updateFields.get(key);
