@@ -28,7 +28,7 @@ public class SnakeObject {
         if (this.length<3) {
             Main.gameOver(this.length);
         } else {
-            this.ghostTail=this.body.remove(this.body.size()-1);
+            this.ghostTail=this.body.remove(0);
             this.length--;
         }
         

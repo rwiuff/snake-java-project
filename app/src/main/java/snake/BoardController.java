@@ -148,8 +148,9 @@ public class BoardController {
                                 queue[0] = queue[1]; // direction input is used
                                 prevDir = direction;
                                 board.clearChangesMap();
-                                if (rng.nextInt(board.getBoardSize())<board.noOfEmptyspaces()) {
-                                    board.placeBomb(rng.nextInt(board.noOfEmptyspaces()));
+                                int boardSize = board.getBoardSize();
+                                if (rng.nextInt(boardSize)<boardSize/board.getSnake().getLength()) {
+                                    board.placeBomb(Math.max(board.getHeight(),board.getWidth())); //expiration time of bomb
                                 }
 
                             }

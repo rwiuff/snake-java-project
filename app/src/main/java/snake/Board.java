@@ -9,6 +9,8 @@ import java.util.Set;
 public class Board {
     public Space[][] board;
     private int boardSize;
+    private int height;
+    private int width;
     private SnakeObject snake;
     private ArrayList<Point> emptySpaces = new ArrayList<Point>();
     private Random random = new Random();
@@ -17,6 +19,8 @@ public class Board {
 
     public Board(int n, int m, boolean wallsON, boolean warpsOn) {
         this.board = new Space[n][m];
+        this.height=n;
+        this.width=m;
         this.snake = new SnakeObject(n, m);
         this.boardSize=n*m;
         placeSnake();
@@ -74,9 +78,9 @@ public class Board {
                     }
                     break;
                 case 3: //bomb
-                    SnakeSegment newTail = this.snake.getTail(); // segment with coordinates of new ghostTail
-                    this.board[newTail.getX()][newTail.getY()]=null;
-                    Point newTailPoint = new Point(newTail.getX(),newTail.getY());
+                    SnakeSegment newGhostTail = this.snake.getGhostTail(); // segment with coordinates of new ghostTail
+                    this.board[newGhostTail.getX()][newGhostTail.getY()]=null;
+                    Point newTailPoint = new Point(newGhostTail.getX(),newGhostTail.getY());
                     emptySpaces.add(newTailPoint);
                     changesMap.add(newTailPoint);
                     
@@ -168,6 +172,12 @@ public class Board {
     }
     public void clearChangesMap() {
         this.changesMap.clear();
+    }
+    public int getHeight() {
+        return this.height;
+    }
+    public int getWidth() {
+        return this.width;
     }
 
 }
