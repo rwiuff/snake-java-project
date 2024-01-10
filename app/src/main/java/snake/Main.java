@@ -79,9 +79,9 @@ public class Main extends Application {
         menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
         mainMenuController = menuLoader.getController();
         mainMenuRoot = menuLoader.load();
-        boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
-        boardRoot = boardLoader.load();
-        boardController = boardLoader.getController();
+        // boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
+        // boardRoot = boardLoader.load();
+        // boardController = boardLoader.getController();
         icon16 = new Image(getClass().getResourceAsStream("/icons/icon16.png"));
         icon32 = new Image(getClass().getResourceAsStream("/icons/icon32.png"));
         icon64 = new Image(getClass().getResourceAsStream("/icons/icon64.png"));
