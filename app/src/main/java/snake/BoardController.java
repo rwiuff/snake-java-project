@@ -25,7 +25,7 @@ import javafx.util.Duration;
 import java.util.Set;
 
 import java.awt.Point;
-
+import java.util.Random;
 public class BoardController {
     @FXML
     private BorderPane borderPane;
@@ -42,16 +42,12 @@ public class BoardController {
     @FXML
     private Label scoreLabel;
 
-    // private Color appleColor = Color.CRIMSON;
-    // private Color headColor = Color.ORANGERED;
-    // private Color snakeColor = Color.DARKORANGE;
     private Color fieldColor = Color.SILVER;
-    // private Color wallColor = Color.SEASHELL;
 
     private int width;
     private int height;
-    private boolean wallsON = true;
-    private boolean warpsOn = true;
+    private boolean wallsOn;
+    private boolean warpsOn;
     private Board board;
     private Set<Point> changesMap;
     private Timeline realtime;
@@ -60,7 +56,10 @@ public class BoardController {
     private Scene scene;
     private int prevDir = 3;
     private int[] queue = { 3, 3 };
-
+    private double speed;
+    private boolean bombsOn;
+    private Random rng = new Random();
+    
 
     @FXML
     private void startGame(ActionEvent event) {
@@ -70,9 +69,13 @@ public class BoardController {
         run(scene);
     }
 
-    public void setup(Scene scene) {
+    public void setup(Scene scene, double speed, boolean wallsOn, boolean warpsOn, boolean bombsOn) {
+        this.speed = speed;
+        this.wallsOn = wallsOn;
+        this.warpsOn = warpsOn;
+        this.bombsOn = bombsOn;
         this.scene = scene;
-        this.board = new Board(height, width, wallsON, warpsOn);
+        this.board = new Board(height, width, wallsOn, warpsOn);
         drawBoard();
         pauseOverlay.setVisible(false);
         borderPane.setVisible(false);
@@ -111,25 +114,53 @@ public class BoardController {
     }
 
     public void run(Scene scene) {
-        this.realtime = new Timeline(
-                new KeyFrame(Duration.millis(20), new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        int direction = queue[0];
-                        board.getSnake().getHead().setDir(direction);
-                        if (tick++ % 6 == 0) {
-                            changesMap = board.update();
-                            reDrawBoard(scene, changesMap);
-                            tick = 1;
-                            queue[0] = queue[1]; // direction input is used
-                            prevDir = direction;
+        if (!this.bombsOn) {
+            this.realtime = new Timeline(
+                    new KeyFrame(Duration.millis(speed), new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            int direction = queue[0];
+                            board.getSnake().getHead().setDir(direction);
+                            if (tick++ % 6 == 0) {
+                                changesMap = board.update();
+                                reDrawBoard(scene, changesMap);
+                                tick = 1;
+                                queue[0] = queue[1]; // direction input is used
+                                prevDir = direction;
+                                board.clearChangesMap();
+                            }
+                            
+                        }
+                    }));
+            this.realtime.setCycleCount(Timeline.INDEFINITE);
+            this.realtime.play();
+        } else {
+            this.realtime = new Timeline(
+                    new KeyFrame(Duration.millis(speed), new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            int direction = queue[0];
+                            board.getSnake().getHead().setDir(direction);
+                            if (tick++ % 6 == 0) {
+                                changesMap = board.update();
+                                reDrawBoard(scene, changesMap);
+                                tick = 1;
+                                queue[0] = queue[1]; // direction input is used
+                                prevDir = direction;
+                                board.clearChangesMap();
+                                int boardSize = board.getBoardSize();
+                                if (rng.nextInt(boardSize)<boardSize/(board.getSnake().getLength()/Math.min(board.getHeight(),board.getWidth())+2)) {
+                                    board.placeBomb(Math.max(board.getHeight(),board.getWidth())); //expiration time of bomb
+                                }
+
+                            }
+                            
 
                         }
-
-                    }
-                }));
-        this.realtime.setCycleCount(Timeline.INDEFINITE);
-        this.realtime.play();
+                    }));
+            this.realtime.setCycleCount(Timeline.INDEFINITE);
+            this.realtime.play();
+        }
         scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -266,7 +297,7 @@ public class BoardController {
     }
 
     public void retry() {
-        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, wallsON, warpsOn);
+        this.board = new Board(this.board.getBoard().length, this.board.getBoard()[0].length, wallsOn, warpsOn);
         drawBoard();
         queue[0] = 3;
         queue[1] = 3;

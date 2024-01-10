@@ -1,5 +1,8 @@
 package snake;
 
+import java.awt.Point;
+import java.util.ArrayList;
+
 import javafx.scene.paint.Color;
 
 
@@ -42,4 +45,9 @@ abstract class Space {
         this.color = color;
     }
 
+    public boolean checkExpiration(Space[][] board, ArrayList<Point> emptySpaces) {
+        return false;
+    }
+
+  
 }
