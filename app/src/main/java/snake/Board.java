@@ -12,9 +12,9 @@ public class Board {
     private int height;
     private int width;
     private SnakeObject snake;
-    private ArrayList<Point> emptySpaces = new ArrayList<Point>(); // list of all spaces in the board array not containing an object
+    private ArrayList<Point> emptySpaces = new ArrayList<Point>(); // list of all coordinates in the space array not containing an object
     private Random random = new Random();
-    private Set<Point> changesMap = new HashSet<Point>();
+    private Set<Point> changesMap = new HashSet<Point>(); // set of coodinates in the space array that need to be redrawn
     private Set<Point> bombList = new HashSet<Point>();
 
     public Board(int n, int m, boolean wallsON, boolean warpsOn) {
@@ -26,6 +26,7 @@ public class Board {
         this.boardSize=n*m;
         placeSnake();
 
+        // finds all empty spaces on the board
         for (int row = 0; row < n; row++) {
             for (int column = 0; column < m; column++) {
                 if (this.board[row][column] == null) {
@@ -34,10 +35,10 @@ public class Board {
             }
         }
 
-        if (wallsON) {
+        if (wallsON) { // places walls and changes the win condition by the amount of walls
             snake.changeWinCondition(Wall.placeWalls(this.board, this.emptySpaces));
         }
-        if (warpsOn) {
+        if (warpsOn) { // places warps and changes the win condition by the amount of warps
             snake.changeWinCondition(Warp.placeWarp(this.board, this.emptySpaces));
         }
 
@@ -45,7 +46,6 @@ public class Board {
     }
 
     public Set<Point> update() {
-
         SnakeSegment tail = this.snake.getTail(); 
 
         this.board[tail.getX()][tail.getY()] = null;
@@ -64,7 +64,7 @@ public class Board {
             switch (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
                 case 0:
                     break; // essentially default. Just stops program from checking other cases.
-                case 1: // apple
+                case 1: // collided with apple
                     Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(),
                             this.snake.getGhostTail().getY());
                     this.emptySpaces.remove(ghostTailPlace);
@@ -72,13 +72,12 @@ public class Board {
                     this.changesMap.remove(tailPlace);
                     placeApple();
                     break;
-                case 2: // warp
-                    if (board[snake.getHead().getX()][snake.getHead().getY()].collision(snake) == 1) { // hits apple
-                                                                                                       // after warp
+                case 2: // collided with warp
+                    if (board[snake.getHead().getX()][snake.getHead().getY()].collision(snake) == 1) { // hits apple after warp
                         placeApple();
                     }
                     break;
-                case 3: //bomb
+                case 3: // collided with bomb
                     SnakeSegment newGhostTail = this.snake.getGhostTail(); // segment with coordinates of new ghostTail
                     this.board[newGhostTail.getX()][newGhostTail.getY()]=null;
                     Point newTailPoint = new Point(newGhostTail.getX(),newGhostTail.getY());
@@ -91,10 +90,10 @@ public class Board {
             // pass
         }
         this.changesMap.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
-        //checking if bombs have expired
+        // checking if bombs have expired
         Set<Point> expiredBombs = new HashSet<Point>();
         for (Point bombSite : this.bombList) {
-            try { //only used to guarantee no error is thrown when trying method. Shouldnt occur as all points in list are places of bombs
+            try { // only used to guarantee no error is thrown when trying method. Shouldnt occur as all points in list are places of bombs
                 
             if (this.board[(int)bombSite.getX()][(int)bombSite.getY()].checkExpiration(this.board,this.emptySpaces)) {
                 expiredBombs.add(bombSite);
@@ -102,7 +101,7 @@ public class Board {
             }
 
             } catch (NullPointerException e) {
-                //do nothing
+                // pass
             }
         }
         for (Point dud : expiredBombs) {
@@ -112,7 +111,7 @@ public class Board {
         return this.changesMap;
     }
 
-    public void placeSnake() { // places the SnakeHead and newest segment in the board
+    public void placeSnake() { // places the SnakeHead and newest segment in the board array
         this.board[snake.getHead().getX()][snake.getHead().getY()] = snake.getHead();
         SnakeSegment newSnakeSegment = snake.getBody().get(snake.getBody().size() - 1);
         this.board[newSnakeSegment.getX()][newSnakeSegment.getY()] = newSnakeSegment;

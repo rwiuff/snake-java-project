@@ -31,8 +31,6 @@ public class SnakeObject {
             this.ghostTail=this.body.remove(0);
             this.length--;
         }
-        
-
     }
 
     public void snakeMove() {
