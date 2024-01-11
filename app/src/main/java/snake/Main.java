@@ -26,7 +26,6 @@ public class Main extends Application {
     public static int height;
     private static FXMLLoader menuLoader;
     private static FXMLLoader boardLoader;
-    private static MainMenuController mainMenuController;
     public static BoardController boardController;
     private static Parent mainMenuRoot;
     private static Parent boardRoot;
