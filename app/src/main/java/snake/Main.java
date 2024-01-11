@@ -76,7 +76,7 @@ public class Main extends Application {
 
     private void populateResources() throws IOException {
         menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-        mainMenuController = menuLoader.getController();
+        // MainMenuController mainMenuController = menuLoader.getController();
         mainMenuRoot = menuLoader.load();
         // boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
         // boardRoot = boardLoader.load();
