@@ -337,8 +337,12 @@ public class BoardController {
             dialog.setContentText("Please enter your name:");
             dialog.setOnCloseRequest(e -> {
                 String name = dialog.getResult();
-                if (!name.isBlank())
-                    saveHighScore(score, name);
+                try {
+                    if (!name.isBlank())
+                        saveHighScore(score, name);
+                } catch (NullPointerException e1) {
+                    saveHighScore(score, "Anonymous");
+                }
             });
             dialog.show();
         }
