@@ -12,9 +12,11 @@ public class Board {
     private int height;
     private int width;
     private SnakeObject snake;
-    private ArrayList<Point> emptySpaces = new ArrayList<Point>(); // list of all coordinates in the space array not containing an object
+    private ArrayList<Point> emptySpaces = new ArrayList<Point>(); // list of all coordinates in the space array not
+                                                                   // containing an object
     private Random random = new Random();
-    private Set<Point> changesMap = new HashSet<Point>(); // set of coodinates in the space array that need to be redrawn
+    private Set<Point> changesMap = new HashSet<Point>(); // set of coodinates in the space array that need to be
+                                                          // redrawn
     private Set<Point> bombList = new HashSet<Point>();
 
     public Board(int n, int m, boolean wallsON, boolean warpsOn) {
@@ -74,7 +76,8 @@ public class Board {
                     placeApple();
                     break;
                 case 2: // collided with warp
-                    if (board[snake.getHead().getX()][snake.getHead().getY()].collision(snake) == 1) { // hits apple after warp
+                    if (board[snake.getHead().getX()][snake.getHead().getY()].collision(snake) == 1) { // hits apple
+                                                                                                       // after warp
                         placeApple();
                     }
                     break;
@@ -158,6 +161,9 @@ public class Board {
             } else {
                 checkedPoints.add(tempPlace);
                 emptySpaces.remove(tempPlace);
+                if (emptySpaces.isEmpty()) {
+                    placeFound = true; // Two avoid indefinite repitions incase of no space to place bomb
+                }
             }
 
         }
