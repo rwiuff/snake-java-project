@@ -294,7 +294,6 @@ public class BoardController {
         drawBoard();
         queue[0] = 3;
         queue[1] = 3;
-        this.tick = 1;
         this.realtime.play();
 
     }
