@@ -335,6 +335,8 @@ public class BoardController {
                 try {
                     if (!name.isBlank())
                         saveHighScore(score, name);
+                    else if (name.isBlank())
+                        saveHighScore(score, "Anonymous");
                 } catch (NullPointerException e1) {
                     saveHighScore(score, "Anonymous");
                 }
