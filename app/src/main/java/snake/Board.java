@@ -162,7 +162,7 @@ public class Board {
                 checkedPoints.add(tempPlace);
                 emptySpaces.remove(tempPlace);
                 if (emptySpaces.isEmpty()) {
-                    break; // Two avoid indefinite repitions incase of no space to place bomb
+                    break; // To avoid indefinite repitions incase of no space to place bomb
                 }
             }
 
