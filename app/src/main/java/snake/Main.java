@@ -36,9 +36,21 @@ public class Main extends Application {
     private static Settings settings;
 
     public static void main(String[] args) {
-        dimensions = args.length < 2 ? new String[] { "20", "20" } : args;
-        width = Integer.parseInt(dimensions[0]);
-        height = Integer.parseInt(dimensions[1]);
+        String[] input = args.length < 2 ? new String[] { "20", "20" } : args;
+        if (input[0].matches("^[0-9]*[1-9]+$|^[1-9]+[0-9]*$")) {
+            width = Integer.parseInt(input[0]);
+            System.out.println("Width: " + width);
+        } else {
+            width = 20;
+            System.out.println("Invalid width. Width set to: " + width);
+        }
+        if (input[1].matches("^[0-9]*[1-9]+$|^[1-9]+[0-9]*$")) {
+            height = Integer.parseInt(input[1]);
+            System.out.println("Height: " + height);
+        } else {
+            height = 20;
+            System.out.println("Invalid width. Height set to: " + height);
+        }
         settings = new Settings();
         File file = new File("SnakeHighScore.txt");
         if (!file.exists())
