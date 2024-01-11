@@ -123,7 +123,7 @@ public class BoardController {
     public void run(Scene scene) {
         if (!this.bombsOn) {
             this.realtime = new Timeline(
-                    new KeyFrame(Duration.millis(speed/5), new EventHandler<ActionEvent>() {
+                    new KeyFrame(Duration.millis(speed*5), new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             int direction = queue[0];
@@ -141,7 +141,7 @@ public class BoardController {
             this.realtime.play();
         } else {
             this.realtime = new Timeline(
-                    new KeyFrame(Duration.millis(speed/5), new EventHandler<ActionEvent>() {
+                    new KeyFrame(Duration.millis(speed*5), new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             int direction = queue[0];
