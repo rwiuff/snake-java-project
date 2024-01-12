@@ -52,9 +52,9 @@ public class Board {
                 Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(),this.snake.getGhostTail().getY());
                 this.emptySpaces.remove(ghostTailPlace);
                 changesSet.add(ghostTailPlace);
+                changesSet.remove(tailPlace);
                 placeApple();
             }
-            ;
 
         } catch (NullPointerException e) {
             // pass

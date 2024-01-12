@@ -21,6 +21,7 @@ public class SnakeObject{
         this.length++;
         if (boardSize == length) {
             System.out.println("You win!");
+            Main.gameOver(length);
         }
     }
 
