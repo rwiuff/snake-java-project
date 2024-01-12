@@ -12,7 +12,7 @@ java -jar Snake-<version number>.jar m n
 ```
 
 With n and m representing the dimensions.
-To run the program as a project, go to the root folde. Type the following for windows:
+To run the program as a project, go to the root folder. Type the following for windows:
 
 ```
 .\gradlew.bat run
