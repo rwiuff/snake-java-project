@@ -448,3 +448,5 @@ build
 .fake
 
 SnakeHighScore.txt
+!Group18JavaProject/*
+!Group18JavaProject.zip
