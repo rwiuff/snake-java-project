@@ -26,7 +26,7 @@ public class BoardController {
     private int fieldsize;
 
     public void run(Scene scene) {
-        this.board = new Board(width, height);
+        this.board = new Board(height, width);
         drawBoard();
         scene.addEventHandler(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
             @Override
