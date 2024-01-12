@@ -20,7 +20,7 @@ public class BoardController {
     private int width;
     private int height;
     private Board board;
-    private Set<Point> changesMap;
+    private Set<Point> changeSet;
 
     private int fieldsize;
 
@@ -50,9 +50,9 @@ public class BoardController {
                         break;
                 }
                 board.getSnake().getHead().setDir(direction); // Snake gets direction
-                changesMap = board.update(); // Board updates game logic and returns a set of points that changes during
+                changeSet = board.update(); // Board updates game logic and returns a set of points that changes during
                                              // move
-                reDrawBoard(scene, changesMap); // Update the view to include changes
+                reDrawBoard(scene, changeSet); // Update the view to include changes
             }
         });
     }

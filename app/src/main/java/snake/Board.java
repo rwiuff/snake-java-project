@@ -11,7 +11,7 @@ public class Board {
     private SnakeObject snake;
     private ArrayList<Point> emptySpaces = new ArrayList<Point>();
     private Random random = new Random();
-    private Set<Point> changesSet = new HashSet<Point>();
+    private Set<Point> changeSet = new HashSet<Point>();
     
 
     public Board(int n, int m) {
@@ -32,18 +32,18 @@ public class Board {
     }
 
     public Set<Point> update() {
-        this.changesSet.clear();
+        this.changeSet.clear();
         SnakeSegment tail = this.snake.getTail(); // -2 as length includes head,
         
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
-        changesSet.add(tailPlace);
-        changesSet.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
+        changeSet.add(tailPlace);
+        changeSet.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
         
         this.emptySpaces.add(tailPlace); // objects can be placed
         snake.snakeMove();
         Point headPlace = new Point(this.snake.getHead().getX(), this.snake.getHead().getY());
-        changesSet.add(headPlace);
+        changeSet.add(headPlace);
         this.emptySpaces.remove(new Point (this.snake.getTail().getX(),this.snake.getTail().getY()));
         this.emptySpaces.remove(headPlace);
         
@@ -51,7 +51,7 @@ public class Board {
             if (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) { //true if has to place a new of its type
                 Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(),this.snake.getGhostTail().getY());
                 this.emptySpaces.remove(ghostTailPlace);
-                changesSet.add(ghostTailPlace);
+                changeSet.add(ghostTailPlace);
                 placeApple();
             }
             ;
@@ -60,7 +60,7 @@ public class Board {
             // pass
         }
         placeSnake();
-        return changesSet;
+        return changeSet;
     }
 
     public void placeSnake() {
@@ -77,7 +77,7 @@ public class Board {
         this.board[x][y] = new Apple(x, y);
         Point applePlace = new Point(x,y);
         this.emptySpaces.remove(applePlace);
-        this.changesSet.add(applePlace);
+        this.changeSet.add(applePlace);
         
     }
 
