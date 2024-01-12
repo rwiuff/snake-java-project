@@ -33,7 +33,7 @@ public class Board {
 
     public Set<Point> update() {
         this.changesSet.clear();
-        SnakeSegment tail = this.snake.getTail(); // -2 as length includes head,
+        SnakeSegment tail = this.snake.getTail(); 
         
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
