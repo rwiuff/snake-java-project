@@ -7,7 +7,7 @@ public class Settings {
     private boolean warpsOn;
     private boolean bombsOn;
 
-    public Settings() {
+    public Settings() { // New settings with default values
         this.speed = (double) 20;
         this.wallsOn = true;
         this.warpsOn = true;

@@ -40,13 +40,13 @@ public class MainMenuController {
     private void startGame(ActionEvent event) throws IOException {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        Main.startGame(stage);
+        Main.startGame(stage); // Startgame -> starGame method
     }
 
     @FXML
-    private void settingsGoto(ActionEvent event) {
-        Settings settings = Main.getSettings();
-        Dialog<HashMap<String, String>> dialog = new Dialog<>();
+    private void settingsGoto(ActionEvent event) { // Press on settings
+        Settings settings = Main.getSettings(); // Get settings from Main class
+        Dialog<HashMap<String, String>> dialog = new Dialog<>(); // Create dialog
         dialog.setTitle("Settings");
         dialog.setHeaderText("Settings for Snake");
         dialog.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("/icons/icon32.png"))));
@@ -59,7 +59,7 @@ public class MainMenuController {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        TextField width = new TextField();
+        TextField width = new TextField(); // Textfields for width and height
         width.setPromptText("20");
         TextField height = new TextField();
         height.setPromptText("20");
@@ -69,7 +69,7 @@ public class MainMenuController {
         grid.add(new Label("Height"), 0, 1);
         grid.add(height, 1, 1);
 
-        CheckBox walls = new CheckBox("Enable Walls");
+        CheckBox walls = new CheckBox("Enable Walls"); // Checkboxes
         CheckBox warp = new CheckBox("Enable Wormholes");
         CheckBox bomb = new CheckBox("Enable bombs");
         Rectangle wallTangle = new Rectangle(20, 20);
@@ -82,7 +82,7 @@ public class MainMenuController {
         bombTangle.setFill(Color.CHARTREUSE);
         bombTangle.setStroke(Color.BLACK);
 
-        if (settings.isWallsOn())
+        if (settings.isWallsOn()) // Set checkboxes according to settings
             walls.setSelected(true);
         if (settings.isWarpsOn())
             warp.setSelected(true);
@@ -96,7 +96,7 @@ public class MainMenuController {
         grid.add(bomb, 1, 4);
         grid.add(bombTangle, 0, 4);
 
-        Slider speed = new Slider(10, 50, settings.getSpeed());
+        Slider speed = new Slider(10, 50, settings.getSpeed()); // Slider with current speed from settings
 
         grid.add(new Label("Fast\nSnake"), 0, 5);
         grid.add(speed, 1, 5);
@@ -113,33 +113,33 @@ public class MainMenuController {
                 newSettings.put("Warp", String.valueOf(warp.isSelected()));
                 newSettings.put("Bomb", String.valueOf(bomb.isSelected()));
                 newSettings.put("Speed", String.valueOf(speed.getValue()));
-                return newSettings;
+                return newSettings; // Create new settings from dialog box
             }
             return null;
         });
         Optional<HashMap<String, String>> result = dialog.showAndWait();
 
         result.ifPresent(newSettings -> {
-            if (!newSettings.get("Width").isBlank())
+            if (!newSettings.get("Width").isBlank()) // If new width is given, set a new width in main
                 Main.width = Integer.parseInt(newSettings.get("Width"));
-            if (!newSettings.get("Height").isBlank())
+            if (!newSettings.get("Height").isBlank()) // If new height is given, set a new height in main
                 Main.height = Integer.parseInt(newSettings.get("Height"));
-            if (newSettings.get("Walls").equals("true")) {
+            if (newSettings.get("Walls").equals("true")) { // Set new setting according to checkbox
                 settings.setWallsOn(true);
             } else if (newSettings.get("Walls").equals("false")) {
                 settings.setWallsOn(false);
             }
-            if (newSettings.get("Warp").equals("true")) {
+            if (newSettings.get("Warp").equals("true")) { // Set new setting according to checkbox
                 settings.setWarpsOn(true);
             } else if (newSettings.get("Warp").equals("false")) {
                 settings.setWarpsOn(false);
             }
-            if (newSettings.get("Bomb").equals("true")) {
+            if (newSettings.get("Bomb").equals("true")) { // Set new setting according to checkbox
                 settings.setBombsOn(true);
             } else if (newSettings.get("Bomb").equals("false")) {
                 settings.setBombsOn(false);
             }
-            settings.setSpeed(Double.valueOf(newSettings.get("Speed")));
+            settings.setSpeed(Double.valueOf(newSettings.get("Speed"))); // Set new speed according to slider
             Main.setSettings(settings);
         });
     }
@@ -148,20 +148,20 @@ public class MainMenuController {
     private void exitProgram(ActionEvent event) {
         Node node = (Node) event.getSource();
         Stage stage = (Stage) node.getScene().getWindow();
-        Main.exit(stage);
+        Main.exit(stage); // Exit method
     }
 
     @FXML
     private void highScorePrompt(ActionEvent event) {
         String highScoreText;
         Alert alert = new Alert(AlertType.INFORMATION);
-        Object[] hsArr = Main.loadHighScore();
+        Object[] hsArr = Main.loadHighScore(); // Get highscore from file
         alert.setTitle("Highscore");
         switch ((int) hsArr[0]) {
-            case -1:
+            case -1: // On error string
                 highScoreText = "No highscore set";
                 break;
-            default:
+            default: // Print highscore
                 highScoreText = "The HighScore is " + hsArr[0] + " set by "
                         + hsArr[1];
         }
@@ -175,5 +175,4 @@ public class MainMenuController {
         }
         alert.close();
     }
-
 }
