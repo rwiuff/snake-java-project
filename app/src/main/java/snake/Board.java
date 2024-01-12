@@ -115,7 +115,6 @@ public class Board {
         for (Point dud : expiredBombs) {
             this.bombList.remove(dud);
         }
-        
         placeSnake();
         return this.changesMap;
     }
@@ -165,6 +164,9 @@ public class Board {
             } else {
                 checkedPoints.add(tempPlace);
                 emptySpaces.remove(tempPlace);
+                if (emptySpaces.isEmpty()) {
+                    break; // To avoid indefinite repitions incase of no space to place bomb
+                }
             }
 
         }

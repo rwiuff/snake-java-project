@@ -56,7 +56,7 @@ public class BoardController {
     private Board board;
     private Set<Point> changesMap;
     private Timeline realtime;
-    private int tick = 1;
+    
     private int fieldsize;
     private Scene scene;
     private int prevDir = 3;
@@ -123,19 +123,17 @@ public class BoardController {
     public void run(Scene scene) {
         if (!this.bombsOn) {
             this.realtime = new Timeline(
-                    new KeyFrame(Duration.millis(speed), new EventHandler<ActionEvent>() {
+                    new KeyFrame(Duration.millis(speed*5), new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             int direction = queue[0];
                             board.getSnake().getHead().setDir(direction);
-                            if (tick++ % 6 == 0) {
-                                changesMap = board.update();
-                                reDrawBoard(scene, changesMap);
-                                tick = 1;
-                                queue[0] = queue[1]; // direction input is used
-                                prevDir = direction;
-                                board.clearChangesMap();
-                            }
+                            changesMap = board.update();
+                            reDrawBoard(scene, changesMap);
+                            queue[0] = queue[1]; // direction input is used
+                            prevDir = direction;
+                            board.clearChangesMap();
+                            
 
                         }
                     }));
@@ -143,27 +141,25 @@ public class BoardController {
             this.realtime.play();
         } else {
             this.realtime = new Timeline(
-                    new KeyFrame(Duration.millis(speed), new EventHandler<ActionEvent>() {
+                    new KeyFrame(Duration.millis(speed*5), new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
                             int direction = queue[0];
                             board.getSnake().getHead().setDir(direction);
-                            if (tick++ % 6 == 0) {
-                                changesMap = board.update();
-                                reDrawBoard(scene, changesMap);
-                                tick = 1;
-                                queue[0] = queue[1]; // direction input is used
-                                prevDir = direction;
-                                board.clearChangesMap();
-                                int boardSize = board.getBoardSize();
-                                if (rng.nextInt(boardSize) < boardSize
-                                        / (board.getSnake().getLength() / Math.min(board.getHeight(), board.getWidth())
-                                                + 2)) {
-                                    board.placeBomb(Math.max(board.getHeight(), board.getWidth())); // expiration time
-                                                                                                    // of bomb
-                                }
-
+                            changesMap = board.update();
+                            reDrawBoard(scene, changesMap);
+                            queue[0] = queue[1]; // direction input is used
+                            prevDir = direction;
+                            board.clearChangesMap();
+                            int boardSize = board.getBoardSize();
+                            if (rng.nextInt(boardSize) < boardSize
+                                    / (board.getSnake().getLength() / Math.min(board.getHeight(), board.getWidth())
+                                            + 2)) {
+                                board.placeBomb(Math.max(board.getHeight(), board.getWidth())); // expiration time
+                                                                                                // of bomb
                             }
+
+                            
 
                         }
                     }));
@@ -296,7 +292,6 @@ public class BoardController {
         drawBoard();
         queue[0] = 3;
         queue[1] = 3;
-        this.tick = 1;
         this.realtime.play();
 
     }
@@ -336,8 +331,14 @@ public class BoardController {
             dialog.setContentText("Please enter your name:");
             dialog.setOnCloseRequest(e -> {
                 String name = dialog.getResult();
-                if (!name.isBlank())
-                    saveHighScore(score, name);
+                try {
+                    if (!name.isBlank())
+                        saveHighScore(score, name);
+                    else if (name.isBlank())
+                        saveHighScore(score, "Anonymous");
+                } catch (NullPointerException e1) {
+                    saveHighScore(score, "Anonymous");
+                }
             });
             dialog.show();
         }
