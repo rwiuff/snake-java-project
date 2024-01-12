@@ -64,9 +64,9 @@ public class MainMenuController {
         TextField height = new TextField();
         height.setPromptText("20");
 
-        grid.add(new Label("Width"), 0, 0);
+        grid.add(new Label("Width [5 - 100]"), 0, 0);
         grid.add(width, 1, 0);
-        grid.add(new Label("Height"), 0, 1);
+        grid.add(new Label("Height [5 - 100]"), 0, 1);
         grid.add(height, 1, 1);
 
         CheckBox walls = new CheckBox("Enable Walls"); // Checkboxes
@@ -120,10 +120,22 @@ public class MainMenuController {
         Optional<HashMap<String, String>> result = dialog.showAndWait();
 
         result.ifPresent(newSettings -> {
-            if (!newSettings.get("Width").isBlank()) // If new width is given, set a new width in main
-                Main.width = Integer.parseInt(newSettings.get("Width"));
-            if (!newSettings.get("Height").isBlank()) // If new height is given, set a new height in main
-                Main.height = Integer.parseInt(newSettings.get("Height"));
+            if (!newSettings.get("Width").isBlank()){ // If new width is given, set a new width in main
+                int newWidth = Integer.parseInt(newSettings.get("Width"));
+                if(newWidth >= 5 && newWidth <= 100){
+                    Main.width = newWidth;
+                } else {
+                    Main.width = 20;
+                }
+            }
+            if (!newSettings.get("Height").isBlank()){ // If new height is given, set a new height in main
+                int newHeight = Integer.parseInt(newSettings.get("Height"));
+                if(newHeight >= 5 && newHeight <= 100){
+                    Main.height = newHeight;
+                } else {
+                    Main.height = 20;
+                }
+            }
             if (newSettings.get("Walls").equals("true")) { // Set new setting according to checkbox
                 settings.setWallsOn(true);
             } else if (newSettings.get("Walls").equals("false")) {
