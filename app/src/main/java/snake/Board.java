@@ -126,6 +126,9 @@ public class Board {
     }
 
     public void placeApple() { // places an Apple object on a random empty spcae on the board
+        if (emptySpaces.isEmpty()) { // if there arent any empty spaces
+            Main.gameOver(snake.getLength());
+        }
         int index = random.nextInt(emptySpaces.size());
         int x = (int) this.emptySpaces.get(index).getX();
         int y = (int) this.emptySpaces.get(index).getY();
