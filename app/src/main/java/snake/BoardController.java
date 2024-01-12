@@ -54,7 +54,7 @@ public class BoardController {
     private boolean wallsOn;
     private boolean warpsOn;
     private Board board;
-    private Set<Point> changesMap;
+    private Set<Point> changeSet;
     private Timeline realtime;
 
     private int fieldsize;
@@ -130,11 +130,11 @@ public class BoardController {
                         public void handle(ActionEvent event) {
                             int direction = queue[0];
                             board.getSnake().getHead().setDir(direction); // Set direction on every frame
-                            changesMap = board.update(); // Update game logic and get set of changes as points
-                            reDrawBoard(scene, changesMap); // Update board view with changed fields
+                            changeSet = board.update(); // Update game logic and get set of changes as points
+                            reDrawBoard(scene, changeSet); // Update board view with changed fields
                             queue[0] = queue[1]; // direction input is used
                             prevDir = direction;
-                            board.clearChangesMap(); // Destroy changes
+                            board.clearChangeSet(); // Destroy changes
                         }
                     }));
             this.realtime.setCycleCount(Timeline.INDEFINITE);
@@ -146,11 +146,11 @@ public class BoardController {
                         public void handle(ActionEvent event) {
                             int direction = queue[0];
                             board.getSnake().getHead().setDir(direction); // Set direction on every frame
-                            changesMap = board.update(); // Update game logic and get set of changes as points
-                            reDrawBoard(scene, changesMap); // Update board view with changed fields
+                            changeSet = board.update(); // Update game logic and get set of changes as points
+                            reDrawBoard(scene, changeSet); // Update board view with changed fields
                             queue[0] = queue[1]; // direction input is used
                             prevDir = direction;
-                            board.clearChangesMap(); // Destroy changes
+                            board.clearChangeSet(); // Destroy changes
                             int boardSize = board.getBoardSize();
                             if (rng.nextInt(boardSize) < boardSize
                                     / (board.getSnake().getLength() / Math.min(board.getHeight(), board.getWidth())
