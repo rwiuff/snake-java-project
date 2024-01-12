@@ -31,7 +31,7 @@ abstract class Space {
         this.y = y;
     }
 
-    public int collision(SnakeObject snake) { 
+    public int collision(SnakeObject snake) { // integer to identify the object that is collided with
         return 0;
     }
 

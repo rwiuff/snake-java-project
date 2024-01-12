@@ -16,7 +16,7 @@ public class Bomb extends Space {
 
     }
 
-    public int collision(SnakeObject snake) {
+    public int collision(SnakeObject snake) { // shortens the snake
         snake.shorten();
         return 3;
     }

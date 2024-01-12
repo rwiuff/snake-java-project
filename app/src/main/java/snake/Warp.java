@@ -16,14 +16,14 @@ public class Warp extends Space {
         board = gameBoard;
     }
 
-    public int collision(SnakeObject snake) {
+    public int collision(SnakeObject snake) { // warps the snakes head to a new position 
         snake.getHead().setX((int) warpPoint.getX());
         snake.getHead().setY((int) warpPoint.getY());
         snake.getHead().move();
         return 2;
     }
 
-    public static int placeWarp(Space[][] spaceArray, ArrayList<Point> emptySpaces) {
+    public static int placeWarp(Space[][] spaceArray, ArrayList<Point> emptySpaces) { // places 2 warps on random empty spaces, each warping to the other
         Random rng = new Random();
         int index = rng.nextInt(emptySpaces.size());
         Point first = emptySpaces.remove(index);
