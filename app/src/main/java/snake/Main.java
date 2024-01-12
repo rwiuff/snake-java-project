@@ -36,26 +36,26 @@ public class Main extends Application {
     private static Settings settings;
 
     public static void main(String[] args) {
-        String[] input = args.length < 2 ? new String[] { "20", "20" } : args;
-        if (input[0].matches("^[0-9]*[1-9]+$|^[1-9]+[0-9]*$")) {
+        String[] input = args.length < 2 ? new String[] { "20", "20" } : args; // Check input args for two inputs
+        if (input[0].matches("^[0-9]*[1-9]+$|^[1-9]+[0-9]*$")) { // Validate for positive integers
             width = Integer.parseInt(input[0]);
             System.out.println("Width: " + width);
-        } else {
+        } else { // If invalid number is pressed, set to default width
             width = 20;
             System.out.println("Invalid width. Width set to: " + width);
         }
-        if (input[1].matches("^[0-9]*[1-9]+$|^[1-9]+[0-9]*$")) {
+        if (input[1].matches("^[0-9]*[1-9]+$|^[1-9]+[0-9]*$")) { // Validate for positive integers
             height = Integer.parseInt(input[1]);
             System.out.println("Height: " + height);
-        } else {
+        } else { // If invalid number is pressed, set to default width
             height = 20;
             System.out.println("Invalid width. Height set to: " + height);
         }
-        settings = new Settings();
-        File file = new File("SnakeHighScore.txt");
-        if (!file.exists())
+        settings = new Settings(); // Create settings object
+        File file = new File("SnakeHighScore.txt"); // Create highscore file
+        if (!file.exists()) // If the file doesn't exist
             try {
-                file.createNewFile();
+                file.createNewFile(); // Create file
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -64,47 +64,43 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        populateResources();
-        scene = new Scene(mainMenuRoot);
+        populateResources(); // Load roots
+        scene = new Scene(mainMenuRoot); // Create main menu scene
         primaryStage.setTitle("Snek");
-        primaryStage.getIcons().addAll(icon16, icon32, icon64);
+        primaryStage.getIcons().addAll(icon16, icon32, icon64); // Get graphics
         mainMenu(primaryStage);
         primaryStage.setResizable(false);
         primaryStage.show();
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
-        primaryStage.setOnCloseRequest(event -> {
+        primaryStage.setOnCloseRequest(event -> { // Run exit method when hiting 'x' on window
             event.consume();
             exit(primaryStage);
         });
     }
 
     public static void mainMenu(Stage primaryStage) {
-        scene.setRoot(mainMenuRoot);
+        scene.setRoot(mainMenuRoot); // Set scene to main menu
         primaryStage.setScene(scene);
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
 
     private void populateResources() throws IOException {
-        menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
-        // MainMenuController mainMenuController = menuLoader.getController();
-        mainMenuRoot = menuLoader.load();
-        // boardLoader = new FXMLLoader(getClass().getResource("/fxml/Board.fxml"));
-        // boardRoot = boardLoader.load();
-        // boardController = boardLoader.getController();
-        icon16 = new Image(getClass().getResourceAsStream("/icons/icon16.png"));
+        menuLoader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml")); // Load Main menu FXML
+        mainMenuRoot = menuLoader.load(); // Get main menu root
+        icon16 = new Image(getClass().getResourceAsStream("/icons/icon16.png")); // Get icons
         icon32 = new Image(getClass().getResourceAsStream("/icons/icon32.png"));
         icon64 = new Image(getClass().getResourceAsStream("/icons/icon64.png"));
     }
 
-    private static void boardReLoad() throws IOException {
+    private static void boardReLoad() throws IOException { // Get Board FXML as root and board Controller
         boardLoader = new FXMLLoader(Main.class.getResource("/fxml/Board.fxml"));
         boardRoot = boardLoader.load();
         boardController = boardLoader.getController();
     }
 
-    public static void exit(Stage primaryStage) {
+    public static void exit(Stage primaryStage) { // Exit dialog box
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setContentText("Are you sure you want to exit Snake?");
         alert.setHeaderText("You are about to exit Snake");
@@ -114,22 +110,24 @@ public class Main extends Application {
             Platform.exit();
     }
 
-    public static void startGame(Stage primaryStage) throws IOException {
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+    public static void startGame(Stage primaryStage) throws IOException { // When pressing 'Start'
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds(); // Get physical screen dimension
         int screenWidth = (int) screenBounds.getWidth();
         int screenHeight = (int) screenBounds.getHeight();
         int fieldSize = 20;
-        if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) {
+        if ((width * 20) > screenWidth * 0.7 || (height * 20) > screenHeight * 0.7) { // If stage exceeds physical
+                                                                                      // scrren resolution
             int heightSize = (int) (screenWidth * 0.7 / width);
             int widthSize = (int) (screenHeight * 0.7 / height);
-            fieldSize = height > widthSize ? widthSize : heightSize;
+            fieldSize = height > widthSize ? widthSize : heightSize; // Change field size for the board, to keep the
+                                                                     // stage inside screen dimensions
         }
-        boardReLoad();
-        scene.setRoot(boardRoot);
-        boardController.setDimensions(width, height, fieldSize);
-        boardController.setSettings(settings);
-        boardController.setup(scene);
-        primaryStage.setScene(scene);
+        boardReLoad(); // Load new board viewer and controller
+        scene.setRoot(boardRoot); // construct new board view
+        boardController.setDimensions(width, height, fieldSize); // Set dimensions for the game
+        boardController.setSettings(settings); // Apply settings
+        boardController.setup(scene); // Construct Board object and populate gridpane
+        primaryStage.setScene(scene); // Set stage to board
         primaryStage.sizeToScene();
         primaryStage.centerOnScreen();
     }
@@ -138,15 +136,15 @@ public class Main extends Application {
         boardController.gameOver((length - 2) * 100);
     }
 
-    public static Settings getSettings() {
+    public static Settings getSettings() { // Method for getting settings
         return settings;
     }
 
-    public static void setSettings(Settings settings) {
+    public static void setSettings(Settings settings) { // Overwrite settings
         Main.settings = settings;
     }
 
-    public static Object[] loadHighScore() {
+    public static Object[] loadHighScore() { // Load highscore from file
         try (FileReader hsfr = new FileReader("SnakeHighScore.txt")) {
             BufferedReader hsbr = new BufferedReader(hsfr);
             String hs = hsbr.readLine();
@@ -156,7 +154,8 @@ public class Main extends Application {
             hsbr.close();
             hsfr.close();
             return new Object[] { score, name };
-        } catch (NumberFormatException | IOException | NullPointerException e) {
+        } catch (NumberFormatException | IOException | NullPointerException e) { // If no string exists in highscore
+                                                                                 // file, return error-code string "-1,"
             return new Object[] { -1, "" };
         }
     }

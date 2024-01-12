@@ -14,7 +14,7 @@ public class Board {
     private SnakeObject snake;
     private ArrayList<Point> emptySpaces = new ArrayList<Point>(); // list of all coordinates in the space array not containing an object
     private Random random = new Random();
-    private Set<Point> changesMap = new HashSet<Point>(); // set of coodinates in the space array that need to be redrawn
+    private Set<Point> changeSet = new HashSet<Point>(); // set of coodinates in the space array that need to be redrawn
     private Set<Point> bombList = new HashSet<Point>();
 
     public Board(int n, int m, boolean wallsON, boolean warpsOn) {
@@ -52,10 +52,10 @@ public class Board {
         // removes the tails position from the board, and adds it as an empty space
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
-        this.changesMap.add(tailPlace);
+        this.changeSet.add(tailPlace);
         this.emptySpaces.add(tailPlace); 
 
-        this.changesMap.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY())); // makes sure the olds head position is redrawn
+        this.changeSet.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY())); // makes sure the olds head position is redrawn
        
         snake.snakeMove(); // moves the snake
 
@@ -73,8 +73,8 @@ public class Board {
                     Point ghostTailPlace = new Point(this.snake.getGhostTail().getX(),
                             this.snake.getGhostTail().getY());
                     this.emptySpaces.remove(ghostTailPlace);
-                    this.changesMap.add(ghostTailPlace);
-                    this.changesMap.remove(tailPlace);
+                    this.changeSet.add(ghostTailPlace);
+                    this.changeSet.remove(tailPlace);
                     placeApple();
                     break;
                 case 2: // collided with warp
@@ -87,7 +87,7 @@ public class Board {
                     this.board[newGhostTail.getX()][newGhostTail.getY()] = null;
                     Point newTailPoint = new Point(newGhostTail.getX(), newGhostTail.getY());
                     emptySpaces.add(newTailPoint);
-                    changesMap.add(newTailPoint);
+                    changeSet.add(newTailPoint);
 
             }
         } catch (NullPointerException e) {
@@ -95,7 +95,7 @@ public class Board {
         }
 
         // adds the heads position to be redrawn
-        changesMap.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
+        changeSet.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
         // checking if bombs have expired
         Set<Point> expiredBombs = new HashSet<Point>();
         for (Point bombSite : this.bombList) {
@@ -105,7 +105,7 @@ public class Board {
                 if (this.board[(int) bombSite.getX()][(int) bombSite.getY()].checkExpiration(this.board,
                         this.emptySpaces)) {
                     expiredBombs.add(bombSite);
-                    changesMap.add(bombSite);
+                    changeSet.add(bombSite);
                 }
 
             } catch (NullPointerException e) {
@@ -116,7 +116,7 @@ public class Board {
             this.bombList.remove(dud);
         }
         placeSnake();
-        return this.changesMap;
+        return this.changeSet;
     }
 
     public void placeSnake() { // places the SnakeHead and newest segment in the board array
@@ -134,7 +134,7 @@ public class Board {
         int y = (int) this.emptySpaces.get(index).getY();
         this.board[x][y] = new Apple(x, y);
         this.emptySpaces.remove(new Point(x, y));
-        changesMap.add(new Point(x, y));
+        changeSet.add(new Point(x, y));
     }
 
     public SnakeObject getSnake() {
@@ -161,7 +161,7 @@ public class Board {
                 this.board[tempX][tempY] = new Bomb(tempX, tempY, expirationtime);
                 Point bombPlace = new Point(tempX, tempY);
                 this.bombList.add(bombPlace);
-                this.changesMap.add(bombPlace);
+                this.changeSet.add(bombPlace);
                 emptySpaces.remove(tempPlace);
                 placeFound = true;
             } else {
@@ -186,8 +186,8 @@ public class Board {
         return this.emptySpaces.size();
     }
 
-    public void clearChangesMap() {
-        this.changesMap.clear();
+    public void clearChangeSet() {
+        this.changeSet.clear();
     }
 
     public int getHeight() {
