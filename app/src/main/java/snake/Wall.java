@@ -24,10 +24,11 @@ public class Wall extends Space {
         Point illegal2 = new Point(spaceArray.length / 2, spaceArray[0].length / 2 - 2); // two in front of head
         // makes sure that the illegal spaces can't be chosen
         emptySpaces.remove(illegal1);
-        emptySpaces.remove(illegal2); 
+        emptySpaces.remove(illegal2);
 
         // picks the amount of walls to be placed (max 5% of board size)
-        int amount = rng.nextInt((int) (spaceArray.length * (double) spaceArray[0].length / 100 * 5));
+        int amount = rng.nextInt((int) (spaceArray.length * (double) spaceArray[0].length / 100 * 1),
+                (int) (spaceArray.length * (double) spaceArray[0].length / 100 * 5));
         for (int i = 1; i <= amount; i++) {
             int index = rng.nextInt(emptySpaces.size());
             Point coordinates = emptySpaces.get(index);
