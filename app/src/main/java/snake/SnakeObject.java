@@ -17,7 +17,7 @@ public class SnakeObject {
         this.winCondition = hSize * vSize;
     }
 
-    public void extend() {
+    public void extend() { // makes the snake 1 segment longer by placing it at the ghostTail
         this.body.add(0, this.ghostTail);
         this.length++;
         if (this.winCondition == length) {
@@ -25,7 +25,7 @@ public class SnakeObject {
         }
     }
 
-    public void shorten() {
+    public void shorten() { // removes the tail making the snake 1 segment shorter
         if (this.length < 3) {
             Main.gameOver(this.length);
         } else {
@@ -34,7 +34,7 @@ public class SnakeObject {
         }
     }
 
-    public void snakeMove() {
+    public void snakeMove() { // moves the head and removes the tail
         body.add(new SnakeSegment(head.getX(), head.getY()));
         head.move();
         this.ghostTail = body.remove(0);

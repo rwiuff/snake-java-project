@@ -228,7 +228,6 @@ public class BoardController {
                         pause(null);
                         break;
                     default:
-                        System.out.println("Invalid keypress");
                         break;
                 }
 

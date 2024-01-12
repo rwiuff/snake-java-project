@@ -25,7 +25,7 @@ public class SnakeHead extends Space {
         }
     }
 
-    public void move() {
+    public void move() { // changes x nad y coordniates based on dir
         switch (dir) {
             case 0:
                 setX((vSize + (getX() - 1)) % vSize);

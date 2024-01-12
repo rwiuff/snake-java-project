@@ -49,18 +49,22 @@ public class Board {
 
         SnakeSegment tail = this.snake.getTail();
 
+        // removes the tails position from the board, and adds it as an empty space
         this.board[tail.getX()][tail.getY()] = null;
         Point tailPlace = new Point(tail.getX(), tail.getY());
         this.changesMap.add(tailPlace);
-        this.changesMap.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY()));
+        this.emptySpaces.add(tailPlace); 
 
-        this.emptySpaces.add(tailPlace); // objects can be placed
-        snake.snakeMove();
+        this.changesMap.add(new Point(this.snake.getHead().getX(), this.snake.getHead().getY())); // makes sure the olds head position is redrawn
+       
+        snake.snakeMove(); // moves the snake
+
+        // removes the tail and new head from the available positions
         Point headPlace = new Point(this.snake.getHead().getX(), this.snake.getHead().getY());
-
         this.emptySpaces.remove(new Point(this.snake.getTail().getX(), this.snake.getTail().getY()));
         this.emptySpaces.remove(headPlace);
 
+        // checks for the collision of the head
         try {
             switch (this.board[snake.getHead().getX()][snake.getHead().getY()].collision(snake)) {
                 case 0:
@@ -87,9 +91,11 @@ public class Board {
 
             }
         } catch (NullPointerException e) {
-            // pass
+            // passes if doesn't hit an object
         }
-        this.changesMap.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
+
+        // adds the heads position to be redrawn
+        changesMap.add(new Point((int) snake.getHead().getX(), (int) snake.getHead().getY()));
         // checking if bombs have expired
         Set<Point> expiredBombs = new HashSet<Point>();
         for (Point bombSite : this.bombList) {
@@ -109,6 +115,7 @@ public class Board {
         for (Point dud : expiredBombs) {
             this.bombList.remove(dud);
         }
+        
         placeSnake();
         return this.changesMap;
     }

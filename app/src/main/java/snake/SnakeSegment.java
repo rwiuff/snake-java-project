@@ -6,7 +6,7 @@ public class SnakeSegment extends Space {
         super(x, y);
     }
 
-    public int collision(SnakeObject snake) {
+    public int collision(SnakeObject snake) { // ends the game
         Main.gameOver(snake.getLength());
         return 0;
     }
