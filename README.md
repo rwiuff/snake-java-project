@@ -1,4 +1,9 @@
-# Snake Java Project
+# Snake Java Project for DTU course 02104
+## Authors
+Niklas Emil Lysdal
+Nikolaj Vorndran Thygesen
+Rasmus Kronborg Finnemann Wiuff
+## Usage
 The program can be run from a terminal using the executable jar or the Gradle environment. To execute the jar, locate the file in the terminal and type:
 
 ```
