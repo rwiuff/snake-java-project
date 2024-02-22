@@ -1,8 +1,14 @@
 # Snake Java Project for DTU course 02104
 ## Authors
 Niklas Emil Lysdal
+
 Nikolaj Vorndran Thygesen
+
 Rasmus Kronborg Finnemann Wiuff
+## About
+This repo contains a JavaFX implementation of the classic game *Snake*.
+## Branches
+This repo has a main branch for the basic version of the game (basic requirements for passing the course). The **Advanced** branch contains the extended version (the *real* game).
 ## Usage
 The program can be run from a terminal using the executable jar or the Gradle environment. To execute the jar, locate the file in the terminal and type:
 
